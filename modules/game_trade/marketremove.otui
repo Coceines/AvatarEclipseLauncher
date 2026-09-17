@@ -1,0 +1,31 @@
+MainWindow
+  id: marketRemove
+  text: Remover item
+  height: 130
+  width: 260
+  visible: false
+  Label
+    id: removeMarketLabel1
+    !text: tr('Transaction ID:')
+    anchors.top: parent.top
+    anchors.left: parent.left
+  TextEdit
+    id: removeMarketText1
+    anchors.top: removeMarketLabel1.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Button
+    id: buttonCancel
+    text: Cancel
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: marketCancel()
+  Button
+    id: buttonOk
+    text: Ok
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: removeMarket()

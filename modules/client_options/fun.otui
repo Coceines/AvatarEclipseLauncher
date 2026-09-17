@@ -1,0 +1,35 @@
+OptionPanel
+
+  UILabel
+    id: funHeader
+    size: 265 24
+    margin: 8 0 0 10
+    text-align: left
+    text-auto-resize: true
+    font: verdana-11px-antialised
+    color: #9bd2fb
+    !text: tr('Toph Mode')
+
+  OptionCheckBox
+    id: tophMode
+    margin: 14 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      text-offset: 0 5
+      font: verdana-11px-antialised
+      !text: tr('Activate Toph Mode')
+      !tooltip: tr('Everything on the map goes 95%% dark. Creatures and players stay visible with a #9bd2fb outline plus a simple glow, and a circular sine wave is released around your character every 5 seconds.')
+
+  UILabel
+    id: tophDescription
+    size: 265 110
+    margin: 18 0 0 10
+    text-align: left
+    text-auto-resize: true
+    font: verdana-11px-monochrome
+    color: #A6AAB2
+    !text: tr('Visao de dobrador de terra: o mundo fica 95%% escuro, criaturas e\nplayers ganham contorno azul (#9bd2fb) com brilho e uma onda\nsenoidal circular sai do seu personagem a cada 5 segundos.\n\nDisponivel apenas para dobradores de TERRA. Trocando de\npersonagem o modo desliga sozinho.')

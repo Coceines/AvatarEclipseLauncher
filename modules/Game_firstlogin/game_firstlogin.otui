@@ -1,0 +1,111 @@
+// modules/Game_firstlogin/game_firstlogin.otui
+// Estilos de interface do tutorial do primeiro login
+// ATENCAO: este arquivo deve ficar em codificacao ANSI/cp1252,
+// como o restante do client (locales/pt.lua usa cp1252).
+
+FirstLoginOverlay < UIWidget
+  background-color: #000000A0
+  anchors.left: parent.left
+  anchors.right: parent.right
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  phantom: true
+  focusable: false
+
+FirstLoginArrow < UIWidget
+  size: 64 48
+  image-source: /modules/Game_firstlogin/img/arrow
+  image-smooth: true
+  phantom: true
+  focusable: false
+
+FirstLoginTooltip < Window
+  !text: 'Dica'
+  size: 420 150
+  @onEscape: modules.game_firstlogin.onNextStep()
+
+  Label
+    id: tipText
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: parent.top
+    anchors.bottom: nextButton.top
+    margin: 6
+    text-wrap: true
+    text-align: center
+    font: verdana-11px-antialised
+    color: #FFFFFF
+
+  Button
+    id: nextButton
+    !text: 'Próximo'
+    size: 76 23
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 8
+    @onClick: modules.game_firstlogin.onNextStep()
+
+FirstLoginImagesWindow < MainWindow
+  !text: 'Tutorial'
+  size: 600 520
+  @onEscape: modules.game_firstlogin.onCloseImages()
+
+  Label
+    id: imageText
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 8
+    margin-left: 12
+    margin-right: 12
+    text-wrap: true
+    text-vertical-auto-resize: true
+    text-align: center
+    font: verdana-11px-antialised
+    color: #FFFFFF
+
+  UIWidget
+    id: imageFrame
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: imageText.bottom
+    anchors.bottom: prevButton.top
+    margin: 10
+    background-color: #00000055
+
+    UIWidget
+      id: img
+      image-source: /modules/Game_firstlogin/img/IMG1
+      image-fixed-ratio: true
+      image-smooth: true
+      size: 560 340
+      anchors.centerIn: parent
+
+  Button
+    id: prevButton
+    !text: 'Anterior'
+    size: 76 23
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin: 10
+    @onClick: modules.game_firstlogin.onPrevImage()
+
+  Button
+    id: nextButton
+    !text: 'Próximo'
+    size: 76 23
+    anchors.left: prevButton.right
+    anchors.bottom: parent.bottom
+    margin-top: 10
+    margin-bottom: 10
+    margin-left: 4
+    @onClick: modules.game_firstlogin.onNextImage()
+
+  Button
+    id: closeButton
+    !text: 'Fechar Tutorial'
+    size: 140 23
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 10
+    @onClick: modules.game_firstlogin.onCloseImages()

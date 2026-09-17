@@ -1,0 +1,12 @@
+Module
+  name: game_spellsound
+  description: Spell sound effects
+  author: Avatar
+  website:
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1006
+  dependencies: [ client_topmenu, client_options ]
+  scripts: [ game_spellsound ]
+  @onLoad: init()
+  @onUnload: terminate()

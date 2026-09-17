@@ -1,0 +1,10 @@
+Module
+  name: game_proficiency
+  description: Weapon Proficiency System
+  author: OpenTibiaBR / Avatar Team
+  sandboxed: true
+  scripts: [ const, proficiency_data, proficiency ]
+  autoload: true
+  autoload-priority: 1200
+  @onLoad: init()
+  @onUnload: terminate()

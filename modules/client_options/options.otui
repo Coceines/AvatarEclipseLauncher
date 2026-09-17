@@ -1,0 +1,286 @@
+TabBarVerticalButton < UIButton
+  size: 290 40
+  color: #aaaaaa
+  anchors.left: parent.left
+  anchors.right: parent.right
+  image-source: settings/bgitemselect
+  image-border: 5
+  image-offset-y: 5
+  text-align: Top-Left
+  text-offset: 20 17
+  font: verdana-11px-antialised
+  icon-align: right
+  icon-offset-x: -15
+  icon-offset-y: 5
+  icon-clip: 0 0 25 25
+  $first:
+    anchors.top: parent.top
+  $!first:
+    anchors.top: prev.bottom
+    margin-top: 11
+  $hover !checked:
+    icon-clip: 0 0 25 25
+  $disabled:
+    icon-clip: 0 0 25 25
+    image-source: settings/bgitemselect
+    image-shader:
+  $checked:
+    icon-clip: 0 25 25 25
+    image-source: settings/bgitemselectactive
+    image-shader: talent_border_glow
+    color: #ffffff
+  $on !checked:
+    color: #A6AAB2
+  $!checked:
+    image-shader:
+
+OptionCheckBox < UICheckBox
+  size: 34 22
+  text-align: center
+  text-offset: 105 -2
+  !text: tr('Off')
+  font: verdana-11px-antialised
+  color: #dfdfdf
+  image-color: #dfdfdfff
+  image-rect: 0 0 34 22
+  image-source: /modules/client_options/settings/checkbox
+  image-offset: 275 0
+  change-cursor-image: true
+  cursor: pointer
+  @onCheckChange: modules.client_options.setOption(self:getId(), self:isChecked())
+
+  $hover !disabled:
+    color: #ffffff
+
+  $!checked:
+    image-source: /modules/client_options/settings/checkbox
+    image-shader:
+    !text: tr('Off')
+    color: #ffffff
+
+  $hover !checked:
+    image-source: /modules/client_options/settings/checkbox
+    image-shader:
+
+  $checked:
+    image-source: /modules/client_options/settings/checkboxactive
+    image-shader: talent_border_glow
+    !text: tr('On')
+    color: #77f558
+
+  $hover checked:
+    image-source: /modules/client_options/settings/checkboxactive
+    image-shader: talent_border_glow
+
+  $disabled:
+    image-color: #dfdfdf88
+    color: #dfdfdf88
+    opacity: 0.8
+    change-cursor-image: false
+
+ScrollBarSliderBG < UIButton
+  id: sliderButton
+  anchors.centerIn: parent
+  size: 22 22
+  image-source: settings/cursorslider
+
+OptionScrollbarBG < UIScrollBar
+  orientation: horizontal
+  height: 10
+  width: 39
+  image-source: settings/bgslider
+  image-size: 210 10
+  image-offset-x: 20
+
+  $disabled:
+    color: #bbbbbb88
+
+  UIButton
+    id: decrementButton
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-source: /images/ui/scrollbar
+    image-clip: 0 39 13 13
+    image-color: #ffffffff
+    size: 13 13
+    visible: false
+    enable: false
+    $hover:
+      image-clip: 13 39 13 13
+    $pressed:
+      image-clip: 26 39 13 13
+    $disabled:
+      image-color: #ffffff66
+
+  UIButton
+    id: incrementButton
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    size: 13 13
+    visible: false
+    enable: false
+    image-source: /images/ui/scrollbar
+    image-clip: 0 52 13 13
+    image-color: #ffffffff
+    $hover:
+      image-clip: 13 52 13 13
+    $pressed:
+      image-clip: 26 52 13 13
+    $disabled:
+      image-color: #ffffff66
+
+  UIWidget
+    id: activeScroll
+    anchors.left: parent.left
+    margin-left: 10
+    height: 10
+    image-source: settings/bgslideractive
+    image-shader: talent_border_glow
+    phantom: true
+
+  ScrollBarSliderBG
+
+  ScrollBarValueLabel
+
+OptionScrollbar < OptionScrollbarBG
+  step: 1
+  @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+OptionComboBox < ComboBox
+  font: verdana-11px-antialised
+  color: #dfdfdf
+  size: 200 40
+  text-offset: 3 0
+  text-align: left
+  image-source: settings/combobox
+  image-border: 3
+  image-border-right: 19
+  image-clip: 0 0 200 40
+  image-shader:
+
+  $hover !disabled:
+    image-clip: 0 41 200 40
+    image-shader:
+
+  $on:
+    image-clip: 0 82 200 40
+    image-shader: talent_border_glow
+
+  $disabled:
+    color: #dfdfdf88
+    opacity: 0.8
+
+OptionPanel < Panel
+  layout:
+    type: verticalBox
+
+TabBarVertical < UITabBar
+  width: 290
+
+  ScrollableFlatPanel
+    id: buttonsPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: scrollBar.left
+    anchors.bottom: parent.bottom
+    vertical-scrollbar: scrollBar
+    margin-right: 1
+    image-source:
+
+  VerticalScrollBar
+    id: scrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 16
+    pixels-scroll: true
+    $!on:
+      width: 0
+
+UIWindow
+  id: optionsWindow
+  anchors.horizontalCenter: parent.horizontalCenter
+  anchors.verticalCenter: parent.verticalCenter
+  !text: tr('Options')
+  text-align: Top-Left
+  text-offset: 42 15
+  font: verdana-11px-antialised
+  size: 910 704
+  image-source: settings/background
+  image-border-top: 6
+  image-border-bottom: 6
+  $mobile:
+    size: 490 360
+
+  UIWidget
+    id: optionsIcon
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin: 10 0 0 15
+    image-source: settings/options
+
+  Label
+    id: optionsKey
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin: 15 0 0 91
+    color: #77f558
+    font: verdana-11px-antialised
+    text: (O)
+
+  UIWidget
+    id: optionsEdgeHorizontal
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: parent.top
+    height: 2
+    margin: 46 0 0 0
+    image-source: settings/edge_top
+
+  UIWidget
+    id: optionsEdgeVertical
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: optionsEdgeHorizontal.bottom
+    anchors.bottom: parent.bottom
+    width: 2
+    margin: 0 123 0 0
+    image-source: settings/edgevertical
+
+  @onEnter: modules.client_options.hide()
+  @onEscape: modules.client_options.hide()
+
+  TabBarVertical
+    id: optionsTabBar
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin: 62 0 0 22
+
+  Panel
+    id: optionsTabContent
+    anchors.top: optionsTabBar.top
+    anchors.left: optionsTabBar.right
+    anchors.right: parent.right
+    anchors.bottom: optionsTabBar.bottom
+    margin-left: 43
+    margin-top: 10
+
+  UIButton
+    anchors.right: parent.right
+    anchors.top: parent.top
+    size: 25 25
+    margin: 12 20 0 0
+    image-source: settings/close_button
+    image-shader:
+
+    $hover !checked:
+      image-source: settings/close_button_active
+      image-shader: talent_border_glow
+
+    $pressed:
+      image-source: settings/close_button_active
+      image-shader: talent_border_glow
+
+    @onClick: |
+      g_settings.save()
+      modules.client_options.hide()

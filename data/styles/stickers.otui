@@ -1,0 +1,40 @@
+StickerBubble < UIWidget
+  image-source: /images/stickers/stickerSpeechBubble
+
+  UIWidget
+    id: Sticker
+    anchors.top: parent.top
+    anchors.right: parent.right
+    size: 64 64
+
+StickersEntry < UIWidget
+  size: 22 22
+  text-align: center
+
+StickersPanel < Panel
+  size: 240 220
+  margin-left: 32
+  margin-bottom: 32
+
+  UIScrollArea
+    id: stickersUIScrollArea
+    anchors.top: parent.top
+    anchors.left: parent.left
+    background-color: #00000075
+    size: 220 220
+    layout:
+      type: grid
+      flow: true
+      cell-size: 64 64
+      cell-spacing: 4
+    padding: 10
+    border: 2 #1d1812
+    vertical-scrollbar: stickerScroll
+
+  VerticalScrollBar
+    id: stickerScroll
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.right
+    step: 48
+    pixels-scroll: true

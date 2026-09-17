@@ -1,0 +1,70 @@
+MountMoldura < UIProgressRect
+  background: #585858AA
+  percent: 100
+  focusable: false
+  font: verdana-11px-rounded
+  image-source: icones/moldura
+  size: 32 32
+
+MountsB < UIButton
+  size: 32 32
+  anchors.top: parent.top
+  anchors.left: parent.left
+
+MainWindow  
+  icon: /images/topbuttons/appa
+  icon-offset: -76 -37
+  text: Mounts
+  size: 175 95
+  margin-top: 40
+  margin-right: 100
+  @onEscape: self.onEscape()
+
+  MountsB
+    id: mountButton1
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 13
+
+  MountsB
+    id: mountButton2
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 55
+
+  MountsB
+    id: mountButton3
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 97
+
+  MountMoldura
+    id: mold1
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 13
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold2
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 55
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold3
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 97
+    @onClick: self.onClick(self)
+
+  Button
+    id: exit1
+    !text: tr('Cancel')
+    !tooltip: tr('Cancel')
+    anchors.top: mountButton2.bottom
+    anchors.left: parent.left
+    margin-left: 17
+    margin-top: 5
+    @onClick: modules.game_mountsAvatar.onMiniWindowClose()

@@ -1,0 +1,17 @@
+# WebView Widget Styles
+# Base style for UIWebView widgets
+
+UIWebView {
+    background-color: #000000;
+    opacity: 1.0;
+}
+
+UIWebView#transparent {
+    background-color: transparent;
+}
+
+UIWebView#overlay {
+    background-color: #00000080;
+    border-width: 1;
+    border-color: #ffffff40;
+}

@@ -1,0 +1,11 @@
+Module
+  name: game_magicmeter
+  description: Magic Meter - damage dealt per spell
+  author: Avatar
+  website:
+  sandboxed: true
+  autoload: true
+  dependencies: [ game_interface, client_topmenu ]
+  scripts: [ magicmeter ]
+  @onLoad: init()
+  @onUnload: terminate()

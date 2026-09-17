@@ -1,0 +1,10 @@
+Module
+  name: game_talenttree
+  description: Talent Tree System
+  author: Avatar Team
+  sandboxed: true
+  scripts: [ talenttree ]
+  autoload: true
+  autoload-priority: 1100
+  @onLoad: TalentTree:init()
+  @onUnload: TalentTree:terminate()

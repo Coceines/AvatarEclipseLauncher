@@ -1,0 +1,10 @@
+Module
+  name: game_mountsBuy
+  description: Mount Avatar Legends Option
+  author: Mirto
+  website: avatarlegendsonline.com.br
+  sandboxed: true
+  scripts: [ configs, game_mountsBuy ]
+  @onLoad: init()
+  @onUnload: terminate()
+  

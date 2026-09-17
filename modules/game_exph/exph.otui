@@ -1,0 +1,93 @@
+SkillFirstWidget < UIWidget
+
+exphButton < UIButton
+  height: 21
+  margin-bottom: 2
+  &onClick: onexphButtonClick
+
+SkillNameLabel < GameLabel
+  font: verdana-11px-antialised
+  color: #AFAFAF
+  anchors.left: parent.left
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+
+SkillValueLabel < GameLabel
+  id: value
+  font: verdana-11px-antialised
+  color: #AFAFAF
+  text-align: topright
+  anchors.right: parent.right
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  anchors.left: prev.left
+
+SkillPercentPanel < ProgressBar
+  id: percent
+  image-source: /images/ui/progressbarexph
+  background-color: #00C000
+  border: 1 black
+  height: 5
+  margin-top: 15
+  anchors.left: parent.left
+  anchors.right: parent.right
+  anchors.top: parent.top
+  phantom: false
+
+MiniWindow
+  id: exphWindow
+  !text: tr('XP Statistics')
+  color: #8F8F8F
+  height: 70
+  icon: /images/topbuttons/EXP
+  @onClose: modules.game_exph.onMiniWindowClose()
+  &save: true
+
+  MiniWindowContents
+    padding-left: 5
+    padding-right: 5
+    layout: verticalBox
+
+    exphButton
+      margin-top: 1
+      id: session
+      height: 15
+      SkillNameLabel
+        !text: tr('Session:')
+      SkillValueLabel
+
+    exphButton
+      id: expph
+      height: 15
+      SkillNameLabel
+        !text: tr('XP/h:')
+      SkillValueLabel
+
+    exphButton
+      id: expgained
+      height: 15
+      SkillNameLabel
+        !text: tr('XP Gained:')
+      SkillValueLabel
+
+    exphButton
+      id: exptolevel
+      height: 15
+      SkillNameLabel
+        !text: tr('XP To:')
+      SkillValueLabel
+
+    exphButton
+      id: timetolevel
+      height: 15
+      SkillNameLabel
+        !text: tr('Next lvl in:')
+      SkillValueLabel
+
+  HorizontalSeparator
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 8
+    margin-left: 10
+    margin-right: 10

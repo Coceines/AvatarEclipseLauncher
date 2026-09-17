@@ -1,0 +1,11 @@
+Module
+  name: game_quests
+  description: Quest Log oficial - sistema de quests (opcode 0xF0)
+  author: CBLade
+  website: http://otclient.ovh
+  scripts: [ quests ]
+  autoload: true
+  autoload-priority: 1009
+  sandboxed: true
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,125 @@
+AchievementCard < Panel
+  height: 68
+  background-color: #333333
+  padding: 6
+  focusable: true
+  phantom: false
+
+  Label
+    id: achName
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: achStatus.left
+    margin-top: 2
+    font: verdana-11px-rounded
+    color: #FFFFFF
+    text-wrap: false
+    text-auto-resize: true
+
+  Label
+    id: achStatus
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 2
+    margin-right: 5
+    font: terminus-14px-bold
+    color: #FFFF00
+    phantom: false
+
+  Label
+    id: achTitle
+    anchors.top: achName.bottom
+    anchors.left: parent.left
+    margin-top: 1
+    margin-left: 2
+    font: verdana-11px-antialised
+    color: #FFD700
+    text-auto-resize: true
+
+  Label
+    id: achProgress
+    anchors.top: achName.bottom
+    anchors.right: parent.right
+    margin-top: 1
+    margin-right: 4
+    font: verdana-11px-rounded
+    color: #AAAAAA
+    text-auto-resize: true
+
+  ProgressBar
+    id: achBar
+    anchors.top: achTitle.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 4
+    height: 10
+    image-source:
+    background-color: #33A03B
+    border: 1 #FFFFFF44
+    phantom: false
+
+  $hover:
+    background-color: #FFFFFF22
+
+  $pressed:
+    background-color: #FFFFFF44
+
+AchievementsWindow < MainWindow
+  id: achievementsWindow
+  !text: tr('Conquistas e Titulos')
+  size: 400 480
+  @onEscape: modules.game_achievements.onEscape()
+  $mobile:
+    size: 330 400
+
+  Label
+    id: titleLabel
+    !text: tr('Clique em uma conquista desbloqueada para equipar o titulo')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 2
+    text-align: center
+    font: verdana-11px-antialised
+    color: #FFD700
+
+  VerticalScrollBar
+    id: achScrollBar
+    anchors.top: titleLabel.bottom
+    anchors.bottom: closeButton.top
+    anchors.right: parent.right
+    margin-top: 5
+    margin-bottom: 5
+    margin-right: 5
+    step: 14
+    pixels-scroll: true
+
+  ScrollablePanel
+    id: achList
+    anchors.top: titleLabel.bottom
+    anchors.left: parent.left
+    anchors.right: achScrollBar.left
+    anchors.bottom: closeButton.top
+    margin-top: 5
+    margin-left: 5
+    margin-right: 5
+    margin-bottom: 5
+    vertical-scrollbar: achScrollBar
+    layout:
+      type: verticalBox
+      spacing: 3
+
+  HorizontalSeparator
+    id: bottomSep
+    anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.bottom: closeButton.top
+    margin-bottom: 8
+
+  Button
+    id: closeButton
+    !text: tr('Close')
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    color: #ffffff
+    @onClick: modules.game_achievements.onEscape()

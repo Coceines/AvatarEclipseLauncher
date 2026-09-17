@@ -1,0 +1,170 @@
+HuntWaypointDot < UIWidget
+  size: 9 9
+  image-source: /images/game/minimap/huntdot
+  focusable: false
+  phantom: true
+
+
+HuntWaypointCard < UIWidget
+  size: 190 56
+  margin: 2
+  background-color: #00000000
+  border-width: 1
+  border-color: #00000000
+  $hover:
+    border-color: #3f7bff
+    background-color: #1a2740
+  $pressed:
+    background-color: #2a3350
+
+  UICreature
+    id: sprite
+    size: 30 30
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+
+  Label
+    id: name
+    anchors.top: parent.top
+    anchors.left: sprite.right
+    anchors.right: parent.right
+    margin: 6 4 0 2
+    height: 16
+    text-wrap: true
+    font: verdana-11px-monochrome
+    color: #d0d0d0
+
+  Label
+    id: exp
+    anchors.top: name.bottom
+    anchors.left: sprite.right
+    anchors.right: parent.right
+    margin: 2 4 0 2
+    height: 13
+    text-auto-resize: true
+    font: verdana-11px-monochrome
+    color: #e8b93c
+
+  Label
+    id: level
+    anchors.top: exp.bottom
+    anchors.left: sprite.right
+    margin: 1 0 0 2
+    height: 13
+    text-auto-resize: true
+    font: verdana-11px-monochrome
+    color: #6fbf73
+
+
+HuntWaypointWindow < MainWindow
+  id: huntWaypointWindow
+  size: 480 336
+  !text: tr('Hunt Waypoint')
+  visible: false
+  padding-top: 16
+
+  @onEscape: modules.game_huntwaypoint.onEscape()
+
+  UIButton
+    id: closeButton
+    size: 14 14
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: /images/ui/miniwindow_buttons
+    image-clip: 28 0 14 14
+    margin-right: -3
+    @onClick: modules.game_huntwaypoint.onEscape()
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14
+
+  Label
+    id: emptyLabel
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 60
+    text-wrap: true
+    width: 320
+    text: tr('Nenhuma hunt configurada no servidor.')
+    font: verdana-11px-monochrome
+    color: #808890
+
+  UIWidget
+    id: gridContainer
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 40 12 0 12
+    visible: false
+
+    HuntWaypointCard
+      id: card1
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin: 2 0 0 0
+
+    HuntWaypointCard
+      id: card2
+      anchors.top: parent.top
+      anchors.left: card1.right
+      margin: 2 0 0 4
+
+    HuntWaypointCard
+      id: card3
+      anchors.top: card1.bottom
+      anchors.left: parent.left
+      margin: 4 0 0 0
+
+    HuntWaypointCard
+      id: card4
+      anchors.top: card3.top
+      anchors.left: card3.right
+      margin: 4 0 0 4
+
+    HuntWaypointCard
+      id: card5
+      anchors.top: card3.bottom
+      anchors.left: parent.left
+      margin: 4 0 0 0
+
+    HuntWaypointCard
+      id: card6
+      anchors.top: card5.top
+      anchors.left: card5.right
+      margin: 4 0 0 4
+
+    UIWidget
+      id: pagerRow
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      height: 20
+
+      Button
+        id: prevButton
+        !text: tr('<')
+        size: 30 18
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        @onClick: modules.game_huntwaypoint.prevPage()
+
+      Label
+        id: pageLabel
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        text: tr('1/1')
+        font: verdana-11px-monochrome
+        color: #c8c8c8
+
+      Button
+        id: nextButton
+        !text: tr('>')
+        size: 30 18
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        @onClick: modules.game_huntwaypoint.nextPage()

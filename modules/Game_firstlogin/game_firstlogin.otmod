@@ -1,0 +1,9 @@
+Module
+  name: game_firstlogin
+  description: Tutorial interativo exibido apenas no primeiro login de cada personagem
+  author: Avatar Legends
+  website: www.otclient.info
+  sandboxed: true
+  scripts: [ game_firstlogin ]
+  @onLoad: init()
+  @onUnload: terminate()

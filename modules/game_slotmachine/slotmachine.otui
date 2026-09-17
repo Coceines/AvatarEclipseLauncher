@@ -1,0 +1,40 @@
+UIWindow
+  size: 250 250
+  anchors.centerIn: parent
+  padding: 48 12 12 12
+  image-source: ui/background1
+  @onEscape: self:hide()
+
+  UIWidget
+    id: slot1
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin: 50 0 0 37
+
+  UIWidget
+    id: slot2
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin: 50 0 0 0
+
+  UIWidget
+    id: slot3
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin: 50 39 0 0
+
+  UIButton
+    id: btnClose
+    size: 20 20
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin: 0 28 48 0
+    @onClick: SlotMachine.toggle()
+
+  UIButton
+    id: btnApostar
+    size: 20 20
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin: 0 0 52 27
+    @onClick: SlotMachine.apostar()

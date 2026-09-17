@@ -1,0 +1,11 @@
+Module
+  name: bomberman_button
+  description: Bomberman BOMB button
+  author: Avatar
+  website:
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1008
+  scripts: [ bomberman_button ]
+  @onLoad: init()
+  @onUnload: terminate()

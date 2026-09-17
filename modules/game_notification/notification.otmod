@@ -1,0 +1,9 @@
+Module
+  name: game_notification
+  description: Reusable notification modal for in-game events
+  author: vini21
+  sandboxed: true
+  dependencies: [ game_interface ]
+  scripts: [ notification ]
+  @onLoad: init()
+  @onUnload: terminate()

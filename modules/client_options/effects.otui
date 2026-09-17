@@ -1,0 +1,104 @@
+OptionPanel
+
+  Label
+    id: effectsInfo
+    margin: 0 0 0 8
+    height: 46
+    font: verdana-11px-antialised
+    color: #9aa0a6
+    text-align: left
+    text-wrap: true
+    !text: tr('Magic effect transparency is controlled only by the sliders below. They set how solid the effect sprites look: 100%% is fully opaque and 0%% makes the spell invisible.')
+
+  UIWidget
+    id: effectOpacitySelfBG
+    margin: 27 0 0 0
+    height: 15
+    font: verdana-11px-antialised
+    text: Effect opacity: self bend
+    text-align: left
+    text-offset: 2 -8
+    !tooltip: tr('Transparency of the magic effects you cast yourself')
+
+    OptionScrollbar
+      id: effectOpacitySelf
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin: 0 0 0 105
+      width: 220
+      minimum: 0
+      maximum: 100
+
+    Label
+      id: effectOpacitySelfLabelBG
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 35
+      margin: 0 29 0 0
+      font: verdana-11px-antialised
+      color: #77f558
+      @onSetup: |
+        local value = modules.client_options.getOption('effectOpacitySelf')
+        self:setText(tr('%s%%', value))
+
+  UIWidget
+    id: effectOpacityOthersBG
+    margin: 27 0 0 0
+    height: 15
+    font: verdana-11px-antialised
+    text: Effect opacity: others bend
+    text-align: left
+    text-offset: 2 -8
+    !tooltip: tr('Transparency of the magic effects cast by other players')
+
+    OptionScrollbar
+      id: effectOpacityOthers
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin: 0 0 0 105
+      width: 220
+      minimum: 0
+      maximum: 100
+
+    Label
+      id: effectOpacityOthersLabelBG
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 35
+      margin: 0 29 0 0
+      font: verdana-11px-antialised
+      color: #77f558
+      @onSetup: |
+        local value = modules.client_options.getOption('effectOpacityOthers')
+        self:setText(tr('%s%%', value))
+
+  UIWidget
+    id: effectOpacityMonstersBG
+    margin: 27 0 0 0
+    height: 15
+    font: verdana-11px-antialised
+    text: Effect opacity: monsters bend
+    text-align: left
+    text-offset: 2 -8
+    !tooltip: tr('Transparency of the magic effects cast by monsters')
+
+    OptionScrollbar
+      id: effectOpacityMonsters
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin: 0 0 0 105
+      width: 220
+      minimum: 0
+      maximum: 100
+
+    Label
+      id: effectOpacityMonstersLabelBG
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 35
+      margin: 0 29 0 0
+      font: verdana-11px-antialised
+      color: #77f558
+      @onSetup: |
+        local value = modules.client_options.getOption('effectOpacityMonsters')
+        self:setText(tr('%s%%', value))

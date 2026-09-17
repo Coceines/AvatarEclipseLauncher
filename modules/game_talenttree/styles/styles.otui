@@ -1,0 +1,8 @@
+TalentNode < UIButton
+  size: 52 52
+
+TalentLinkH < UIWidget
+  height: 2
+
+TalentLinkV < UIWidget
+  width: 2

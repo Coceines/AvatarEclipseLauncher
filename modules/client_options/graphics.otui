@@ -1,0 +1,259 @@
+OptionPanel
+  Panel
+    height: 28
+    margin: 0 0 0 0
+
+    ButtonBox
+      id: opengl1
+      anchors.left: parent.left
+      anchors.top: parent.top
+      text: OpenGL 1
+      size: 80 20
+
+    ButtonBox
+      id: directx9
+      anchors.left: prev.right
+      anchors.verticalCenter: prev.verticalCenter
+      text: DirectX 9
+      size: 80 20
+      margin-left: 4
+
+  OptionCheckBox
+    id: enableLights
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Enable lights')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: fullscreen
+    margin: 27 0 0 8
+    tooltip: Ctrl+Shift+F
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Fullscreen')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: vsync
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Vertical Sync (VSync)')
+      text-offset: 0 5
+      !tooltip: tr('Sync framerate with the monitor to avoid screen tearing')
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: hdMode
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('HD Mode')
+      text-offset: 0 5
+      !tooltip: tr('Upscale sprites with xBRZ (64px). Toggle may reload textures.')
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: drawShadows
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Shadows')
+      text-offset: 0 5
+      !tooltip: tr('Draw soft shadows under creatures')
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: floorShadow
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Floor Shadow')
+      text-offset: 0 5
+      !tooltip: tr('Darken underground floors')
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: highFloorTransparency
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('High Floor Transparency')
+      text-offset: 0 5
+      !tooltip: tr('Make upper floors and occluding same-floor items semi-transparent')
+      font: verdana-11px-antialised
+
+  UIWidget
+    id: floorShadowFadeWidthBG
+    margin: 27 0 0 0
+    height: 15
+    font: verdana-11px-antialised
+    text: Floor shadow fade width
+    text-align: left
+    text-offset: 2 -2
+
+    OptionScrollbar
+      id: floorShadowFadeWidth
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin: 0 0 0 105
+      width: 220
+      minimum: 0
+      maximum: 128
+      !tooltip: tr('Soft gradient on the floor shadow edges (0 disables the fade)')
+
+    Label
+      id: floorShadowFadeWidthLabelBG
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 45
+      margin: 0 20 0 0
+      font: verdana-11px-antialised
+      color: #77f558
+      @onSetup: |
+        local value = modules.client_options.getOption('floorShadowFadeWidth')
+        self:setText(tr('%s px', value))
+
+  OptionCheckBox
+    id: skyClouds
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Sky Clouds')
+      text-offset: 0 5
+      !tooltip: tr('Slow drifting clouds with shadows on roofs and open ground')
+      font: verdana-11px-antialised
+
+  UIWidget
+    id: backgroundFrameRateBG
+    margin: 27 0 0 0
+    height: 15
+    font: verdana-11px-antialised
+    text: Game framerate limit
+    text-align: left
+    text-offset: 2 -2
+
+    OptionScrollbar
+      id: backgroundFrameRate
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin: 0 0 0 105
+      width: 220
+      minimum: 10
+      maximum: 201
+
+    Label
+      id: backgroundFrameRateLabelBG
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 35
+      margin: 0 35 0 0
+      font: verdana-11px-antialised
+      color: #77f558
+      @onSetup: |
+        local value = modules.client_options.getOption('backgroundFrameRate')
+        local text = value
+        if value <= 0 or value >= 201 then
+          text = 'max'
+        end
+        self:setText(tr('%s', text))
+
+  UIWidget
+    id: foregroundFrameRateBG
+    margin: 27 0 0 0
+    height: 15
+    font: verdana-11px-antialised
+    text: Interface framerate limit
+    text-align: left
+    text-offset: 2 -2
+
+    OptionScrollbar
+      id: foregroundFrameRate
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin: 0 0 0 105
+      width: 220
+      minimum: 1
+      maximum: 61
+
+    Label
+      id: foregroundFrameRateLabelBG
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 35
+      margin: 0 35 0 0
+      font: verdana-11px-antialised
+      color: #77f558
+      @onSetup: |
+        local value = modules.client_options.getOption('foregroundFrameRate')
+        local text = value
+        if value <= 0 or value >= 61 then
+          text = 'max'
+        end
+        self:setText(tr('%s', text))
+
+  UIWidget
+    id: ambientLightBG
+    margin: 27 0 0 0
+    height: 15
+    font: verdana-11px-antialised
+    text: Ambient light
+    text-align: left
+    text-offset: 2 -8
+
+    OptionScrollbar
+      id: ambientLight
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin: 0 0 0 105
+      width: 220
+      minimum: 0
+      maximum: 100
+
+    Label
+      id: ambientLightLabelBG
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 35
+      margin: 0 29 0 0
+      font: verdana-11px-antialised
+      color: #77f558
+      @onSetup: |
+        local value = modules.client_options.getOption('ambientLight')
+        self:setText(tr('%s%%', value))

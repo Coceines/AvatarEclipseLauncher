@@ -1,0 +1,150 @@
+InspectLootItem < UIWidget
+  height: 43
+  phantom: true
+
+  UIItem
+    id: itemIcon
+    size: 33 33
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin: 4 0 0 4
+
+  Label
+    id: itemName
+    anchors.top: parent.top
+    anchors.left: prev.right
+    margin: 6 0 0 4
+    text-auto-resize: true
+
+  Label
+    id: itemChance
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin: 0 8 6 0
+    text-auto-resize: true
+
+MainWindow
+  id: inspectWindow
+  size: 340 520
+  !text: tr('Inspect Creature')
+  visible: false
+  padding-top: 16
+  @onEscape: modules.game_inspectcreature.closeAll()
+
+  UIButton
+    id: closeButton
+    size: 14 14
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: /images/ui/miniwindow_buttons
+    image-clip: 28 0 14 14
+    margin-right: -3
+    @onClick: self:getParent():hide()
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14
+
+  UICreature
+    id: uiCreature
+    size: 80 80
+    anchors.top: prev.bottom
+    anchors.left: parent.horizontalCenter
+    margin-left: -60
+    margin-top: 16
+    padding: 0
+
+  Label
+    id: lblMonsterName
+    font: sans-bold-16px
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 7
+    text-auto-resize: true
+
+  Label
+    id: lblMonsterInfo
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 3
+    text-auto-resize: true
+
+  TextList
+    id: listLoot
+    height: 180
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 8 12 8 12
+    phantom: true
+    vertical-scrollbar: scrollLoot
+    border: 1 #756866
+    background-color: #140e0e
+
+  VerticalScrollBar
+    id: scrollLoot
+    anchors.top: listLoot.top
+    anchors.bottom: listLoot.bottom
+    anchors.left: listLoot.right
+    margin-left: 2
+    step: 30
+    pixels-scroll: true
+
+InspectDetailWindow < Window
+  size: 340 520
+  !text: tr('Item Detail')
+  visible: false
+  anchors.centerIn: parent
+  @onEscape: modules.game_inspectcreature.onExitClicked()
+
+  Button
+    id: btnBack
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin: 6 0 0 6
+    @onClick: modules.game_inspectcreature.onBackClicked()
+    !text: tr('Back')
+
+  Button
+    id: btnExit
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin: 6 6 0 0
+    @onClick: modules.game_inspectcreature.onExitClicked()
+    !text: tr('Exit')
+
+  UIItem
+    id: detailItemIcon
+    size: 64 64
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 44
+
+  Label
+    id: detailItemName
+    font: sans-bold-16px
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    text-auto-resize: true
+
+  Label
+    id: detailItemRarity
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 4
+    text-auto-resize: true
+
+  Label
+    id: detailDescription
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 14 10 0 10
+    font: verdana-11px-monochrome
+    text-wrap: true
+    padding: 4

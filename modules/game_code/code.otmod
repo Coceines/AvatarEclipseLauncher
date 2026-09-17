@@ -1,0 +1,11 @@
+Module
+  name: game_code
+  description: OTserverExperience Code System
+  author: srlobodev 
+  website:
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1005
+  scripts: [ code ]
+  @onLoad: init()
+  @onUnload: terminate()

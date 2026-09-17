@@ -1,0 +1,10 @@
+Module
+  name: game_itemfly
+  description: Smooth flying animation when picking up items from the ground
+  author: otclientv8
+  website: http://otclient.ovh
+  scripts: [ itemfly ]
+  sandboxed: true
+  dependencies: [ game_interface, game_inventory ]
+  @onLoad: init()
+  @onUnload: terminate()

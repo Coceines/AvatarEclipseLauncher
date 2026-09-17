@@ -1,0 +1,10 @@
+Module
+  name: game_healcut
+  description: Shows a heal cut icon above players with Grievous Wounds
+  author: Avatar Team
+  autoload: true
+  sandboxed: true
+  scripts: [ game_healcut ]
+  dependencies: [ game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

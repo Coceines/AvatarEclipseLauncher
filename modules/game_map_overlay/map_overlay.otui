@@ -1,0 +1,17 @@
+Panel
+  id: mapOverlayRoot
+  anchors.fill: parent
+  focusable: false
+
+  UIWidget
+    id: mapOverlayBackdrop
+    anchors.fill: parent
+    image-source: /images/tooltip_bg
+    image-color: #000000b0
+    image-shader: map_overlay_dim
+    focusable: false
+
+  Minimap
+    id: mapOverlayMinimap
+    anchors.fill: parent
+    color: alpha

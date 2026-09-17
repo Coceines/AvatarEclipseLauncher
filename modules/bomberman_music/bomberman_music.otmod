@@ -1,0 +1,11 @@
+Module
+  name: bomberman_music
+  description: Bomberman event theme music (area based, like a shader)
+  author: Avatar
+  website:
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1007
+  scripts: [ bomberman_music ]
+  @onLoad: init()
+  @onUnload: terminate()

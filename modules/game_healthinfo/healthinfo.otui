@@ -1,0 +1,140 @@
+HealthBar < ProgressBar
+  id: healthBar
+  size: 189 21
+  background-color: #f00200
+  anchors.top: parent.top
+  anchors.left: parent.left
+  margin-top: 22
+  margin-left: 115
+  color: white
+
+ManaBar < ProgressBar
+  id: manaBar
+  size: 177 10
+  background-color:#da1bd7
+  anchors.top: healthBar.bottom
+  anchors.left: parent.left
+  margin-left: 120
+  margin-top: 4
+  
+ExperienceBar < ProgressBar
+  id: experienceBar
+  size: 161 6
+  background-color: #f5c905
+  anchors.top: manaBar.bottom
+  anchors.left: parent.left
+  margin-left: 120
+  margin-top: 2
+
+SoulLabel < GameLabel
+  id: soulLabel
+  text-align: right
+  color: white
+  font: verdana-11px-rounded
+  anchors.bottom: parent.bottom
+  anchors.right: parent.right
+  anchors.left: parent.horizontalCenter
+  margin-top: 5
+  margin-right: 3
+  on: true
+
+  $!on:
+    visible: false
+    margin-top: 0
+    height: 0
+
+CapLabel < GameLabel
+  id: capLabel
+  color: white
+  font: verdana-11px-rounded
+  anchors.bottom: parent.bottom
+  anchors.left: parent.left
+  anchors.right: parent.horizontalCenter
+  margin-top: 5
+  margin-left: 3
+  on: true
+
+  $!on:
+    visible: false
+    margin-top: 0
+    height: 0
+
+ConditionWidget < UIWidget
+  size: 18 18
+  
+
+  $!first:
+    margin-left: 2
+
+info
+  id: healthInfoWindow
+  focusable: false
+  anchors.left: parent.left
+  anchors.top: parent.top
+  margin-top: 90
+  margin-left: 2
+  size: 350 144
+  border-opacity: 0.0
+  &save: true
+
+  MiniWindowContents
+    HealthBar
+    ManaBar
+    ExperienceBar
+
+    Panel
+      id: conditionPanel
+      layout:
+        type: horizontalBox
+      height: 22
+      margin-bottom: 15
+      margin-left: 122
+      margin-right: 63
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+
+  UIWidget
+    id:healthLabel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 206 20
+    margin-top: 43
+    margin-left: 113
+    opacity: 10.0
+
+  UIWidget
+    id:manaLabel
+    anchors.top: healthLabel.bottom
+    anchors.left: parent.left
+    size: 206 10
+    margin-top: 5
+    margin-left: 113
+    opacity: 10.0
+
+  UIWidget
+    id:experienceLabel
+    anchors.top: manaLabel.bottom
+    anchors.left: parent.left
+    size: 206 10
+    margin-top: 5
+    margin-left: 113
+    opacity: 10.0
+
+  UIWidget
+    id: backgroundOverlay
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    image-source: background2
+    phantom: true
+
+  UIWidget
+    id: uiAvatar
+    size: 70 70
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-source: 
+    margin-top: 41
+    margin-left: 37

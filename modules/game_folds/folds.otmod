@@ -1,0 +1,9 @@
+Module
+  name: game_folds
+  description: View Folds Info
+  author: Hundanger
+  website: nothing
+  sandboxed: true
+  scripts: [ configs, folds ]
+  @onLoad: init()
+  @onUnload: terminate()

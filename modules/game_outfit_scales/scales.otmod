@@ -1,0 +1,11 @@
+Module
+  name: game_outfit_scales
+  description: Per-creature outfit scale configuration
+  author: otclientv8
+  website: http://otclient.ovh
+  autoload: true
+  autoload-priority: 1020
+  scripts: [ scales ]
+  sandboxed: true
+  @onLoad: init()
+  @onUnload: terminate()

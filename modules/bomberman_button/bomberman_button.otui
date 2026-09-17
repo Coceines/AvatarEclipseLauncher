@@ -1,0 +1,21 @@
+BombermanWindow < MainWindow
+  id: bombermanWindow
+  size: 120 60
+  !text: tr('Bomberman')
+  visible: false
+  draggable: true
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+  margin-right: 14
+  margin-bottom: 14
+
+  UIButton
+    id: bombButton
+    !text: tr('BOMB')
+    font: verdana-11px-rounded
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 8
+    @onClick: modules.bomberman_button.onBombClick()

@@ -1,0 +1,10 @@
+Module
+  name: game_dailyhunt
+  description: Daily Hunt
+  author: System
+  sandboxed: true
+  scripts: [ dailyhunt ]
+  autoload: true
+  autoload-priority: 1002
+  @onLoad: init()
+  @onUnload: terminate()

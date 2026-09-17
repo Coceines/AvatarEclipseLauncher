@@ -1,0 +1,10 @@
+Module
+  name: game_cooking
+  description: Cooking system - Cozinha com minigame de mexida
+  author: Avatar
+  website: None
+  sandboxed: true
+  autoload: true
+  scripts: [ cooking ]
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,332 @@
+MiniWindow
+  id: helperWindow
+  !text: tr('Helper')
+  width: 215
+  height: 280
+  icon: /images/topbuttons/Helper
+  @onClose: modules.game_myhelper.onWindowClose()
+  &save: true
+
+  MiniWindowContents
+    Panel
+      id: statusPanel
+      height: 34
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+
+      Label
+        id: statusLabel
+        !text: tr('Desativado')
+        font: verdana-11px-antialised
+        color: #ff8a8a
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+
+      PowerButton
+        id: powerButton
+        !tooltip: tr('Ligar / Desligar o helper')
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        @onClick: modules.game_myhelper.togglePower()
+
+      Label
+        id: profileLabel
+        !text: tr('Perfil')
+        font: verdana-11px-antialised
+        color: #9a9a9a
+        anchors.top: parent.top
+        anchors.right: powerButton.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-right: 4
+
+    HorizontalSeparator
+      height: 2
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 6
+
+    Label
+      id: healTitle
+      !text: tr('Cura com Magia')
+      font: verdana-11px-antialised
+      color: #7fd0ff
+      height: 14
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      margin-top: 4
+
+    Panel
+      id: healRow
+      height: 22
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 2
+
+      CheckBox
+        id: healEnabled
+        anchors.top: parent.top
+        anchors.left: parent.left
+        margin-top: 3
+
+      UIWidget
+        id: healIcon
+        width: 22
+        height: 22
+        image-size: 22 22
+        image-source: /images/folds/fire/2
+        anchors.top: parent.top
+        anchors.left: prev.right
+        margin-left: 4
+
+      Label
+        id: healSpellName
+        text: Recover
+        font: verdana-11px-antialised
+        color: #dfdfdf
+        anchors.top: parent.top
+        anchors.left: healIcon.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 4
+        text-auto-resize: true
+
+      SpinBox
+        id: healPercent
+        width: 46
+        height: 20
+        anchors.top: parent.top
+        anchors.right: parent.right
+        buttons: true
+
+    Label
+      id: potsTitle
+      !text: tr('Pocoes')
+      font: verdana-11px-antialised
+      color: #7fd0ff
+      height: 14
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      margin-top: 5
+
+    Panel
+      id: hpRow
+      height: 34
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 3
+
+      Label
+        id: hpLabel
+        !text: tr('Vida')
+        font: verdana-11px-antialised
+        color: #dfdfdf
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+
+      ItemBox
+        id: hpItemSlot
+        anchors.left: hpLabel.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 15
+
+        UIItem
+          id: hpItemBox
+          item-visible: true
+          virtual: true
+          phantom: true
+          anchors.fill: parent
+
+      PlusButton
+        id: hpPickButton
+        anchors.left: hpItemSlot.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 4
+        @onClick: modules.game_myhelper.openPotionList('hp')
+
+      Label
+        id: hpHelp
+        text: ?
+        font: verdana-11px-antialised
+        color: #9a9a9a
+        !tooltip: tr('Defina em qual porcentagem da sua vida a potion de vida deve ser usada')
+        anchors.left: hpPickButton.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 3
+
+      Label
+        id: hpPercentLabel
+        text: %
+        font: verdana-11px-antialised
+        color: #9a9a9a
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+
+      SpinBox
+        id: hpPotPercent
+        width: 46
+        height: 20
+        anchors.top: parent.top
+        anchors.right: hpPercentLabel.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-right: 2
+        buttons: true
+
+    Panel
+      id: manaRow
+      height: 34
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 3
+
+      Label
+        id: manaLabel
+        !text: tr('Mana')
+        font: verdana-11px-antialised
+        color: #dfdfdf
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+
+      ItemBox
+        id: manaItemSlot
+        anchors.left: manaLabel.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 10
+
+        UIItem
+          id: manaItemBox
+          item-visible: true
+          virtual: true
+          phantom: true
+          anchors.fill: parent
+
+      PlusButton
+        id: manaPickButton
+        anchors.left: manaItemSlot.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 4
+        @onClick: modules.game_myhelper.openPotionList('mana')
+
+      Label
+        id: manaHelp
+        text: ?
+        font: verdana-11px-antialised
+        color: #9a9a9a
+        !tooltip: tr('Defina em qual porcentagem da sua mana a potion de mana deve ser usada')
+        anchors.left: manaPickButton.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 3
+
+      Label
+        id: manaPercentLabel
+        text: %
+        font: verdana-11px-antialised
+        color: #9a9a9a
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+
+      SpinBox
+        id: manaPotPercent
+        width: 46
+        height: 20
+        anchors.top: parent.top
+        anchors.right: manaPercentLabel.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-right: 2
+        buttons: true
+
+    Label
+      id: waterTitle
+      !text: tr('Water Heal (Aliado)')
+      font: verdana-11px-antialised
+      color: #7fd0ff
+      height: 14
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      margin-top: 5
+
+    Panel
+      id: waterRow
+      height: 20
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 2
+
+      CheckBox
+        id: waterEnabled
+        anchors.top: parent.top
+        anchors.left: parent.left
+        margin-top: 2
+
+      TextEdit
+        id: waterAllyEdit
+        height: 20
+        focusable: true
+        editable: true
+        anchors.top: parent.top
+        anchors.left: prev.right
+        anchors.right: waterHealPercent.left
+        margin-left: 4
+        margin-right: 4
+
+      Label
+        id: waterPercentLabel
+        text: %
+        font: verdana-11px-antialised
+        color: #9a9a9a
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+
+      SpinBox
+        id: waterHealPercent
+        width: 46
+        height: 20
+        anchors.top: parent.top
+        anchors.right: waterPercentLabel.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-right: 2
+        buttons: true
+
+    Panel
+      id: autoRow
+      height: 20
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 5
+
+      Label
+        id: autoTitle
+        !text: tr('Auto Target')
+        font: verdana-11px-antialised
+        color: #7fd0ff
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+
+      CheckBox
+        id: autoTargetEnabled
+        anchors.top: parent.top
+        anchors.left: autoTitle.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 6
+
+      SpinBox
+        id: autoTargetDistance
+        width: 46
+        height: 20
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        buttons: true

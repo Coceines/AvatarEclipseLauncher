@@ -1,0 +1,197 @@
+Compilação de 23/07/2026 11:10:04 iniciada.
+O detalhamento do log está definido como: Normal.
+     1>Projeto "C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\otclient.vcxproj" no nó 1 (destinos padrão).
+     1>PrepareForBuild:
+         Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+       InitializeBuildStatus:
+         Tocando "otclient\OpenGL\otclient.tlog\unsuccessfulbuild".
+       VcpkgTripletSelection:
+         Using triplet "x86-windows-static" from "C:\vcpkg\installed\x86-windows-static\"
+         Using normalized configuration "Release"
+       ClCompile:
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+         Todas as saídas estão atualizadas.
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\rc.exe /l"0x0409" /I"C:\vcpkg\installed\x86-windows-static\include" /nologo /fo"otclient\OpenGL\otclient.res" ..\src\otclient.rc 
+       Link:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX64\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\../otclient_gl.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\vcpkg\installed\x86-windows-static\lib" /LIBPATH:"C:\vcpkg\installed\x86-windows-static\lib\manual-link" /LTCG:NOSTATUS /ALLOWBIND libssl.lib "physfs-static.lib" winmm.lib avrt.lib lua51.lib dbghelp.lib kernel32.lib user32.lib shell32.lib gdi32.lib advapi32.lib Ole32.lib psapi.lib bcrypt.lib ucrt.lib vcruntime.lib msvcrt.lib mincore_downlevel.lib mincore.lib libglew32.lib OpenAL32.lib zip.lib vorbis.lib vorbisfile.lib ogg.lib libcrypto.lib libglew32.lib opengl32.lib "C:\vcpkg\installed\x86-windows-static\lib\*.lib" /NODEFAULTLIB:libcmt.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FULL /PDB:"C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\../otclient_gl.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /OPT:REF /OPT:ICF /LTCG /LTCGOUT:"otclient\OpenGL\otclient_gl.iobj" /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\../otclient_gl.lib" /MACHINE:X86 /SAFESEH /guard:cf otclient\OpenGL\otclient.res
+         otclient\OpenGL\\obj_r\..\src\client\animatedtext.obj
+         otclient\OpenGL\\obj_r\..\src\client\animator.obj
+         otclient\OpenGL\\obj_r\..\src\client\client.obj
+         otclient\OpenGL\\obj_r\..\src\client\container.obj
+         otclient\OpenGL\\obj_r\..\src\client\creature.obj
+         otclient\OpenGL\\obj_r\..\src\client\creatures.obj
+         otclient\OpenGL\\obj_r\..\src\client\effect.obj
+         otclient\OpenGL\\obj_r\..\src\client\game.obj
+         otclient\OpenGL\\obj_r\..\src\client\houses.obj
+         otclient\OpenGL\\obj_r\..\src\client\item.obj
+         otclient\OpenGL\\obj_r\..\src\client\itemtype.obj
+         otclient\OpenGL\\obj_r\..\src\client\lightview.obj
+         otclient\OpenGL\\obj_r\..\src\client\localplayer.obj
+         otclient\OpenGL\\obj_r\..\src\client\luafunctions_client.obj
+         otclient\OpenGL\\obj_r\..\src\client\luavaluecasts_client.obj
+         otclient\OpenGL\\obj_r\..\src\client\map.obj
+         otclient\OpenGL\\obj_r\..\src\client\mapio.obj
+         otclient\OpenGL\\obj_r\..\src\client\mapview.obj
+         otclient\OpenGL\\obj_r\..\src\client\minimap.obj
+         otclient\OpenGL\\obj_r\..\src\client\missile.obj
+         otclient\OpenGL\\obj_r\..\src\client\outfit.obj
+         otclient\OpenGL\\obj_r\..\src\client\player.obj
+         otclient\OpenGL\\obj_r\..\src\client\protocolcodes.obj
+         otclient\OpenGL\\obj_r\..\src\client\protocolgame.obj
+         otclient\OpenGL\\obj_r\..\src\client\protocolgameparse.obj
+         otclient\OpenGL\\obj_r\..\src\client\protocolgamesend.obj
+         otclient\OpenGL\\obj_r\..\src\client\spritemanager.obj
+         otclient\OpenGL\\obj_r\..\src\client\statictext.obj
+         otclient\OpenGL\\obj_r\..\src\client\thing.obj
+         otclient\OpenGL\\obj_r\..\src\client\thingtype.obj
+         otclient\OpenGL\\obj_r\..\src\client\thingtypemanager.obj
+         otclient\OpenGL\\obj_r\..\src\client\tile.obj
+         otclient\OpenGL\\obj_r\..\src\client\towns.obj
+         otclient\OpenGL\\obj_r\..\src\client\uicreature.obj
+         otclient\OpenGL\\obj_r\..\src\client\uiitem.obj
+         otclient\OpenGL\\obj_r\..\src\client\uimap.obj
+         otclient\OpenGL\\obj_r\..\src\client\uimapanchorlayout.obj
+         otclient\OpenGL\\obj_r\..\src\client\uiminimap.obj
+         otclient\OpenGL\\obj_r\..\src\client\uiprogressrect.obj
+         otclient\OpenGL\\obj_r\..\src\client\uisprite.obj
+         otclient\OpenGL\\obj_r\..\src\client\healthbars.obj
+         otclient\OpenGL\\obj_r\..\src\client\uigraph.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\adaptiverenderer.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\application.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\asyncdispatcher.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\binarytree.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\clock.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\config.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\configmanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\event.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\eventdispatcher.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\filestream.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\graphicalapplication.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\logger.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\module.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\modulemanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\resourcemanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\scheduledevent.obj
+         otclient\OpenGL\\obj_r\..\src\framework\core\timer.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\animatedtexture.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\apngloader.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\atlas.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\bitmapfont.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\cachedtext.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\coordsbuffer.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\drawcache.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\drawqueue.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\fontmanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\framebuffer.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\framebuffermanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\graph.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\graphics.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\hardwarebuffer.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\image.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\xbrz.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\painter.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\paintershaderprogram.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\shader.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\shadermanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\shaderprogram.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\textrender.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\texture.obj
+         otclient\OpenGL\\obj_r\..\src\framework\graphics\texturemanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\http\http.obj
+         otclient\OpenGL\\obj_r\..\src\framework\http\session.obj
+         otclient\OpenGL\\obj_r\..\src\framework\http\websocket.obj
+         otclient\OpenGL\\obj_r\..\src\framework\input\mouse.obj
+         otclient\OpenGL\\obj_r\..\src\framework\luaengine\lbitlib.obj
+         otclient\OpenGL\\obj_r\..\src\framework\luaengine\luaexception.obj
+         otclient\OpenGL\\obj_r\..\src\framework\luaengine\luainterface.obj
+         otclient\OpenGL\\obj_r\..\src\framework\luaengine\luaobject.obj
+         otclient\OpenGL\\obj_r\..\src\framework\luaengine\luavaluecasts.obj
+         otclient\OpenGL\\obj_r\..\src\framework\luafunctions.obj
+         otclient\OpenGL\\obj_r\..\src\framework\net\connection.obj
+         otclient\OpenGL\\obj_r\..\src\framework\net\inputmessage.obj
+         otclient\OpenGL\\obj_r\..\src\framework\net\outputmessage.obj
+         otclient\OpenGL\\obj_r\..\src\framework\net\packet_player.obj
+         otclient\OpenGL\\obj_r\..\src\framework\net\packet_recorder.obj
+         otclient\OpenGL\\obj_r\..\src\framework\net\protocol.obj
+         otclient\OpenGL\\obj_r\..\src\framework\net\server.obj
+         otclient\OpenGL\\obj_r\..\src\framework\otml\otmldocument.obj
+         otclient\OpenGL\\obj_r\..\src\framework\otml\otmlemitter.obj
+         otclient\OpenGL\\obj_r\..\src\framework\otml\otmlexception.obj
+         otclient\OpenGL\\obj_r\..\src\framework\otml\otmlnode.obj
+         otclient\OpenGL\\obj_r\..\src\framework\otml\otmlparser.obj
+         otclient\OpenGL\\obj_r\..\src\framework\platform\platform.obj
+         otclient\OpenGL\\obj_r\..\src\framework\platform\platformwindow.obj
+         otclient\OpenGL\\obj_r\..\src\framework\platform\win32crashhandler.obj
+         otclient\OpenGL\\obj_r\..\src\framework\platform\win32platform.obj
+         otclient\OpenGL\\obj_r\..\src\framework\platform\win32window.obj
+         otclient\OpenGL\\obj_r\..\src\framework\proxy\proxy.obj
+         otclient\OpenGL\\obj_r\..\src\framework\proxy\proxy_client.obj
+         otclient\OpenGL\\obj_r\..\src\framework\sound\combinedsoundsource.obj
+         otclient\OpenGL\\obj_r\..\src\framework\sound\oggsoundfile.obj
+         otclient\OpenGL\\obj_r\..\src\framework\sound\soundbuffer.obj
+         otclient\OpenGL\\obj_r\..\src\framework\sound\soundchannel.obj
+         otclient\OpenGL\\obj_r\..\src\framework\sound\soundfile.obj
+         otclient\OpenGL\\obj_r\..\src\framework\sound\soundmanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\sound\soundsource.obj
+         otclient\OpenGL\\obj_r\..\src\framework\sound\streamsoundsource.obj
+         otclient\OpenGL\\obj_r\..\src\framework\stdext\demangle.obj
+         otclient\OpenGL\\obj_r\..\src\framework\stdext\math.obj
+         otclient\OpenGL\\obj_r\..\src\framework\stdext\net.obj
+         otclient\OpenGL\\obj_r\..\src\framework\stdext\string.obj
+         otclient\OpenGL\\obj_r\..\src\framework\stdext\time.obj
+         otclient\OpenGL\\obj_r\..\src\framework\stdext\uri.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uianchorlayout.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uiboxlayout.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uigridlayout.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uihorizontallayout.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uilayout.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uimanager.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uitextedit.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uitranslator.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uiverticallayout.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uiwidget.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uiwidgetbasestyle.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uiwidgetimage.obj
+         otclient\OpenGL\\obj_r\..\src\framework\ui\uiwidgettext.obj
+         otclient\OpenGL\\obj_r\..\src\framework\util\color.obj
+         otclient\OpenGL\\obj_r\..\src\framework\util\crypt.obj
+         otclient\OpenGL\\obj_r\..\src\framework\util\extras.obj
+         otclient\OpenGL\\obj_r\..\src\framework\util\pngunpacker.obj
+         otclient\OpenGL\\obj_r\..\src\framework\util\qrcodegen.obj
+         otclient\OpenGL\\obj_r\..\src\framework\util\stats.obj
+         otclient\OpenGL\\obj_r\..\src\framework\xml\tinystr.obj
+         otclient\OpenGL\\obj_r\..\src\framework\xml\tinyxml.obj
+         otclient\OpenGL\\obj_r\..\src\framework\xml\tinyxmlerror.obj
+         otclient\OpenGL\\obj_r\..\src\framework\xml\tinyxmlparser.obj
+         otclient\OpenGL\\obj_r\..\src\main.obj
+     1>LINK : fatal error LNK1104: cannot open file 'C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\..\otclient_gl.exe' [C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\otclient.vcxproj]
+     1>Projeto de compilação pronto "C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\otclient.vcxproj" (destinos padrão) -- FALHA.
+
+FALHA da compilação.
+
+       "C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\otclient.vcxproj" (destino padrão) (1) ->
+       (Link destino) -> 
+         LINK : fatal error LNK1104: cannot open file 'C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\..\otclient_gl.exe' [C:\Users\imfis\Desktop\Avatar-comprado-client\vc16\otclient.vcxproj]
+
+    0 Aviso(s)
+    1 Erro(s)
+
+Tempo Decorrido 00:00:02.92

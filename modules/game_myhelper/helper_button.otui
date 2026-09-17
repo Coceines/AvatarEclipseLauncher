@@ -1,0 +1,20 @@
+// Botao lateral esquerdo: abre o helper (game_myhelper).
+// A arte fica em modules/client_options/settings/helper_button.png
+// As ancoras sao definidas no helper.lua (empilha acima do botao do mapa).
+HelperSideButton < UIWidget
+  id: helperSideButton
+  size: 52 76
+  image-source: /modules/client_options/settings/helper_button
+  focusable: false
+  phantom: true
+
+  UIButton
+    id: helperSideHit
+    anchors.fill: parent
+    image-source:
+    background-color: #00000000
+    focusable: false
+    change-cursor-image: true
+    cursor: pointer
+    !tooltip: tr('Helper')
+    @onClick: modules.game_myhelper.toggle()

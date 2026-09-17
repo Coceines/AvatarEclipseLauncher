@@ -1,0 +1,62 @@
+UIWidget
+  id: controllerPanel
+
+  UIWidget
+    id: enableRow
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 28
+    margin-top: 4
+    margin-left: 6
+
+    CheckBox
+      id: enableController
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      width: 200
+      height: 20
+      !text: tr('Enable Controller')
+      color: #e0e0e0ff
+
+    Label
+      id: controllerStatus
+      anchors.left: enableController.right
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      margin-left: 12
+      height: 16
+      text-align: left
+      color: #a0a0a0ff
+      !text: tr('No controller connected.')
+
+  HorizontalSeparator
+    id: topSep
+    anchors.top: enableRow.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 2
+    margin-top: 2
+
+  Button
+    id: configureButton
+    !text: tr('Configure Buttons...')
+    anchors.top: topSep.bottom
+    anchors.left: parent.left
+    margin-top: 12
+    margin-left: 6
+    width: 190
+    height: 26
+
+  Label
+    id: configHint
+    anchors.top: configureButton.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 8
+    margin-left: 6
+    margin-right: 10
+    height: 16
+    text-align: left
+    color: #a0a0a0ff
+    !text: tr('Assign keyboard hotkeys to controller buttons.')

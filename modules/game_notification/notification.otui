@@ -1,0 +1,61 @@
+NotificationWidget < UIWidget
+  id: notificationWidget
+  size: 340 80
+  anchors.horizontalCenter: parent.horizontalCenter
+  anchors.verticalCenter: parent.verticalCenter
+  margin-top: -280
+  visible: false
+  focusable: false
+  phantom: true
+  opacity: 0.0
+
+  UIWidget
+    id: notifBg
+    anchors.fill: parent
+    image-border: 4
+    background-color: #1a1a2eee
+    border-width: 1
+    border-color: #FFD70088
+    border-radius: 8
+    phantom: true
+
+  UIWidget
+    id: notifIcon
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 14
+    size: 32 32
+    phantom: true
+    visible: false
+
+  UILabel
+    id: notifTitle
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 14
+    margin-left: 16
+    margin-right: 16
+    text-align: center
+    text: Notification
+    font: verdana-11px-rounded
+    color: #FFD700
+    phantom: true
+
+  UILabel
+    id: notifMessage
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-top: 4
+    margin-left: 16
+    margin-right: 16
+    margin-bottom: 10
+    text-align: center
+    text-wrap: true
+    text-auto-resize: true
+    text: Message
+    font: verdana-11px-rounded
+    color: #dddddd
+    phantom: true

@@ -1,0 +1,10 @@
+Module
+  name: game_specialfx
+  description: Handles special creature visual effects (float, etc.)
+  author: Avatar Team
+  autoload: true
+  sandboxed: true
+  scripts: [ specialfx ]
+  dependencies: [ game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

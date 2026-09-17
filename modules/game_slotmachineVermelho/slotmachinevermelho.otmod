@@ -1,0 +1,11 @@
+Module
+  name: Slot Machine Vermelho
+  description: Slot Machine Vermelho
+  author: Gengo
+  website: none
+  version: 1.0
+  autoload: true
+  sandboxed: true
+  scripts: [ slotmachinevermelho ]
+  @onLoad: SlotMachineVermelho.init()
+  @onUnload: SlotMachineVermelho.terminate()

@@ -1,0 +1,10 @@
+Module
+  name: game_playerinfo
+  description: Game Player Information
+  author: Gengo
+  sandboxed: true
+  scripts: [ playerinfo ]
+  autoload: true
+  autoload-priority: 1001
+  @onLoad: init()
+  @onUnload: terminate()

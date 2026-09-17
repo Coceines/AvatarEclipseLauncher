@@ -1,0 +1,39 @@
+Panel
+  id: background
+  image-source: /images/background
+  image-smooth: true
+  image-fixed-ratio: true
+  anchors.top: parent.top
+  anchors.left: parent.left
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+  margin-top: 1
+  focusable: false
+
+  // Particulas subindo (shader background_particles, criado em
+  // modules/game_shaders/shaders.lua): azuis na metade esquerda da tela,
+  // vermelhas na direita, nascendo na base e sumindo no meio.
+  // E' um painel do tamanho da tela, filho do fundo, para ser desenhado por
+  // cima da imagem e atras da janela de login. O shader devolve so' as
+  // particulas (nao usa a textura do widget, que so' existe porque o motor
+  // exige uma imagem para aplicar o shader), entao a imagem de fundo continua
+  // aparecendo normalmente. phantom: nao pega clique.
+  Panel
+    id: particles
+    image-source: /images/ui/1pixel-down-frame
+    image-shader: background_particles
+    anchors.fill: parent
+    focusable: false
+    phantom: true
+
+  UILabel
+    id: clientVersionLabel
+    background-color: #00000099
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    text-align: center
+    text-auto-resize: true
+    width: 120
+    padding: 2
+    color: #ffffff
+    font: verdana-11px-monochrome

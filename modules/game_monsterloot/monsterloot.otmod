@@ -1,0 +1,10 @@
+Module
+  name: game_monsterloot
+  description: Game Moster Loot
+  author: Gengo
+  sandboxed: true
+  scripts: [ monsterloot ]
+  autoload: true
+  autoload-priority: 1001
+  @onLoad: init()
+  @onUnload: terminate()

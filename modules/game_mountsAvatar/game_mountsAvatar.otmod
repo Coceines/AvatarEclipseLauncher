@@ -1,0 +1,9 @@
+Module
+  name: game_mountsAvatar
+  description: Mount Avatar Legends Option
+  author: Mirto
+  website: avatarats.com.br
+  sandboxed: true
+  scripts: [ configs, game_mountsAvatar ]
+  @onLoad: init()
+  @onUnload: terminate()

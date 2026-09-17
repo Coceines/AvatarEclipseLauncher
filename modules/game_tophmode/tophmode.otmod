@@ -1,0 +1,10 @@
+Module
+  name: game_tophmode
+  description: Toph Mode - visao de dobrador de terra (menu FUN)
+  author: Avatar
+  sandboxed: true
+  scripts: [ tophmode ]
+  autoload: true
+  autoload-priority: 1004
+  @onLoad: init()
+  @onUnload: terminate()

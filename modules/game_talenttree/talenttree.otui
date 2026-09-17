@@ -1,0 +1,280 @@
+TalentNode < UIButton
+  size: 52 52
+  background-color: #11111100
+  focusable: false
+  change-cursor-image: true
+  cursor: pointer
+
+  UIWidget
+    id: nodeIcon
+    size: 44 44
+    anchors.centerIn: parent
+    phantom: true
+    image-source: /modules/game_proficiency/images/icons-0
+    image-clip: 0 0 64 64
+
+  UIWidget
+    id: border
+    size: 52 52
+    anchors.centerIn: parent
+    phantom: true
+    image-source: /modules/game_proficiency/images/border-weaponmasterytreeicons-inactive
+
+  Label
+    id: nodeCost
+    size: 18 14
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 2
+    margin-right: 2
+    background-color: #0d0d0df0
+    border-width: 1
+    border-color: #444444
+    text-align: center
+    font: verdana-11px-rounded
+    color: #e7b131
+    phantom: true
+
+TalentLinkH < UIWidget
+  height: 2
+  phantom: true
+  background-color: #3a3a3a
+  $on:
+    background-color: #e7b131
+
+TalentLinkV < UIWidget
+  width: 2
+  phantom: true
+  background-color: #3a3a3a
+  $on:
+    background-color: #e7b131
+
+TalentTreeTab < UIButton
+  size: 110 36
+  text-align: center
+  font: verdana-11px-rounded
+  color: #888888
+  background-color: #111111
+  border-width: 1
+  border-color: #2a2a2a
+  focusable: false
+
+  $on:
+    color: #e7b131
+    background-color: #1e1a0a
+    border-color: #e7b131
+
+  $hover !on:
+    color: #cccccc
+    background-color: #1a1a1a
+
+TalentPointsLabel < Label
+  text-align: center
+  font: verdana-11px-rounded
+  color: #4CAF50
+
+TalentResetButton < UIButton
+  size: 120 28
+  text-align: center
+  font: verdana-11px-rounded
+  color: #cc4444
+  background-color: #1a0d0d
+  border-width: 1
+  border-color: #cc4444
+
+  $hover:
+    background-color: #2a1111
+    color: #ff6666
+
+MainWindow
+  id: talentTreeWindow
+  !text: tr('Talent Tree (Ctrl+B)')
+  size: 860 640
+  anchors.centerIn: parent
+  visible: false
+  @onEscape: modules.game_talenttree.TalentTree:toggle()
+
+  Panel
+    id: pointsBar
+    height: 40
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: 4 28 0 28
+    background-color: #111111
+    border-width: 1
+    border-color: #2a2a2a
+
+    Label
+      id: pointsTitle
+      height: 14
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 4
+      margin-left: 8
+      margin-right: 8
+      font: verdana-11px-rounded
+      color: #888888
+      text-align: center
+      !text: tr('Skill Points Available')
+
+    Label
+      id: pointsValue
+      height: 16
+      anchors.top: pointsTitle.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 1
+      margin-left: 8
+      margin-right: 8
+      font: verdana-11px-rounded
+      color: #4CAF50
+      text-align: center
+      text: 0
+
+  UIWidget
+    id: topSep
+    height: 1
+    anchors.top: pointsBar.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 4
+    background-color: #2a2a2a
+
+  Panel
+    id: mainArea
+    anchors.top: topSep.bottom
+    anchors.bottom: bottomBar.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: 4 8 4 8
+
+    Panel
+      id: treeCanvas
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: infoPanel.left
+      margin-right: 8
+      background-color: #0d0d0d
+      border-width: 1
+      border-color: #1a1a1a
+
+    Panel
+      id: infoPanel
+      width: 300
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      background-color: #111111
+      border-width: 1
+      border-color: #2a2a2a
+      padding: 12
+
+      Label
+        id: infoName
+        height: 24
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        font: verdana-11px-antialised
+        color: #e7b131
+        text-align: center
+        !text: tr('Select a talent')
+
+      UIWidget
+        id: infoSep1
+        height: 1
+        anchors.top: infoName.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 8
+        background-color: #2a2a2a
+
+      Label
+        id: infoDesc
+        anchors.top: infoSep1.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 8
+        font: verdana-11px-antialised
+        color: #dfdfdf
+        text-align: topLeft
+        text-wrap: true
+        text-auto-resize: true
+        !text: tr('Hover over a node to see details.')
+
+      UIWidget
+        id: infoSep2
+        height: 1
+        anchors.top: infoDesc.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 10
+        background-color: #2a2a2a
+
+      Label
+        id: infoCost
+        height: 16
+        anchors.top: infoSep2.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 10
+        font: verdana-11px-antialised
+        color: #aaaaaa
+        text-align: center
+        !text: tr('Cost: -')
+
+      Label
+        id: infoReq
+        anchors.top: infoCost.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 6
+        font: verdana-11px-antialised
+        color: #ff9966
+        text-align: center
+        text-wrap: true
+        text-auto-resize: true
+        !text: tr('Requires: -')
+
+      Label
+        id: infoStatus
+        anchors.top: infoReq.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 8
+        font: verdana-11px-antialised
+        color: #aaaaaa
+        text-align: center
+        text-wrap: true
+        text-auto-resize: true
+        !text: ''
+
+  Panel
+    id: bottomBar
+    height: 38
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: 0 8 6 8
+    layout:
+      type: horizontalBox
+      spacing: 12
+
+    TalentResetButton
+      id: resetButton
+      !text: tr('Reset Talents')
+      @onClick: modules.game_talenttree.TalentTree.onResetClick()
+
+    Label
+      id: resetCostLabel
+      width: 460
+      height: 20
+      margin-top: 5
+      margin-left: 12
+      font: verdana-11px-rounded
+      color: #ffcc44
+      !text: tr('Cost to reset talents: Free')
+      text-align: left

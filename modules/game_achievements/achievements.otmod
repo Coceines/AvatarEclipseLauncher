@@ -1,0 +1,12 @@
+Module
+  name: game_achievements
+  description: Conquistas + Titulos - conquistas por player com titulo equipavel (opcode 172)
+  author: Avatar
+  website: localhost
+  version: 1.0
+  autoload: true
+  autoload-priority: 1011
+  sandboxed: true
+  scripts: [ achievements ]
+  @onLoad: init()
+  @onUnload: terminate()

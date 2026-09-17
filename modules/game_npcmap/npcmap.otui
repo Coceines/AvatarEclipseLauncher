@@ -1,0 +1,16 @@
+// NPC Map - icone do minimapa
+// Disco de fundo (npc_background_icon.png, 110x110, encolhido pelo widget)
+// com o outfit do NPC desenhado por cima olhando pro sul (UICreature).
+NpcMapIcon < UIWidget
+  size: 24 24
+  image-source: /modules/game_npcmap/img/npc_background_icon
+  image-smooth: true
+  focusable: false
+  phantom: false
+  // sprite do NPC +50% (20 -> 30); pode passar um pouco do disco de proposito
+  UICreature
+    id: npc
+    size: 30 30
+    phantom: true
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.verticalCenter: parent.verticalCenter

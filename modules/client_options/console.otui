@@ -1,0 +1,91 @@
+OptionPanel
+  OptionCheckBox
+    id: showInfoMessagesInConsole
+    margin: 0 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Show info messages in console')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: showEventMessagesInConsole
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Show event messages in console')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: showStatusMessagesInConsole
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Show status messages in console')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: showTimestampsInConsole
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Show timestamps in console')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: showLevelsInConsole
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Show levels in console')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: showPrivateMessagesInConsole
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Show private messages in console')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: showPrivateMessagesOnScreen
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Show private messages on screen')
+      text-offset: 0 5
+      font: verdana-11px-antialised

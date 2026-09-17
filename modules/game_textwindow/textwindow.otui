@@ -1,0 +1,145 @@
+TaskWindow < MainWindow
+  id: window
+  !text: tr('Informations:')
+  size: 420 390
+
+  UIWidget
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    phantom: true
+    image-source: task
+
+  MultilineTextEdit
+    id: text
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: closeButton.top
+    vertical-scrollbar: textScroll
+    text-wrap: true
+    margin: 5 13 17 0
+    border: 1 #644f21
+    background-color: #251e1e
+    editable: false
+    focusable: false
+    image-source: alpha
+
+  VerticalScrollBar
+    id: textScroll
+    anchors.top: text.top
+    anchors.bottom: text.bottom
+    anchors.left: prev.right
+    margin-left: 2
+    step: 16
+    pixels-scroll: true
+
+  Button
+    id: closeButton
+    !text: tr('Close')
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin: 0 5 10 0
+    width: 90
+
+TextWindow2 < MainWindow
+  id: textWindow
+  size: 420 390
+
+  Label
+    id: description
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 3
+    text-auto-resize: true
+    text-align: left
+    text-wrap: true
+
+  MultilineTextEdit
+    id: text
+    anchors.top: description.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: okButton.top
+    vertical-scrollbar: textScroll
+    text-wrap: true
+    margin: 4 13 20 0
+
+  VerticalScrollBar
+    id: textScroll
+    anchors.top: text.top
+    anchors.bottom: text.bottom
+    anchors.left: prev.right
+    margin-left: 1
+    step: 16
+    pixels-scroll: true
+
+  Button
+    id: okButton
+    !text: tr('Ok')
+    anchors.bottom: parent.bottom
+    anchors.right: next.left
+    margin-right: 10
+    width: 60
+
+  Button
+    id: cancelButton
+    !text: tr('Cancel')
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    width: 60
+
+TextWindow < MainWindow
+  id: textWindow
+  size: 420 390
+
+  Item
+    id: textItem
+    virtual: true
+    anchors.top: parent.top
+    anchors.left: parent.left
+
+  Label
+    id: description
+    anchors.top: parent.top
+    anchors.left: textItem.right
+    anchors.right: parent.right
+    margin-left: 8
+    text-auto-resize: true
+    text-align: left
+    text-wrap: true
+
+  MultilineTextEdit
+    id: text
+    anchors.top: textItem.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: okButton.top
+    vertical-scrollbar: textScroll
+    text-wrap: true
+    margin: 9 13 20 0
+
+  VerticalScrollBar
+    id: textScroll
+    anchors.top: text.top
+    anchors.bottom: text.bottom
+    anchors.left: prev.right
+    margin-left: 1
+    step: 16
+    pixels-scroll: true
+
+  Button
+    id: okButton
+    !text: tr('Ok')
+    anchors.bottom: parent.bottom
+    anchors.right: next.left
+    margin-right: 10
+    width: 60
+
+  Button
+    id: cancelButton
+    !text: tr('Cancel')
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    width: 60

@@ -1,0 +1,211 @@
+MountMoldura < UIProgressRect
+  background: #585858AA
+  percent: 100
+  focusable: false
+  font: verdana-11px-rounded
+  size: 64 64
+
+MountsB < UIButton
+  size: 64 64
+  anchors.top: parent.top
+  anchors.left: parent.left
+
+MainWindow
+  text: Mounts
+  size: 380 280
+  @onEscape: self.onEscape()
+
+  MountsB
+    id: mountButton1
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 5
+
+  MountsB
+    id: mountButton2
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+
+  MountsB
+    id: mountButton3
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+
+  MountsB
+    id: mountButton4
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+
+  MountsB
+    id: mountButton5
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 285
+
+  MountsB
+    id: mountButton6
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 5
+    margin-top: 75
+
+  MountsB
+    id: mountButton7
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+    margin-top: 75
+
+  MountsB
+    id: mountButton8
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+    margin-top: 75
+
+  MountsB
+    id: mountButton9
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+    margin-top: 75
+
+  MountsB
+    id: mountButton10
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 285
+    margin-top: 75
+
+  MountsB
+    id: mountButton11
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+    margin-top: 145
+
+  MountsB
+    id: mountButton12
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+    margin-top: 145
+
+  MountsB
+    id: mountButton13
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+    margin-top: 145
+
+  MountMoldura
+    id: mold1
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 5
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold2
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold3
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold4
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold5
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 285
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold6
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 5
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold7
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold8
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold9
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold10
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 285
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold11
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+    margin-top: 145
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold12
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+    margin-top: 145
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold13
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+    margin-top: 145
+    @onClick: self.onClick(self)
+
+  Label
+    id: Label0
+    !text: tr ('Escolha sua montaria.')
+    font: verdana-11px-rounded
+    color: #32a3d9
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 225
+    margin-left: 115

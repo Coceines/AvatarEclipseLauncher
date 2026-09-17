@@ -1,0 +1,60 @@
+ButtonClose < UIButton
+  size: 14 14
+  image-source: /images/ui/miniwindow_buttons
+  image-clip: 28 0 14 14
+
+  $hover:
+    image-clip: 28 14 14 14
+
+  $pressed:
+    image-clip: 28 28 14 14 
+
+
+MainWindow
+  size: 301 420
+  !text: tr('Informations:')
+  text-offset: 0 10
+  image-source: img/1
+  padding: 10 10 10 10
+  focusable: false
+  visible: false
+
+  ButtonClose
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    @onClick: hideInformation()
+
+  UICreature
+    id: uiOutfit
+    size: 64 64
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin: 38 16 0 0
+
+  Label
+    id: lblName
+    font: sans-bold-16px
+    text-auto-resize: true
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 49
+
+  Label
+    id: lblLevel
+    text-auto-resize: true
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    text-wrap: true
+    margin: 21 0 0 6
+
+  Label
+    id: lblInfo
+    text-auto-resize: true
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    text-auto-resize: true
+    text-wrap: true

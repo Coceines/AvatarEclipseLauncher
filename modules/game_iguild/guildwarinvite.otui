@@ -1,0 +1,55 @@
+MainWindow
+  id: warinviteGuildWindow
+  text: Invitar para War
+  height: 224
+  width: 260
+  visible: false
+  Label
+    id: warinviteGuildLabel1
+    text: Nome da Guild:
+    anchors.top: parent.top
+    anchors.left: parent.left
+  TextEdit
+    id: warinviteGuildText1
+    anchors.top: warinviteGuildLabel1.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Label
+    id: warinviteGuildLabel2
+    text: Número de Frags:
+    anchors.top: warinviteGuildText1.top
+    anchors.left: parent.left
+    margin-top: 30
+  TextEdit
+    id: warinviteGuildText2
+    anchors.top: warinviteGuildLabel2.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Label
+    id: warinviteGuildLabel3
+    text: Valor da Aposta:
+    anchors.top: warinviteGuildLabel2.top
+    anchors.left: parent.left
+    margin-top: 46
+  TextEdit
+    id: warinviteGuildText3
+    anchors.top: warinviteGuildLabel3.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Button
+    id: buttonCancel
+    text: Cancel
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: guildCancel()
+  Button
+    id: buttonOk
+    text: Ok
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: warinviteGuild()

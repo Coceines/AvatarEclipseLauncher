@@ -1,0 +1,8 @@
+Module
+  name: game_trade
+  description: Trade management
+  author: gyro
+  website: ns.net
+  sandboxed: true
+  scripts: [ market ]
+  @onLoad: init()

@@ -1,0 +1,222 @@
+Bar < ProgressBar
+  background-color: red
+  height: 7
+  phantom: false
+
+Recipe < Label
+  height: 25
+  !text: tr('recipe')
+  text-align: left
+  focusable: true
+  background-color: #585858
+  border-width: 1
+
+  $focus:
+    color: #FFFFFF
+    background-color: #414141
+    text-offset: 8 0
+
+MainWindow
+  !text: tr('Cooking')
+  size: 658 418
+
+  Bar
+    id: skillBar
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    width: 150
+    margin-top: 2
+
+  Label
+    id: skillLabel
+    !text: tr('0')
+    anchors.top: prev.top
+    anchors.left: prev.right
+    margin-left: 5
+    margin-top: -5
+
+  UIWidget
+    id: professionIcon
+    image-source: /images/topbuttons/drop
+    image-size: 80 80
+    size: 80 80
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-right: 5
+
+  Button
+    id: craftButton
+    !text: tr('Cook')
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    enabled: true
+
+  Button
+    id: craftAllButton
+    !text: tr('Cook All')
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-top: 10
+    enabled: true
+    visible: true
+
+  Label
+    id: costlabel
+    !text: tr('\tCooking fee:')
+    anchors.top: craftAllButton.bottom
+    anchors.right: parent.right
+    margin-right: 4
+    margin-top: 10
+
+  TextEdit
+    id: cost
+    !text: tr('0 Gold')
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-right: 4
+    margin-top: 6
+    text-wrap: true
+    editable: false
+    change-cursor-image: false
+    focusable: false
+    selectable: false
+
+  Label
+    id: balancelabel
+    !text: tr('Total Balance:')
+    anchors.top: cost.bottom
+    anchors.right: parent.right
+    margin-right: 4
+    margin-top: 10
+
+  TextEdit
+    id: balance
+    !text: tr('0')
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-right: 4
+    margin-top: 6
+    text-wrap: true
+    editable: false
+    change-cursor-image: false
+    focusable: false
+    selectable: false
+
+  Button
+    id: closeButton
+    !text: tr('Close')
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+
+  VerticalSeparator
+    anchors.right: closeButton.left
+    anchors.top: skillLabel.bottom
+    anchors.bottom: parent.bottom
+    margin-right: 15
+
+  Panel
+    id: mainPanel
+    anchors.left: parent.left
+    anchors.right: closeButton.left
+    anchors.bottom: parent.bottom
+    anchors.top: skillLabel.bottom
+    margin-top: 20
+
+    Label
+      !text: tr('Recipe List')
+      anchors.top: parent.top
+      anchors.left: parent.left
+
+    VerticalList
+      id: recipeList
+      width: 200
+      anchors.left: parent.left
+      anchors.bottom: parent.bottom
+      anchors.top: prev.bottom
+      margin-right: 15
+      margin-top: 5
+      vertical-scrollbar: recipeListScrollBar
+
+    VerticalScrollBar
+      id: recipeListScrollBar
+      anchors.left: recipeList.right
+      anchors.top: recipeList.top
+      anchors.bottom: recipeList.bottom
+      margin-left: 1
+      pixels-scroll: true
+      step: 5
+
+    Item
+      id: recipeItem
+      size: 40 40
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: prev.top
+
+    Label
+      id: recipeLabel
+      !text: tr('Recipe Name')
+      anchors.left: recipeItem.right
+      anchors.top: recipeItem.top
+      margin-left: 10
+      margin-top: 12
+
+    Label
+      !text: tr('Ingredients')
+      anchors.top: ingredientsPanel.top
+      anchors.left: recipeItem.left
+      margin-top: -20
+
+    ScrollableFlatPanel
+      id: ingredientsPanel
+      anchors.top: recipeItem.bottom
+      anchors.left: recipeItem.left
+      size: 224 92
+      margin-top: 40
+      vertical-scrollbar: ingredientsScrollBar
+      layout:
+        type: grid
+        cell-size: 34 34
+        flow: true
+        cell-spacing: 10
+        num-columns: 3
+
+    VerticalScrollBar
+      id: ingredientsScrollBar
+      anchors.left: ingredientsPanel.right
+      anchors.top: ingredientsPanel.top
+      anchors.bottom: ingredientsPanel.bottom
+      margin-left: 1
+      pixels-scroll: true
+      step: 10
+
+    Label
+      !text: tr('Description')
+      anchors.top: ingredientsPanel.bottom
+      anchors.left: ingredientsPanel.left
+      anchors.right: ingredientsPanel.right
+      margin-top: 15
+
+    TextEdit
+      id: recipeDesc
+      !text: tr('Recipe Desc')
+      anchors.top: prev.bottom
+      anchors.left: ingredientsPanel.left
+      anchors.right: ingredientsPanel.right
+      anchors.bottom: parent.bottom
+      vertical-scrollbar: recipeDescScrollBar
+      margin-top: 5
+      text-wrap: true
+      editable: false
+      multiline: true
+      change-cursor-image: false
+      focusable: false
+      selectable: false
+
+    VerticalScrollBar
+      id: recipeDescScrollBar
+      anchors.left: recipeDesc.right
+      anchors.top: recipeDesc.top
+      anchors.bottom: recipeDesc.bottom
+      pixels-scroll: true
+      visible: false
+      step: 5

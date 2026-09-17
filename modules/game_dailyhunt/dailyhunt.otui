@@ -1,0 +1,191 @@
+// =========================================================================
+//  Daily Hunt -- janela da task diaria
+//
+//  Uma linha por criatura da lista (DailyHuntRow). A linha inteira e'
+//  clicavel: clicar seleciona (tira a duvida de qual task vai ser resgatada)
+//  e o botao "Resgatar" do rodape pede o premio ao servidor.
+//
+//  Nao ha texto de luva nem de porcentagem aqui de proposito.
+// =========================================================================
+
+DailyHuntRow < UIWidget
+  height: 96
+  phantom: true
+
+  // barrinha verde que marca a linha selecionada
+  UIWidget
+    id: selectionBar
+    size: 3 88
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    background-color: #33cc33
+    visible: false
+
+  UICreature
+    id: creatureIcon
+    size: 48 48
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin: 14 0 0 16
+
+  Label
+    id: killCount
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin: 16 12 0 0
+    height: 16
+    text-align: right
+    text-auto-resize: true
+    font: verdana-11px-monochrome
+    color: #c8c8c8
+
+  Label
+    id: monsterName
+    anchors.top: parent.top
+    anchors.left: creatureIcon.right
+    anchors.right: killCount.left
+    margin: 16 8 0 8
+    height: 16
+    text-auto-resize: true
+    font: verdana-11px-monochrome
+    color: #c8c8c8
+
+  ProgressBar
+    id: progressBar
+    anchors.top: monsterName.bottom
+    anchors.left: creatureIcon.right
+    anchors.right: parent.right
+    margin: 10 8 0 8
+    height: 14
+    background-color: #33cc33
+
+  Label
+    id: statusLabel
+    anchors.top: progressBar.bottom
+    anchors.left: creatureIcon.right
+    anchors.right: parent.right
+    margin: 6 8 0 8
+    height: 16
+    text-align: left
+    text-auto-resize: true
+    font: verdana-11px-monochrome
+    color: #ff9b3b
+
+  // camada invisivel: captura o clique na linha inteira (inclusive em cima
+  // dos labels e do retrato) e da o feedback de hover. A selecao tambem e'
+  // tratada no row.onMouseRelease, dentro do dailyhunt.lua.
+  UIButton
+    id: rowHit
+    anchors.fill: parent
+    image-source:
+    background-color: #00000000
+    focusable: false
+    change-cursor-image: true
+    cursor: pointer
+
+    $hover:
+      background-color: #ffffff0d
+
+
+DailyHuntWindow < MainWindow
+  id: dailyHuntWindow
+  size: 400 650
+  !text: tr('Daily Hunt')
+  visible: false
+  padding-top: 16
+
+  @onEscape: modules.game_dailyhunt.onEscape()
+
+  UIButton
+    id: closeButton
+    size: 14 14
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: /images/ui/miniwindow_buttons
+    image-clip: 28 0 14 14
+    margin-right: -3
+    @onClick: modules.game_dailyhunt.onEscape()
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14
+
+  TextList
+    id: monsterList
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: rewardPanel.top
+    margin: 40 8 0 8
+    phantom: true
+    background-color: #00000000
+    border-width: 0
+    padding: 0
+    vertical-scrollbar: scrollBar
+
+  VerticalScrollBar
+    id: scrollBar
+    anchors.top: monsterList.top
+    anchors.bottom: monsterList.bottom
+    anchors.left: monsterList.right
+    margin-left: 2
+    step: 30
+    pixels-scroll: true
+
+  UIWidget
+    id: rewardPanel
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    height: 78
+    margin: 0 8 8 8
+
+    Label
+      id: bossStatus
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      height: 16
+      text-align: center
+      text-auto-resize: true
+      font: verdana-11px-monochrome
+      color: #c8c8c8
+      text: tr('Complete uma task para liberar o boss ALPHA dela.')
+
+    Label
+      id: selectedLabel
+      anchors.top: bossStatus.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      height: 14
+      text-align: center
+      text-auto-resize: true
+      font: verdana-11px-monochrome
+      color: #808890
+      text: tr('Clique na task concluida para selecionar.')
+
+    Button
+      id: claimButton
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      !text: tr('Resgatar')
+      size: 132 28
+      @onClick: modules.game_dailyhunt.onClaimReward()
+
+    Button
+      id: rerollButton
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      !text: tr('Re-roll (1x/dia)')
+      size: 132 28
+      @onClick: modules.game_dailyhunt.onReroll()
+
+    Button
+      id: exitButton
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      !text: tr('Exit')
+      size: 70 28
+      @onClick: modules.game_dailyhunt.onEscape()

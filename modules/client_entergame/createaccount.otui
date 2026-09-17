@@ -1,0 +1,108 @@
+CreateAccountLabel < Label
+  font: verdana-11px-rounded
+  text-auto-resize: true
+  anchors.left: parent.left
+  anchors.right: parent.right
+
+MainWindow
+  id: createAccountWindow
+  !text: tr('Criar Conta')
+  size: 320 405
+  @onEscape: CreateAccount.hide()
+
+  CreateAccountLabel
+    id: accLabel
+    !text: tr('Nome da conta')
+    anchors.top: parent.top
+
+  TextEdit
+    id: accountName
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+    max-length: 25
+
+  CreateAccountLabel
+    id: passLabel
+    !text: tr('Senha')
+    anchors.top: prev.bottom
+    margin-top: 8
+
+  PasswordTextEdit
+    id: password
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+
+  CreateAccountLabel
+    id: passConfirmLabel
+    !text: tr('Confirmar senha')
+    anchors.top: prev.bottom
+    margin-top: 8
+
+  PasswordTextEdit
+    id: passwordConfirm
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+
+  CreateAccountLabel
+    id: charLabel
+    !text: tr('Nome do personagem')
+    anchors.top: prev.bottom
+    margin-top: 8
+
+  TextEdit
+    id: characterName
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+    max-length: 25
+
+  CreateAccountLabel
+    id: sexLabel
+    !text: tr('Sexo')
+    anchors.top: prev.bottom
+    margin-top: 8
+
+  ComboBox
+    id: sexBox
+    height: 20
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+
+  CreateAccountLabel
+    id: vocLabel
+    !text: tr('Elemento (vocacao)')
+    anchors.top: prev.bottom
+    margin-top: 8
+
+  ComboBox
+    id: vocBox
+    height: 20
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+
+  Button
+    id: createButton
+    !text: tr('Criar')
+    width: 90
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: CreateAccount.doCreate()
+
+  Button
+    id: cancelButton
+    !text: tr('Cancelar')
+    width: 90
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    @onClick: CreateAccount.hide()

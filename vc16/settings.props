@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <PREPROCESSOR_DEFS>
+        WIN32;
+        _CRT_SECURE_NO_WARNINGS;
+        _WIN32_WINNT=0x0601;
+		    WINVER=0x0601;
+        OTCLIENT;
+        CRASH_HANDLER;
+        FW_GRAPHICS;
+        FW_NET;
+        FW_XML;
+        FW_SOUND;
+        FW_CAM;
+        AB;
+        NOMINMAX;
+        TOGGLE_GAMEPAD;
+    </PREPROCESSOR_DEFS>
+    
+    <OTCLIENT_LIBDEPS>
+        libssl.lib;
+        physfs-static.lib;
+        winmm.lib;
+        avrt.lib;
+        lua51.lib;
+        dbghelp.lib;
+        kernel32.lib;
+        user32.lib;
+        shell32.lib;
+        gdi32.lib;
+        advapi32.lib;
+    		Ole32.lib;
+        psapi.lib;
+        bcrypt.lib;		
+        ucrt.lib;
+        vcruntime.lib;
+        msvcrt.lib;
+        mincore_downlevel.lib;
+        mincore.lib;
+        libglew32.lib;
+        OpenAL32.lib;
+        zip.lib;
+        vorbis.lib;
+        vorbisfile.lib;
+        ogg.lib;
+        libcrypto.lib;
+        SDL2.lib;
+    </OTCLIENT_LIBDEPS>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- .exe stays in the client root (OutDir). Intermediate .obj/.pdb go to C:\otc-build because
+         vc16\otclient\OpenGL on this machine fails with MSB6003 / C1083 (mapped-file lock on *.tlog). -->
+    <IntDir>C:\otc-build\otclient\$(Platform)_$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)../</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TrackFileAccess>false</TrackFileAccess>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+   <VcpkgConfiguration>Release</VcpkgConfiguration>   <VcpkgTriplet Condition="'$(Platform)'=='Win32'">x86-windows-static</VcpkgTriplet>
+	 <VcpkgTriplet Condition="'$(Platform)'=='x64'">x64-windows-static</VcpkgTriplet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(BUILD_REVISION)' != '' ">
+    <PREPROCESSOR_DEFS>
+      $(PREPROCESSOR_DEFS);
+      BUILD_REVISION=$(BUILD_REVISION)
+    </PREPROCESSOR_DEFS>
+  </PropertyGroup>  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <ObjectFileName>$(IntDir)\obj_r\%(RelativeDir)</ObjectFileName>
+      <!-- Required when several CL.exe write the same vc143.pdb (parallel compile / VS) -->
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)SDL2\include;$(ProjectDir)ultralight-sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>$(OTCLIENT_LIBDEPS)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+      <LargeAddressAware>true</LargeAddressAware>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

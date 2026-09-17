@@ -1,0 +1,24 @@
+// Botao lateral esquerdo: abre a mochila (backpack) equipada do personagem.
+// A arte fica em modules/client_options/settings/inventory_button.png
+// Fica ancorado logo acima do chat (consolePanel), sem sobrepor a conversa.
+InventorySideButton < UIWidget
+  id: inventorySideButton
+  size: 52 76
+  anchors.left: parent.left
+  anchors.bottom: consolePanel.top
+  margin-left: 0
+  margin-bottom: 6
+  image-source: /modules/client_options/settings/inventory_button
+  focusable: false
+  phantom: true
+
+  UIButton
+    id: inventorySideHit
+    anchors.fill: parent
+    image-source:
+    background-color: #00000000
+    focusable: false
+    change-cursor-image: true
+    cursor: pointer
+    !tooltip: tr('Backpack')
+    @onClick: modules.game_inventory.toggleBackpack()

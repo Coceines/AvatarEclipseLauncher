@@ -1,0 +1,11 @@
+Module
+  name: game_huntwaypoint
+  description: Hunt Waypoint - caminho ate a hunt no mapa
+  author: System
+  sandboxed: true
+  scripts: [ huntwaypoint ]
+  // Desativado temporariamente (a pedido). Para voltar, troque para true.
+  autoload: false
+  autoload-priority: 1003
+  @onLoad: init()
+  @onUnload: terminate()

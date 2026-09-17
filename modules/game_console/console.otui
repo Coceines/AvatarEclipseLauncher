@@ -1,0 +1,326 @@
+ComplexConsoleLabel < UITextEdit
+  font: verdana-11px-antialised
+  height: 14
+  color: yellow
+  margin-left: 2
+  text-wrap: true
+  text-auto-resize: true
+  background-color: #000000
+  selection-color: #111416
+  selection-background-color: #999999
+  change-cursor-image: false
+  cursor-visible: false
+  editable: false
+  draggable: true
+  selectable: true
+  focusable: false
+
+CooldownBarPanel < Panel
+  id: cooldownBars
+  anchors.top: parent.top
+  anchors.left: parent.left
+  size: 150 31
+  margin-left: 3
+  layout:
+    type: verticalBox
+    align-top: true
+  visible: false
+
+ConsoleLabel < UITextEdit
+  font: consolechat-11px_cp1252
+  height: 14
+  color: #FFFFFF
+  margin-left: 2
+  text-wrap: true
+  text-auto-resize: true
+  selection-color: #111416
+  selection-background-color: #999999
+  change-cursor-image: false
+  cursor-visible: false
+  editable: false
+  draggable: true
+  selectable: false
+  focusable: false
+
+  Label
+    id: name
+    font: consolechat-11px_cp1252
+    anchors.fill: parent
+    color: #3ebaf3
+
+CooldownBar < UIButton
+  font: verdana-11px-antialised
+  size: 150 31
+  image-source: /game_console/cooldown_panel
+  visible: false
+
+  UILabel
+    id: progressbar
+    size: 150 31
+    margin-left: 3
+    anchors.top: parent.top
+    image-source: /game_console/cooldown_progressbar
+    anchors.left: parent.left
+
+  UILabel
+    id: name
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    text-auto-resize: true
+    margin-left: 26
+    font: sans-bold-16px
+
+  UILabel
+    id: timer
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    text-auto-resize: true
+    margin-right: 10
+    font: sans-bold-16px
+
+  UILabel
+    id: icon
+    size: 21 21
+    margin-left: 3
+    margin-top: 5
+    anchors.top: parent.top
+    anchors.left: parent.left
+
+ConsoleTabBar < MoveableTabBar
+  height: 28
+
+ConsoleTabBarPanel < MoveableTabBarPanel
+  id: consoleTab
+
+  ScrollablePanel
+    id: consoleBuffer
+    anchors.fill: parent
+    margin-right: 12
+    vertical-scrollbar: consoleScrollBar
+    layout:
+      type: verticalBox
+      align-bottom: true
+    border-width: 1
+    border-color: #202327
+    background: #00000066
+    inverted-scroll: true
+    padding: 1
+
+  VerticalScrollBar
+    id: consoleScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 14
+    pixels-scroll: true
+
+ConsoleButton < UIWidget
+  icon-color: #FFFFFFFF
+  image-color: #FFFFFFFF
+  $hover:
+    icon-color: #c1c1c1
+    image-color: #c1c1c1
+  $pressed:
+    icon-color: #9a9a9a
+    image-color: #9a9a9a
+
+  UIWidget
+    id: mask
+    anchors.fill: parent
+    image-source: images/pressed
+    phantom: true
+    visible: false
+
+ConsoleTabBarButton < MoveableTabBarButton
+  height: 28
+  color: #dfdfdf
+  // keep the client's own tab atlas: the inherited image-clip/image-border are
+  // sized for /images/ui/tabbutton_square, so pointing image-source somewhere
+  // else left the 9-slice sampling a region it was never meant for
+  padding-top: 3
+  padding-bottom: 3
+  padding-left: 14
+  padding-right: 14
+
+  // a state block replaces the base one, so the image clips for the tab button
+  // atlas have to be repeated here (values come from MoveableTabBarButton)
+  $hover !checked:
+    color: #878787
+    image-clip: 0 24 50 24
+
+  $hover checked:
+    color: #d87b00
+
+  $disabled:
+    color: #424242
+
+  $checked:
+    color: #ddad2f
+    image-clip: 0 48 50 24
+
+  $on !checked:
+    color: #03fc2c
+
+  UIWidget
+    id: mask
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: -15
+    margin-bottom: -21
+    image-source: images/panelarrow
+    phantom: true
+    visible: false
+
+Panel
+  id: consolePanel
+  phantom: false
+  height: 240
+  width: 550
+  anchors.bottom: parent.bottom
+  anchors.left: parent.left
+  // raises the whole chat (tabs, log and input) 90px from the bottom of the screen
+  margin-bottom: 90
+
+  Panel
+    id: panelBox
+    image-source: images/panelbox
+    image-border-top: 2
+    anchors.fill: parent
+    margin-top: 34
+    margin-bottom: 32
+    focusable: false
+
+  UIWidget
+    id: consoleTextBackground
+    anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 27
+    focusable: false
+    image-source: images/typetextbox
+    height: 32
+
+    UIWidget
+      anchors.fill: parent
+      image-source: images/maincontentboxshadow
+      image-border: 9
+
+  TextEdit
+    id: consoleTextEdit
+    anchors.fill: prev
+    image-source: images/blank
+    shift-navigation: true
+    max-length: 255
+    text-auto-submit: true
+    color: white
+    selection-color: #111416
+    selection-background-color: #999999
+    margin-top: 6
+    margin-bottom: 6
+    margin-right: 58
+    @onTextChange: onTextChange(self)
+
+    Label
+      id: mask
+      anchors.fill: parent
+      opacity: 0.3
+      text-align: left
+      phantom: true
+      text: "Enter your message here..."
+
+  ConsoleButton
+    id: sendMessage
+    anchors.verticalcenter: prev.verticalcenter
+    anchors.right: parent.right
+    margin-right: 5
+    size: 52 22
+    image-source: images/arrow
+    focusable: false
+    @onClick: sendCurrentMessage()
+
+  Panel
+    id: sidePanel
+    image-source: images/bar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: consoleTextEdit.left
+    margin-top: 32
+    focusable: false
+    layout: verticalBox
+
+    ConsoleButton
+      id: chatLockButton
+      icon-source: images/lock_icon
+      size: 28 28
+      margin-top: 6
+      !tooltip: tr("Disable chat mode, allow to walk using ASDW")
+      @onClick: toggleChat(self)
+
+    ConsoleButton
+      id: openChatButton
+      icon-source: images/folder
+      size: 28 28
+      !tooltip: tr("Open new channel") .. " (Ctrl+O)"
+      @onClick: openNewChannel()
+
+    ConsoleButton
+      id: clearChatButton
+      icon-source: images/bin
+      size: 28 28
+      !tooltip: tr("Clear current message window")
+      @onClick: clearCurrentTab(self)
+
+    ConsoleButton
+      id: stickerButton
+      icon-source: /images/stickers/emoji
+      size: 28 28
+      !tooltip: tr("Stickers Panel")
+
+    ConsoleButton
+      id: moveUpButton
+      icon-source: images/move_to_top_icon
+      size: 28 28
+      !tooltip: tr("Open next tab")
+
+    ConsoleButton
+      id: moveDownButton
+      icon-source: images/move_bottom_top_icon
+      size: 28 28
+      !tooltip: tr("Open previous tab")
+
+  ConsoleTabBar
+    id: consoleTabBar
+    anchors.left: sidePanel.right
+    anchors.top: parent.top
+    anchors.right: parent.right
+    height: 28
+    tab-spacing: 2
+    movable: true
+    moveable: true
+    focusable: false
+
+  Panel
+    id: consoleContentPanel
+    anchors.top: prev.bottom
+    anchors.bottom: consoleTextBackground.top
+    anchors.left: prev.left
+    anchors.right: parent.right
+    margin-right: 2
+    margin-top: 4
+    padding: 6
+    focusable: false
+
+  ConsoleButton
+    id: expandButton
+    anchors.top: prev.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin: -2
+    image-source: images/endline
+    width: 12
+    focusable: false
+    @onClick: expandChat(self)
+    $on:
+      image-source: images/endline_rotated

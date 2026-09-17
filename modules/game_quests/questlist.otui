@@ -1,0 +1,180 @@
+QuestListItem < Panel
+  height: 64
+  id: quest_
+  background-color: transparent
+  padding: 4
+  focusable: true
+  phantom: false
+
+  UICreature
+    id: questIcon
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    size: 48 48
+    fixed-creature-size: true
+    phantom: true
+
+  UIItem
+    id: questItem
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    size: 48 48
+    virtual: true
+    phantom: true
+
+  Label
+    id: questName
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: questStatus.left
+    margin-top: 2
+    margin-left: 60
+    font: verdana-11px-rounded
+    color: #FFFFFF
+    text-wrap: false
+    text-auto-resize: true
+    phantom: false
+
+  Label
+    id: questStatus
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 2
+    margin-right: 5
+    font: terminus-14px-bold
+    color: #FFFF00
+    phantom: false
+
+  Label
+    id: questProgress
+    anchors.top: questStatus.bottom
+    anchors.left: parent.left
+    margin-top: 2
+    margin-left: 60
+    font: verdana-11px-rounded
+    color: #CCCCCC
+    phantom: false
+
+  ProgressBar
+    id: questProgressBar
+    anchors.top: questProgress.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 3
+    margin-left: 60
+    margin-right: 4
+    height: 10
+    image-source: 
+    background-color: #00FF00
+    border: 1 #FFFFFF44
+    phantom: false
+
+  $hover:
+    background-color: #FFFFFF22
+
+  $pressed:
+    background-color: #FFFFFF44
+
+QuestListWindow < MainWindow
+  id: questListWindow
+  !text: tr('Quest Log')
+  size: 400 500
+  @onEscape: self:hide()
+  $mobile:
+    size: 330 400
+
+  Label
+    id: titleLabel
+    !text: tr('Available Quests')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 2
+    text-align: center
+    font: verdana-11px-rounded
+    color: #FFD700
+
+  VerticalScrollBar
+    id: questListScrollBar
+    anchors.top: titleLabel.bottom
+    anchors.bottom: closeButton.top
+    anchors.right: parent.right
+    margin-top: 5
+    margin-bottom: 5
+    margin-right: 5
+    step: 14
+    pixels-scroll: true
+
+  ScrollablePanel
+    id: questList
+    anchors.top: titleLabel.bottom
+    anchors.left: parent.left
+    anchors.right: questListScrollBar.left
+    anchors.bottom: closeButton.top
+    margin-top: 5
+    margin-left: 5
+    margin-right: 5
+    margin-bottom: 5
+    vertical-scrollbar: questListScrollBar
+    layout:
+      type: verticalBox
+      spacing: 2
+
+  HorizontalSeparator
+    id: bottomSep
+    anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.bottom: closeButton.top
+    margin-bottom: 8
+
+  Button
+    id: closeButton
+    !text: tr('Close')
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    color: #ffffff
+    @onClick: self:getParent():hide()
+
+QuestTooltip < UIWidget
+  size: 250 150
+  background-color: #000000DD
+  border-width: 2
+  border-color: #FFD700
+  padding: 8
+  layout:
+    type: verticalBox
+    spacing: 3
+
+  Label
+    id: tooltipQuestName
+    font: verdana-11px-rounded
+    color: #FFD700
+    text-wrap: true
+    text-auto-resize: true
+
+  HorizontalSeparator
+    margin-top: 2
+    margin-bottom: 2
+
+  Label
+    id: tooltipStatus
+    font: verdana-11px-rounded
+    text-wrap: true
+    text-auto-resize: true
+
+  Label
+    id: tooltipMissions
+    font: verdana-11px-rounded
+    color: #CCCCCC
+    text-wrap: true
+    text-auto-resize: true
+
+  Label
+    id: tooltipDescription
+    font: verdana-11px-rounded
+    color: #AAAAAA
+    text-wrap: true
+    text-auto-resize: true
+    margin-top: 3

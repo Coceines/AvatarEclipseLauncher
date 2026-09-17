@@ -1,0 +1,173 @@
+PotionCard < Panel
+  size: 155 140
+  background-color: #1a1d24
+  border-width: 1
+  border-color: #2c3240
+  padding: 8
+  focusable: true
+
+  $hover:
+    background-color: #242936
+    border-color: #4a90e2
+
+  $focused:
+    background-color: #2a3142
+    border-color: #00d2ff
+
+  UIItem
+    id: itemIcon
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    size: 32 32
+    phantom: true
+
+  Label
+    id: potionName
+    anchors.top: itemIcon.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 8
+    font: verdana-11px-rounded
+    color: #ffffff
+    text-align: center
+    text-wrap: true
+    phantom: true
+
+  Label
+    id: potionTime
+    anchors.top: potionName.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    font: verdana-11px-rounded
+    color: #00e676
+    text-align: center
+    phantom: true
+
+MainWindow
+  id: potionCraftWindow
+  text: Mesa de Alquimia
+  size: 530 410
+  anchors.centerIn: parent
+  @onEscape: PotionCraft.hide()
+
+  Panel
+    id: selectionView
+    anchors.fill: parent
+    margin-bottom: 35
+
+    Label
+      id: subtitle
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      font: verdana-11px-rounded
+      color: #b0bec5
+
+    Panel
+      id: cardsGrid
+      anchors.top: subtitle.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-top: 12
+      layout:
+        type: grid
+        cell-size: 155 140
+        cell-spacing: 12
+        flow: true
+
+  Panel
+    id: quantityView
+    anchors.fill: parent
+    margin-bottom: 35
+    visible: false
+
+    Panel
+      id: headerCard
+      size: 480 75
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      background-color: #1a1d24
+      border-width: 1
+      border-color: #2c3240
+      padding: 10
+
+      UIItem
+        id: selectedItemIcon
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        size: 32 32
+        phantom: true
+
+      Label
+        id: selectedPotionName
+        anchors.top: parent.top
+        anchors.left: selectedItemIcon.right
+        margin-left: 15
+        margin-top: 10
+        font: verdana-11px-rounded
+        color: #ffffff
+
+      Label
+        id: selectedPotionTime
+        anchors.top: selectedPotionName.bottom
+        anchors.left: selectedPotionName.left
+        margin-top: 4
+        font: verdana-11px-rounded
+        color: #80deea
+
+    Label
+      id: lblQuantity
+      anchors.top: headerCard.bottom
+      anchors.left: parent.left
+      margin-top: 25
+      width: 300
+      font: verdana-11px-rounded
+      color: #ffffff
+
+    HorizontalScrollBar
+      id: quantityScrollBar
+      anchors.top: lblQuantity.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 12
+      mouse-scroll: true
+      step: 1
+      minimum: 0
+      maximum: 1000
+      value: 1
+
+    Label
+      id: lblTotalTime
+      anchors.top: quantityScrollBar.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 25
+      font: verdana-11px-rounded
+      color: #ffeb3b
+      text-align: center
+
+    Button
+      id: btnBack
+      text: Voltar
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      size: 100 24
+      @onClick: PotionCraft.showSelectionView()
+
+    Button
+      id: btnConfirm
+      text: Confirmar Craft
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      size: 140 24
+      @onClick: PotionCraft.confirmCraft()
+
+  Button
+    id: btnClose
+    text: Fechar
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    size: 80 24
+    @onClick: PotionCraft.hide()

@@ -1,0 +1,134 @@
+GameMenuListButton < UIButton
+  size: 220 34
+  color: #dfdfdf
+  image-source: /modules/client_options/settings/bgitemselect
+  image-border: 5
+  text-align: left
+  text-offset: 14 0
+  font: verdana-11px-antialised
+  change-cursor-image: true
+  cursor: pointer
+
+  $hover:
+    image-source: /modules/client_options/settings/bgitemselectactive
+    color: #ffffff
+
+  $on:
+    image-source: /modules/client_options/settings/bgitemselectactive
+    image-shader: talent_border_glow
+    color: #ffffff
+
+  $!on:
+    image-shader:
+
+GameMenuCorner < UIWidget
+  size: 144 126
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+  margin-right: 0
+  margin-bottom: 0
+  image-source: /modules/client_options/settings/corner_button_options_right
+  focusable: false
+  phantom: true
+
+  UIButton
+    id: gameMenuCornerHit
+    size: 42 42
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 75
+    margin-top: 66
+    image-source:
+    background-color: #00000000
+    focusable: false
+    change-cursor-image: true
+    cursor: pointer
+    !tooltip: tr('Menu')
+    @onClick: modules.client_topmenu.toggleGameMenu()
+
+// botao do Shop no centro-norte da tela (mesma arte de canto, outra imagem)
+GameMenuTopShop < UIWidget
+  size: 102 70
+  anchors.top: parent.top
+  anchors.horizontalCenter: parent.horizontalCenter
+  margin-top: 0
+  image-source: /modules/client_options/settings/top_button_shop
+  focusable: false
+  phantom: true
+
+  UIButton
+    id: gameMenuShopHit
+    anchors.fill: parent
+    image-source:
+    background-color: #00000000
+    focusable: false
+    change-cursor-image: true
+    cursor: pointer
+    !tooltip: tr('Shop')
+    @onClick: modules.client_topmenu.toggleShop()
+
+GameMenuPanel < UIWidget
+  size: 260 320
+  anchors.right: parent.right
+  margin-right: 8
+  image-source: /modules/client_options/settings/background
+  image-border-top: 6
+  image-border-bottom: 6
+  padding: 10
+  focusable: false
+  visible: false
+  clipping: true
+
+  Label
+    id: gameMenuTitle
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 22
+    font: verdana-11px-antialised
+    color: #ffffff
+    text-align: center
+    !text: tr('Menu')
+    phantom: true
+
+  VerticalScrollBar
+    id: gameMenuScroll
+    anchors.top: gameMenuTitle.bottom
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-top: 6
+    step: 42
+    pixels-scroll: true
+    width: 12
+
+  ScrollablePanel
+    id: gameMenuList
+    anchors.top: gameMenuTitle.bottom
+    anchors.left: parent.left
+    anchors.right: gameMenuScroll.left
+    anchors.bottom: parent.bottom
+    margin-top: 6
+    margin-right: 2
+    vertical-scrollbar: gameMenuScroll
+    clipping: true
+    layout:
+      type: verticalBox
+      spacing: 6
+
+UIWidget
+  id: gameMenuRoot
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  anchors.left: parent.left
+  anchors.right: parent.right
+  focusable: false
+  phantom: true
+
+  GameMenuCorner
+    id: gameMenuCorner
+
+  GameMenuTopShop
+    id: gameMenuShop
+
+  GameMenuPanel
+    id: gameMenuPanel

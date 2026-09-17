@@ -1,0 +1,10 @@
+Module
+  name: game_inspectcreature
+  description: Inspect Creature - Bestiário com loot info
+  author: Freebuff
+  sandboxed: true
+  scripts: [ inspectcreature ]
+  autoload: true
+  autoload-priority: 1002
+  @onLoad: init()
+  @onUnload: terminate()

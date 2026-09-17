@@ -1,0 +1,53 @@
+-- ============================================================================
+-- GAME HEALCUT + HUNGER + NOMANA ICONS - OTClient Module
+-- ============================================================================
+-- DEBUG VERSION - with prints for troubleshooting
+
+local OPCODE_HEAL_CUT = 108
+local OPCODE_HUNGRY   = 109
+local OPCODE_NO_MANA  = 110
+
+function init()
+    ProtocolGame.registerExtendedOpcode(OPCODE_HEAL_CUT, onHealCut)
+    ProtocolGame.registerExtendedOpcode(OPCODE_HUNGRY, onHungry)
+    ProtocolGame.registerExtendedOpcode(OPCODE_NO_MANA, onNoMana)
+    print("[HEALCUT] Module initialized. Opcodes 108/109/110 registered.")
+end
+
+function terminate()
+    ProtocolGame.unregisterExtendedOpcode(OPCODE_HEAL_CUT)
+    ProtocolGame.unregisterExtendedOpcode(OPCODE_HUNGRY)
+    ProtocolGame.unregisterExtendedOpcode(OPCODE_NO_MANA)
+end
+
+local function handleIcon(protocol, opcode, buffer, setter)
+    local data = buffer:split(",")
+    if #data < 2 then
+        print("[HEALCUT] WARN: bad buffer format: " .. tostring(buffer))
+        return
+    end
+
+    local creatureId = tonumber(data[1])
+    local state = tonumber(data[2]) == 1
+
+    local creature = g_map.getCreatureById(creatureId)
+    if creature then
+        creature[setter](creature, state)
+    else
+        print("[HEALCUT] WARN: creature not found id=" .. tostring(creatureId))
+    end
+end
+
+function onHealCut(protocol, opcode, buffer)
+    handleIcon(protocol, opcode, buffer, "setHealCut")
+end
+
+function onHungry(protocol, opcode, buffer)
+    print("[HEALCUT] onHungry opcode=" .. opcode .. " buffer=" .. buffer)
+    handleIcon(protocol, opcode, buffer, "setHungry")
+end
+
+function onNoMana(protocol, opcode, buffer)
+    print("[HEALCUT] onNoMana opcode=" .. opcode .. " buffer=" .. buffer)
+    handleIcon(protocol, opcode, buffer, "setNoMana")
+end

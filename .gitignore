@@ -1,0 +1,24 @@
+# Visual Studio
+*.pdb
+*.VC.db
+*.iobj
+
+# Arquivos específicos
+modules/corelib/ui/zUniD.spr
+
+# Caso queira ignorar apenas esses arquivos:
+otclient_gl.pdb
+vc16/.vs/otclient/v17/Browse.VC.db
+vc16/otclient/OpenGL/otclient_gl.iobj
+vc16/otclient/OpenGL/vc143.pdb
+vc16/.vs/otclient/CopilotIndices/17.14.1593.33849/SemanticSymbols.db
+vc16/.vs/otclient/CopilotIndices/17.14.1593.33849/SemanticSymbols.db
+vc16/.vs/otclient/CopilotIndices/17.14.1593.33849/CodeChunks.db
+vc16/.vs/otclient/CopilotIndices/17.14.1593.33849/SemanticSymbols.db
+vc16/.vs/otclient/CopilotIndices/17.14.1593.33849/SemanticSymbols.db
+vc16/.vs/otclient/FileContentIndex/4e7c04ee-72e2-4cf5-a806-79a79385f15c.vsidx
+vc16/.vs/otclient/FileContentIndex/33f9806e-8bf8-402e-9680-6dd98b3ebba0.vsidx
+vc16/.vs/otclient/FileContentIndex/4e7c04ee-72e2-4cf5-a806-79a79385f15c.vsidx
+vc16/.vs/otclient/v17/fileList.bin
+vc16/.vs/otclient/v17/.suo
+vc16/.vs/otclient/CopilotIndices/17.14.1593.33849/SemanticSymbols.db

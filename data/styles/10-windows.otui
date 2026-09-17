@@ -1,0 +1,46 @@
+Window < UIWindow
+  font: verdana-11px-antialised
+  size: 264 264
+  opacity: 1
+  color: white
+  text-offset: 0 15
+  text-align: top
+  image-source: /images/ui/window
+  image-border: 50
+  image-border-top: 50
+  opacity: 1
+  padding-top: 40
+  padding-left: 20
+  padding-right: 20
+  padding-bottom: 20
+
+  $disabled:
+    color: #aaaaaa88
+
+  $dragging:
+    opacity: 0.8
+
+HeadlessWindow < UIWindow
+  image-source: /images/ui/window_headless
+  image-border: 5
+  padding: 5
+
+MainWindow < Window
+  anchors.centerIn: parent
+
+folds < UIWindow
+  font: verdana-11px-antialised
+  image-source: /images/ui/window
+  image-border: 5
+  image-border-top: 5
+  opacity: 1
+
+info < UIWindow
+  font: verdana-11px-antialised
+  opacity: 1
+
+  $disabled:
+    color: #aaaaaa88
+
+  $dragging:
+    opacity: 10

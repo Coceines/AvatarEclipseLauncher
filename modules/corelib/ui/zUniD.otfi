@@ -1,0 +1,9 @@
+DatSpr
+  extended: true
+  transparency: true
+  frame-durations: true
+  frame-groups: true
+  metadata-file: zUniD.dat
+  sprites-file: zUniD.spr
+  sprite-size: 32
+  sprite-data-size: 4096

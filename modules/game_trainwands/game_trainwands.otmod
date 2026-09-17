@@ -1,0 +1,10 @@
+Module
+  name: game_trainwands
+  description: Training Wand Charges (Tibia Global style)
+  author: Avatar
+  sandboxed: true
+  scripts: [ game_trainwands ]
+  autoload: true
+  autoload-priority: 1004
+  @onLoad: init()
+  @onUnload: terminate()

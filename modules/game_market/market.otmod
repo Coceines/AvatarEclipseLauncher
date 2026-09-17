@@ -1,0 +1,10 @@
+Module
+  name: game_market
+  description: Sistema de Market
+  author: Gengo
+  sandboxed: true
+  scripts: [ market ]
+  autoload: true
+  autoload-priority: 1001
+  @onLoad: Market.init()
+  @onUnload: Market.terminate()

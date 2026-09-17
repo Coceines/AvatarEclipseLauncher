@@ -1,0 +1,10 @@
+Module
+  name: game_potioncraft
+  description: Potion Crafting Table Interface
+  author: Avatar
+  sandboxed: true
+  scripts: [ game_potioncraft ]
+  autoload: true
+  autoload-priority: 1005
+  @onLoad: init()
+  @onUnload: terminate()

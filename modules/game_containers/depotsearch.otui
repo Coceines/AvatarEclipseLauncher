@@ -1,0 +1,23 @@
+Panel
+  id: depotSearchPopup
+  size: 262 30
+  background-color: #0d0d0dcc
+  visible: false
+
+  TextEdit
+    id: depotSearchEdit
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    anchors.right: btnClear.left
+    margin-left: 4
+    margin-right: 4
+    height: 22
+    placeholder: Nome do item...
+
+  Button
+    id: btnClear
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    size: 80 22
+    margin-right: 4
+    text: Limpar

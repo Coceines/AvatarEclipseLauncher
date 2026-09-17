@@ -1,0 +1,9 @@
+Module
+  name: game_pet
+  description: Escolha do pet (criatura fantasma que segue o player)
+  author: Avatar
+  website: avatarlegendsonline.com.br
+  sandboxed: true
+  scripts: [ pet ]
+  @onLoad: init()
+  @onUnload: terminate()

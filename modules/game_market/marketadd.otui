@@ -1,0 +1,120 @@
+// Janela de confirmacao da oferta.
+//
+// Ela NAO escolhe o item: quem escolhe e' o crosshair nativo do client (igual
+// mirar com runa). O botao "Adicionar Oferta" do market dispara o crosshair e
+// esta janela so' aparece depois que o servidor confirma o item clicado, com o
+// sprite, o nome e o tier em cima, pra o jogador preencher preco e quantidade.
+MainWindow
+  size: 280 285
+  padding-top: 20
+  !text: tr('Adicionar Oferta')
+  visible: false
+
+  UIButton
+    id: btnClose
+    size: 14 14
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: /images/ui/miniwindow_buttons
+    image-clip: 28 0 14 14
+    margin-right: -3
+    @onClick: Market.cancelAddOffer()
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14
+
+  // ---- Item escolhido: sprite (com o shader do tier) + nome embaixo ----
+  // 34x34 com o padding 1 do estilo "Item" = sprite 32x32 desenhado 1:1
+  Item
+    id: uiPickedItem
+    size: 34 34
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 34
+    virtual: true
+
+  Label
+    id: lblPickedName
+    anchors.top: uiPickedItem.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+    font: verdana-11px-monochrome
+    color: #ffffff
+    text-auto-resize: true
+
+  // TIER do item, em amarelo, logo abaixo do nome
+  Label
+    id: lblPickedTier
+    anchors.top: lblPickedName.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 2
+    font: verdana-11px-monochrome
+    color: #ffd700
+    text-auto-resize: true
+
+  Label
+    id: lblPickedAvail
+    anchors.top: lblPickedTier.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 2
+    font: verdana-11px-monochrome
+    color: #9a9a9a
+    text-auto-resize: true
+
+  Label
+    id: lblPrice
+    anchors.top: lblPickedAvail.bottom
+    anchors.left: parent.left
+    margin: 14 0 0 20
+    font: verdana-11px-monochrome
+    color: #b8b8b8
+    !text: tr('Preço total (gold):')
+
+  TextEdit
+    id: edtPrice
+    anchors.top: lblPrice.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: 6 20 0 20
+    height: 26
+    font: verdana-11px-monochrome
+
+  Label
+    id: lblCount
+    anchors.top: edtPrice.bottom
+    anchors.left: parent.left
+    margin: 12 0 0 20
+    font: verdana-11px-monochrome
+    color: #b8b8b8
+    !text: tr('Quantidade:')
+
+  TextEdit
+    id: edtCount
+    anchors.top: lblCount.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: 6 20 0 20
+    height: 26
+    font: verdana-11px-monochrome
+
+  Button
+    id: buttonCancel
+    width: 80
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin: 0 20 12 0
+    !text: tr('Cancelar')
+    @onClick: Market.cancelAddOffer()
+
+  Button
+    id: buttonOk
+    width: 150
+    anchors.bottom: parent.bottom
+    anchors.right: buttonCancel.left
+    margin: 0 6 12 0
+    !text: tr('Adicionar')
+    !tooltip: tr('Confere o item de novo no servidor e envia a oferta.')
+    @onClick: Market.addOffer()

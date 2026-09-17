@@ -1,0 +1,216 @@
+PlantCard < UICheckBox
+  size: 115 130
+  border-width: 1
+  border-color: #444444ff
+  background-color: #1a1a1aaa
+  @onCheckChange: modules.game_creaturemanager.onCreatureCheckChange(self)
+
+  UIItem
+    id: stageItem
+    size: 64 64
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    phantom: true
+    virtual: true
+
+  Label
+    id: nameLabel
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-bottom: 8
+    text-align: center
+    font: verdana-11px-monochrome
+    color: #c8c8c8
+    phantom: true
+
+  $checked on:
+    border-color: #ffffffff
+    background-color: #ffffff22
+
+  $!checked:
+    border-color: #444444ff
+    background-color: #1a1a1aaa
+
+creatureManagerWindow < UIWidget
+  size: 650 500
+  anchors.centerIn: parent
+  background-color: #141414ee
+  border-width: 2
+  border-color: #555555ff
+  padding-top: 40
+  padding-left: 12
+  padding-right: 12
+  padding-bottom: 12
+  draggable: true
+  @onEscape: modules.game_creaturemanager.hide()
+
+  Label
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 32
+    margin-top: 4
+    text-align: center
+    font: verdana-11px-rounded
+    color: #ffd27f
+    text: Farm Manager
+    background-color: #1f1f1fff
+
+  UIButton
+    id: closeBtnManager
+    size: 18 18
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 7
+    margin-right: 7
+    text-align: center
+    font: verdana-11px-rounded
+    color: #ffffff
+    text: X
+    background-color: #882222ff
+    border-width: 1
+    border-color: #aa3333ff
+    @onClick: modules.game_creaturemanager.hide()
+
+    $hover:
+      background-color: #aa2222ff
+    $pressed:
+      background-color: #cc2222ff
+
+  Panel
+    id: leftPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    width: 210
+    padding: 10
+    background-color: #0d0d0daa
+    border-width: 1
+    border-color: #333333ff
+
+    Panel
+      id: previewBox
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      size: 120 120
+      border-width: 1
+      border-color: #555555ff
+      background-color: #000000aa
+
+      UIItem
+        id: previewItem
+        size: 80 80
+        anchors.centerIn: parent
+        virtual: true
+
+    Label
+      id: creatureNameLabel
+      text: No plant selected
+      anchors.top: previewBox.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 10
+      text-align: center
+      font: verdana-11px-rounded
+      color: #ffd27f
+
+    Label
+      id: creatureInfoLabel
+      text:
+      anchors.top: creatureNameLabel.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 5
+      height: 38
+      text-align: center
+      font: verdana-11px-rounded
+      color: #aaaaaa
+
+    Button
+      id: feedButton
+      text: Water (Free)
+      anchors.top: creatureInfoLabel.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      height: 28
+      margin-top: 10
+      enabled: false
+      @onClick: modules.game_creaturemanager.feedSelected()
+
+    Button
+      id: trainButton
+      text: Grow
+      anchors.top: feedButton.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      height: 28
+      margin-top: 5
+      enabled: false
+      @onClick: modules.game_creaturemanager.trainSelected()
+
+    Button
+      id: harvestButton
+      text: Harvest
+      anchors.top: trainButton.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      height: 28
+      margin-top: 5
+      enabled: false
+      @onClick: modules.game_creaturemanager.harvestSelected()
+
+    Button
+      id: releaseButton
+      text: Remove Plant
+      anchors.top: harvestButton.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      height: 28
+      margin-top: 5
+      enabled: false
+      @onClick: modules.game_creaturemanager.releaseSelected()
+
+    Button
+      id: buyCreatureButton
+      text: Buy Seed
+      anchors.top: releaseButton.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      height: 28
+      margin-top: 5
+      @onClick: modules.game_creaturemanager.showStore()
+
+    Button
+      id: exitButton
+      text: Exit
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      height: 28
+      @onClick: modules.game_creaturemanager.hide()
+
+  Panel
+    id: rightPanel
+    anchors.top: parent.top
+    anchors.left: leftPanel.right
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-left: 8
+    background-color: #0d0d0daa
+    border-width: 1
+    border-color: #333333ff
+    padding: 8
+
+    Panel
+      id: creatureGrid
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      layout:
+        type: grid
+        cell-size: 115 130
+        cell-spacing: 5
+        flow: true

@@ -1,0 +1,11 @@
+Module
+  name: game_map_overlay
+  description: Mapa em tela cheia com fundo escuro e efeito de lente
+  author: avatar
+  website: http://otclient.ovh
+  autoload: true
+  autoload-priority: 1150
+  sandboxed: true
+  scripts: [ map_overlay ]
+  @onLoad: init()
+  @onUnload: terminate()

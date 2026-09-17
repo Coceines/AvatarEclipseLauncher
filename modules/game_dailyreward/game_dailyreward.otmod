@@ -1,0 +1,11 @@
+Module
+  name: game_dailyreward
+  description: Daily Reward - 7-day reward collection system
+  author: Avatar Team
+  website:
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1010
+  scripts: [ game_dailyreward ]
+  @onLoad: init()
+  @onUnload: terminate()

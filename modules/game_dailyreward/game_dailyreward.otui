@@ -1,0 +1,123 @@
+DailyRewardDayBox < UIWidget
+  height: 97
+  width: 65
+  phantom: true
+
+  Label
+    id: dayLabel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 4
+    height: 14
+    text-align: center
+    text-auto-resize: true
+    font: verdana-11px-rounded
+    color: #888888
+
+  UIItem
+    id: itemSprite
+    size: 32 32
+    anchors.top: dayLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+
+  Label
+    id: itemName
+    anchors.top: itemSprite.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-top: 6
+    margin-bottom: 3
+    margin-left: 2
+    margin-right: 2
+    text-align: center
+    text-wrap: true
+    font: verdana-11px-rounded
+    color: #aaaaaa
+
+  Label
+    id: overlay
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    text-align: center
+    font: verdana-11px-rounded
+    color: #ffffff
+    visible: false
+    background-color: #00000088
+
+DailyRewardWindow < MainWindow
+  id: dailyRewardWindow
+  size: 565 225
+  !text: tr('Recompensas Diarias')
+  visible: false
+  draggable: true
+  padding-top: 16
+
+  @onEscape: modules.game_dailyreward.onClose()
+
+  UIButton
+    id: closeButton
+    size: 14 14
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: /images/ui/miniwindow_buttons
+    image-clip: 28 0 14 14
+    margin-right: -3
+    @onClick: modules.game_dailyreward.onClose()
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14
+
+  UIButton
+    id: claimButton
+    !text: tr('Check')
+    size: 100 28
+    anchors.bottom: infoLabel.top
+    anchors.right: parent.horizontalCenter
+    margin-bottom: 6
+    margin-right: 5
+    @onClick: modules.game_dailyreward.onClaim()
+
+  UIButton
+    id: closeButton2
+    !text: tr('Close')
+    size: 100 28
+    anchors.bottom: infoLabel.top
+    anchors.left: claimButton.right
+    margin-bottom: 6
+    margin-left: 10
+    @onClick: modules.game_dailyreward.onClose()
+
+  Label
+    id: infoLabel
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-bottom: 6
+    height: 14
+    text-align: center
+    text-auto-resize: true
+    font: verdana-11px-rounded
+    color: #ff0000ff
+    !text: tr('Algumas das recompensas coletadas aqui vão direto pra mailbox.')
+
+  Panel
+    id: daysPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: claimButton.top
+    margin-top: 14
+    margin-left: 10
+    margin-right: 10
+    margin-bottom: 6
+    layout:
+      type: horizontalBox
+      spacing: 8

@@ -1,0 +1,39 @@
+LocalLabel < Label
+  font: sans-bold-16px
+  color: white
+  text-auto-resize: true
+  visible: false
+
+MiniWindow
+  id: minimapWindow
+  !text: tr('Minimap')
+  height: 150
+  icon: /images/topbuttons/minimap
+  @onClose: modules.game_minimap.onMiniWindowClose()
+  &save: true
+
+  Label
+    id: helpLabel
+    text: ?
+    text-align: center
+    phantom: false
+    !tooltip: tr('Hold left mouse button to navigate\nScroll mouse middle button to zoom\nRight mouse button to create map marks\nPress Ctrl+Shilft+M to view the entire game map')
+    anchors.top: minimizeButton.top
+    anchors.right: minimapHDCheck.left
+    margin-right: 3
+    size: 14 14
+
+  CheckBox
+    id: minimapHDCheck
+    !text: tr('HDMAP')
+    font: verdana-11px-rounded
+    color: white
+    anchors.top: minimizeButton.top
+    anchors.right: minimizeButton.left
+    margin-right: 3
+    @onCheckChange: modules.game_minimap.toggleMinimapHD(self)
+
+  MiniWindowContents
+    Minimap
+      id: minimap
+      anchors.fill: parent

@@ -1,0 +1,25 @@
+UIWidget
+  id: optionsCornerMenu
+  size: 144 126
+  anchors.left: parent.left
+  anchors.bottom: parent.bottom
+  margin-left: 0
+  margin-bottom: 0
+  image-source: /modules/client_options/settings/corner_button_menu
+  focusable: false
+  phantom: true
+
+  UIButton
+    id: optionsCornerHit
+    size: 42 42
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 46
+    margin-top: 49
+    image-source:
+    background-color: #00000000
+    focusable: false
+    change-cursor-image: true
+    cursor: pointer
+    !tooltip: tr('Options')
+    @onClick: modules.client_options.toggle()

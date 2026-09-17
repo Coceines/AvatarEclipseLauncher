@@ -1,0 +1,9 @@
+Module
+  name: game_loot
+  description: Game Screen-Loot
+  author: Gengo
+  scripts: [ loot ]
+  autoload: true
+  autoload-priority: 1001
+  @onLoad: ScreenLoot.init()
+  @onUnload: ScreenLoot.terminate()

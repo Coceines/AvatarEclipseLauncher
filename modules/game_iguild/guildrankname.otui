@@ -1,0 +1,43 @@
+MainWindow
+  id: rankNameGuildWindow
+  text: Alterar Categoria
+  height: 175
+  width: 260
+  visible: false
+  Label
+    id: rankNameGuildLabel1
+    text: Antiga Posição:
+    anchors.top: parent.top
+    anchors.left: parent.left
+  TextEdit
+    id: rankNameGuildText1
+    anchors.top: rankNameGuildLabel1.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Label
+    id: rankNameGuildLabel2
+    text: Nova Posição:
+    anchors.top: rankNameGuildText1.top
+    anchors.left: parent.left
+    margin-top: 30
+  TextEdit
+    id: rankNameGuildText2
+    anchors.top: rankNameGuildLabel2.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Button
+    id: buttonCancel
+    text: Cancel
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: guildCancel()
+  Button
+    id: buttonOk
+    text: Ok
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: rankNameGuild()

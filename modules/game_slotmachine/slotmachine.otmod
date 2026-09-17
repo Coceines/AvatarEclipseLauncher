@@ -1,0 +1,11 @@
+Module
+  name: Slot Machine
+  description: Slot Machine
+  author: Gengo
+  website: none
+  version: 1.0
+  autoload: true
+  sandboxed: true
+  scripts: [ slotmachine ]
+  @onLoad: SlotMachine.init()
+  @onUnload: SlotMachine.terminate()

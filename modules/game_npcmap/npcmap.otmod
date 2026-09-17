@@ -1,0 +1,10 @@
+Module
+  name: game_npcmap
+  description: Mostra todos os NPCs do mapa (spawn) no minimapa com o outfit e nome
+  author: System
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1005
+  scripts: [ npcs, npcmap ]
+  @onLoad: init()
+  @onUnload: terminate()

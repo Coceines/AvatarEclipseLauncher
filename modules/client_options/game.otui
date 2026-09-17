@@ -1,0 +1,129 @@
+OptionPanel
+
+  OptionCheckBox
+    id: smartWalk
+    margin: 0 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Enable smart walking')
+      text-offset: 0 5
+      !tooltip: tr('Will detect when to use diagonal step based on the\nkeys you are pressing')
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: classicControl
+    margin: 27 0 0 8
+
+    $mobile:
+      visible: false
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Classic control')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: walkSmoothing
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Smooth camera movement')
+      text-offset: 0 5
+      !tooltip: tr('Slides the camera between tiles instead of jumping\none square at a time while walking')
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: disableLoadingScreen
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Disable loading screen')
+      text-offset: 0 5
+      !tooltip: tr('Skip the fullscreen loading screen and enter the game directly')
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: displayNames
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Display creature names')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: displayHealth
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Display creature health bars')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: displayText
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Display text messages')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  OptionCheckBox
+    id: markNpcsMinimap
+    margin: 27 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Mark NPCs in minimap')
+      text-offset: 0 5
+      !tooltip: tr('Shows an icon for every NPC on your minimap (only on areas you have explored)')
+      font: verdana-11px-antialised
+
+  Button
+    id: changeLocale
+    !text: tr('Change language')
+    @onClick: modules.client_locales.createWindow()
+    margin: 27 0 0 8
+    width: 160
+    height: 24
+
+  Button
+    id: resetWindowsLayout
+    !text: tr('Reset windows layout')
+    !tooltip: tr('Puts every window back to its default place and reopens the ones you had closed')
+    @onClick: modules.client_options.resetWindowLayout()
+    margin: 27 0 0 8
+    width: 160
+    height: 24

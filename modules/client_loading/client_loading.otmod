@@ -1,0 +1,11 @@
+Module
+  name: client_loading
+  description: Fullscreen resource preload screen with progress bar, shown after character selection and before entering the game
+  author: otclientv8
+  website: http://otclient.ovh
+  sandboxed: true
+  autoload: true
+  autoload-priority: 150
+  scripts: [ loading ]
+  @onLoad: init()
+  @onUnload: terminate()

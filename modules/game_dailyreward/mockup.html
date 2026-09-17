@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Daily Reward - Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ccc;
+    gap: 30px;
+  }
+  h2 { color: #f0c040; margin-bottom: 10px; text-align: center; }
+  .subtitle { color: #888; font-size: 12px; margin-bottom: 5px; text-align: center; }
+
+  /* ---- The Window (OTClient style) ---- */
+  .module-window {
+    background: #2a2a3e;
+    border: 2px solid #f0c040;
+    border-radius: 6px;
+    padding: 16px 20px 14px 20px;
+    width: 580px;
+    position: relative;
+  }
+  .module-window .title-bar {
+    background: linear-gradient(90deg, #806000, #f0c040, #806000);
+    color: #000;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    padding: 4px 0;
+    border-radius: 3px 3px 0 0;
+    margin: -16px -20px 12px -20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ---- 7 Day Squares ---- */
+  .days-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .day-box {
+    width: 68px;
+    height: 88px;
+    border: 2px solid #555;
+    border-radius: 4px;
+    background: #1e1e30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .day-box .day-label {
+    font-size: 10px;
+    color: #888;
+    position: absolute;
+    top: 2px;
+    left: 0; right: 0;
+    text-align: center;
+  }
+  .day-box .item-icon {
+    width: 32px;
+    height: 32px;
+    background: #f0c040;
+    border-radius: 3px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: opacity 0.3s;
+  }
+  .day-box .item-name {
+    font-size: 8px;
+    color: #aaa;
+    margin-top: 4px;
+    text-align: center;
+    max-width: 60px;
+    line-height: 1.1;
+  }
+
+  /* TODAY highlight */
+  .day-box.today {
+    border-color: #f0c040;
+    box-shadow: 0 0 8px #f0c04088;
+  }
+  .day-box.today .day-label {
+    color: #f0c040;
+    font-weight: bold;
+  }
+
+  /* CLAIMED (green check) */
+  .day-box.claimed {
+    border-color: #40c040;
+  }
+  .day-box.claimed .item-icon {
+    opacity: 0.15;
+    background: #40c040;
+  }
+  .day-box.claimed .check-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #40c040;
+    background: rgba(0,0,0,0.4);
+    border-radius: 2px;
+  }
+  .day-box.claimed .item-icon { opacity: 0.2; }
+
+  /* MISSED / FAIL (red) */
+  .day-box.missed {
+    border-color: #c04040;
+    background: #2e1a1a;
+  }
+  .day-box.missed .item-icon {
+    opacity: 0.2;
+    background: #c04040;
+  }
+  .day-box.missed .fail-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ff4444;
+    background: rgba(0,0,0,0.45);
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ---- Buttons ---- */
+  .buttons-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  .btn {
+    padding: 7px 28px;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+  }
+  .btn-check {
+    background: linear-gradient(180deg, #60c040, #409030);
+    color: #fff;
+  }
+  .btn-check:hover { background: linear-gradient(180deg, #70d050, #50a040); }
+  .btn-check:disabled {
+    background: #555;
+    color: #888;
+    cursor: not-allowed;
+  }
+  .btn-close {
+    background: linear-gradient(180deg, #c04040, #902020);
+    color: #fff;
+  }
+  .btn-close:hover { background: linear-gradient(180deg, #d05050, #a03030); }
+
+  /* ---- Scenarios ---- */
+  .scenarios {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .scenario-label {
+    color: #f0c040;
+    font-size: 11px;
+    text-align: center;
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h2>🎁 Daily Reward Module - Mockup</h2>
+<p class="subtitle">Clique no item 19009 "Coletor de recompensas" no jogo para abrir esta janela</p>
+
+<div class="scenarios">
+
+  <!-- SCENARIO 1: Normal - Day 3 claimable -->
+  <div>
+    <div class="scenario-label">Cenário 1: Dia 3 disponível para coleta</div>
+    <div class="module-window">
+      <div class="title-bar">Recompensas Diárias</div>
+      <div class="days-row">
+        <!-- Day 1: Claimed -->
+        <div class="day-box claimed">
+          <span class="day-label">Dia 1</span>
+          <div class="item-icon">🧪</div>
+          <div class="item-name">Health Potion</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <!-- Day 2: Claimed -->
+        <div class="day-box claimed">
+          <span class="day-label">Dia 2</span>
+          <div class="item-icon">💎</div>
+          <div class="item-name">Crystal Coin</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <!-- Day 3: Today - Available -->
+        <div class="day-box today">
+          <span class="day-label">Dia 3 ★</span>
+          <div class="item-icon">⚔️</div>
+          <div class="item-name">Magic Plate Armor</div>
+        </div>
+        <!-- Day 4-7: Future -->
+        <div class="day-box">
+          <span class="day-label">Dia 4</span>
+          <div class="item-icon" style="background:#555">🎁</div>
+          <div class="item-name">???</div>
+        </div>
+        <div class="day-box">
+          <span class="day-label">Dia 5</span>
+          <div class="item-icon" style="background:#555">🎁</div>
+          <div class="item-name">???</div>
+        </div>
+        <div class="day-box">
+          <span class="day-label">Dia 6</span>
+          <div class="item-icon" style="background:#555">🎁</div>
+          <div class="item-name">???</div>
+        </div>
+        <div class="day-box">
+          <span class="day-label">Dia 7</span>
+          <div class="item-icon" style="background:#555; border: 2px solid #f0c040">🏆</div>
+          <div class="item-name">Grand Prize</div>
+        </div>
+      </div>
+      <div class="buttons-row">
+        <button class="btn btn-check">✔ Check</button>
+        <button class="btn btn-close">✕ Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO 2: Day 4 missed -->
+  <div>
+    <div class="scenario-label">Cenário 2: Dia 4 foi perdido (FAIL)</div>
+    <div class="module-window">
+      <div class="title-bar">Recompensas Diárias</div>
+      <div class="days-row">
+        <div class="day-box claimed">
+          <span class="day-label">Dia 1</span>
+          <div class="item-icon">🧪</div>
+          <div class="item-name">Health Potion</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box claimed">
+          <span class="day-label">Dia 2</span>
+          <div class="item-icon">💎</div>
+          <div class="item-name">Crystal Coin</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box claimed">
+          <span class="day-label">Dia 3</span>
+          <div class="item-icon">⚔️</div>
+          <div class="item-name">Magic Plate Armor</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box missed">
+          <span class="day-label">Dia 4</span>
+          <div class="item-icon">🛡️</div>
+          <div class="item-name">Demon Helmet</div>
+          <div class="fail-overlay">FAIL</div>
+        </div>
+        <div class="day-box">
+          <span class="day-label">Dia 5</span>
+          <div class="item-icon" style="background:#555">🎁</div>
+          <div class="item-name">???</div>
+        </div>
+        <div class="day-box">
+          <span class="day-label">Dia 6</span>
+          <div class="item-icon" style="background:#555">🎁</div>
+          <div class="item-name">???</div>
+        </div>
+        <div class="day-box">
+          <span class="day-label">Dia 7</span>
+          <div class="item-icon" style="background:#555; border: 2px solid #f0c040">🏆</div>
+          <div class="item-name">Grand Prize</div>
+        </div>
+      </div>
+      <div class="buttons-row">
+        <button class="btn btn-check" disabled>✔ Check</button>
+        <button class="btn btn-close">✕ Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO 3: All 7 completed! -->
+  <div>
+    <div class="scenario-label">Cenário 3: Semana completa!</div>
+    <div class="module-window">
+      <div class="title-bar">Recompensas Diárias</div>
+      <div class="days-row">
+        <div class="day-box claimed">
+          <span class="day-label">Dia 1</span>
+          <div class="item-icon">🧪</div>
+          <div class="item-name">Health Potion</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box claimed">
+          <span class="day-label">Dia 2</span>
+          <div class="item-icon">💎</div>
+          <div class="item-name">Crystal Coin</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box claimed">
+          <span class="day-label">Dia 3</span>
+          <div class="item-icon">⚔️</div>
+          <div class="item-name">Magic Plate Armor</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box claimed">
+          <span class="day-label">Dia 4</span>
+          <div class="item-icon">🛡️</div>
+          <div class="item-name">Demon Helmet</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box claimed">
+          <span class="day-label">Dia 5</span>
+          <div class="item-icon">👑</div>
+          <div class="item-name">Crown</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box claimed">
+          <span class="day-label">Dia 6</span>
+          <div class="item-icon">🔥</div>
+          <div class="item-name">Fire Sword</div>
+          <div class="check-overlay">✔</div>
+        </div>
+        <div class="day-box claimed">
+          <span class="day-label">Dia 7</span>
+          <div class="item-icon" style="background: #f0c040; border: 2px solid #f0c040">🏆</div>
+          <div class="item-name">Grand Prize</div>
+          <div class="check-overlay">✔</div>
+        </div>
+      </div>
+      <div class="buttons-row">
+        <button class="btn btn-check" disabled>✔ Check</button>
+        <button class="btn btn-close">✕ Close</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Interactive: click Check in scenario 1 to claim day 3
+  document.querySelectorAll('.btn-check:not(:disabled)').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const window = this.closest('.module-window');
+      const today = window.querySelector('.day-box.today');
+      if (today) {
+        today.classList.remove('today');
+        today.classList.add('claimed');
+        today.innerHTML = `
+          <span class="day-label">Dia 3</span>
+          <div class="item-icon">⚔️</div>
+          <div class="item-name">Magic Plate Armor</div>
+          <div class="check-overlay">✔</div>
+        `;
+        this.disabled = true;
+        this.textContent = '✔ Coletado!';
+      }
+    });
+  });
+
+  // Close buttons just log
+  document.querySelectorAll('.btn-close').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const window = this.closest('.module-window');
+      window.style.opacity = '0.3';
+      setTimeout(() => { window.style.opacity = '1'; }, 800);
+    });
+  });
+</script>
+
+</body>
+</html>

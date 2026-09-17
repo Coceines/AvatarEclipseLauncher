@@ -1,0 +1,176 @@
+MainWindow
+  id: CodeWindow
+  size: 398 218
+  image-source: images/bg
+  clip: false
+  padding-bottom: 0
+  @onClose: modules.game_code.hide()
+
+  UIButton
+    id: closeButton
+    size: 15 15
+    image-source: images/close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: -32
+    margin-right: -5
+    focusable: false
+    phantom: false
+    @onClick: modules.game_code.hide()
+
+  Label
+    id: titleLabel
+    text: "Resgatar Codigos"
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: -33
+    width: 360
+    height: 18
+    text-align: center
+    font: verdana-11px-antialised
+
+  UIWidget
+    id: subImage
+    size: 344 102
+    image-source: images/subbg
+    anchors.top: titleLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+
+    Label
+      id: descLabel
+      text: "Resgate seu código das redes sociais, fique por dentro das novidades do servidor no instagram e discord.\nInsira o codigo abaixo e clique em \"Resgatar\""
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      width: 320
+      height: 64
+      text-align: center
+      font: verdana-11px-antialised
+      text-wrap: true
+
+  UIWidget
+    id: textBg
+    size: 266 32
+    image-source: images/textcode
+    anchors.top: subImage.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 15
+    focusable: true
+    phantom: false
+
+    Label
+      id: codeLabel
+      text: ""
+      anchors.fill: parent
+      margin-left: 12
+      margin-right: 12
+      margin-top: 6
+      margin-bottom: 6
+      font: verdana-11px-antialised
+      text-align: center
+      color: white
+
+    TextEdit
+      id: codeEdit
+      anchors.fill: parent
+      margin-left: 12
+      margin-right: 12
+      margin-top: 6
+      margin-bottom: 6
+      font: verdana-11px-antialised
+      text-align: center
+      opacity: 0.00
+      border-width: 0
+      background-color: #00000000
+      color: #00000000
+
+  UIButton
+    id: redeemButton
+    size: 100 30
+    image-source: images/resgateb_big
+    anchors.top: textBg.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 2
+    margin-left: -54
+    focusable: false
+    phantom: false
+    text: "Resgatar"
+    font: verdana-11px-antialised
+    text-align: center
+    color: #e6e6e6
+
+  UIButton
+    id: closeRedeemButton
+    size: 100 30
+    image-source: images/resgateb_big
+    anchors.top: textBg.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 2
+    margin-left: 54
+    focusable: false
+    phantom: false
+    text: "Fechar"
+    font: verdana-11px-antialised
+    text-align: center
+    color: #e6e6e6
+
+  UIWidget
+    id: rewardModal
+    size: 349 120
+    image-source: images/rewardbg
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 8
+    opacity: 0.00
+    visible: false
+    phantom: false
+    focusable: true
+
+    Label
+      id: rewardTitle
+      text: "Voce resgatou o codigo:"
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 5
+      width: 330
+      height: 16
+      text-align: center
+      font: verdana-11px-antialised
+
+    Label
+      id: rewardCode
+      text: ""
+      anchors.top: rewardTitle.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 2
+      width: 330
+      height: 16
+      text-align: center
+      font: verdana-11px-antialised
+
+    UIWidget
+      id: rewardItems
+      size: 320 44
+      anchors.top: rewardCode.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 8
+      layout:
+        type: horizontalBox
+        fit-children: true
+        padding: 6
+        spacing: 8
+
+    UIButton
+      id: confirmButton
+      size: 81 29
+      image-source: images/confirm
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-bottom: -2
+      focusable: false
+      phantom: false
+      text: "Confirmar"
+      font: verdana-11px-antialised
+      text-align: center
+      color: #e6e6e6

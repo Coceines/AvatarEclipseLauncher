@@ -1,0 +1,10 @@
+{
+  "preloadedSkills": [
+    "brainstorming",
+    "vercel-composition-patterns",
+    "extract-design-system",
+    "api-design-principles",
+    "golang-code-style"
+  ],
+  "startupScript": "/pense"
+}

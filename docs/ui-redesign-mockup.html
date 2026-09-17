@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freebuff Desktop — UI Redesign Mockup</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+    background: #0a0e17;
+    color: #c8cdd5;
+    user-select: none;
+  }
+  :root {
+    --bg-darkest: #0a0e17;
+    --bg-dark: #111827;
+    --bg-panel: #151c2c;
+    --bg-glass: rgba(15, 20, 35, 0.88);
+    --border-subtle: rgba(255,255,255,0.06);
+    --border-accent: rgba(99,140,255,0.25);
+    --accent-blue: #638cff;
+    --accent-purple: #a855f7;
+    --accent-cyan: #22d3ee;
+    --accent-green: #34d399;
+    --accent-red: #f87171;
+    --accent-amber: #fbbf24;
+    --text-primary: #e8ecf1;
+    --text-secondary: #8892a4;
+    --text-muted: #4b5563;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+    --shadow-glow-blue: 0 0 20px rgba(99,140,255,0.15);
+    --shadow-glow-purple: 0 0 20px rgba(168,85,247,0.15);
+    --transition-fast: 150ms ease;
+  }
+
+  /* ========== TOPBAR ========== */
+  .topbar {
+    position: absolute; top: 0; left: 0; right: 0; height: 36px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px) saturate(1.5);
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6px; z-index: 100;
+  }
+  .topbar::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-purple), transparent);
+    opacity: 0.3;
+  }
+  .topbar-group { display: flex; align-items: center; gap: 2px; }
+  .topbar-sep { width: 1px; height: 18px; background: var(--border-subtle); margin: 0 4px; }
+  .topbar-btn {
+    width: 30px; height: 30px; border-radius: var(--radius-sm);
+    background: transparent; border: none; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; transition: all var(--transition-fast);
+    color: var(--text-secondary); position: relative;
+  }
+  .topbar-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+  .topbar-btn.active {
+    background: rgba(99,140,255,0.12);
+    box-shadow: inset 0 0 0 1px var(--border-accent); color: var(--accent-blue);
+  }
+  .topbar-btn.active::after {
+    content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
+    width: 10px; height: 2px; background: var(--accent-blue); border-radius: 1px;
+  }
+  .topbar-btn svg { width: 20px; height: 20px; }
+  .topbar-info { display: flex; align-items: center; gap: 10px; margin: 0 8px; }
+  .topbar-label { font-size: 11px; font-weight: 600; letter-spacing: 0.3px; font-variant-numeric: tabular-nums; }
+  .topbar-fps { color: var(--accent-green); }
+  .topbar-ping { color: var(--accent-amber); }
+
+  /* ========== MAIN LAYOUT ========== */
+  .game-layout {
+    position: absolute; top: 36px; left: 0; right: 0; bottom: 0;
+    display: grid; grid-template-columns: 198px 1fr 198px; grid-template-rows: 1fr;
+  }
+
+  /* ========== SIDE PANELS ========== */
+  .side-panel {
+    background: var(--bg-glass); backdrop-filter: blur(16px);
+    border-right: 1px solid var(--border-subtle);
+    display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden;
+    padding: 5px; gap: 5px;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent;
+  }
+  .side-panel::-webkit-scrollbar { width: 3px; }
+  .side-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+  .side-panel.right { border-right: none; border-left: 1px solid var(--border-subtle); }
+
+  /* ========== MINI WINDOWS ========== */
+  .mw {
+    background: var(--bg-panel); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm);
+    flex-shrink: 0;
+  }
+  .mw-hd {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 5px 8px; border-bottom: 1px solid var(--border-subtle);
+    background: linear-gradient(135deg, rgba(255,255,255,0.025), transparent);
+    cursor: pointer;
+  }
+  .mw-hd:hover { background: rgba(255,255,255,0.03); }
+  .mw-title { font-size: 10px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.5px; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
+  .mw-ctrls { display: flex; gap: 3px; }
+  .mw-ctrls button {
+    width: 13px; height: 13px; border-radius: 3px; border: none;
+    background: rgba(255,255,255,0.05); color: var(--text-muted); font-size: 7px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .mw-ctrls button:hover { background: rgba(255,255,255,0.1); color: var(--text-secondary); }
+  .mw-ctrls .x:hover { background: rgba(248,113,113,0.2); color: var(--accent-red); }
+  .mw-body { padding: 6px; }
+
+  /* ========== HEALTH INFO ========== */
+  .hp-info {
+    background: var(--bg-panel); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);
+    position: relative; flex-shrink: 0;
+  }
+  .hp-info::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 70px;
+    background: linear-gradient(135deg, rgba(99,140,255,0.07), rgba(168,85,247,0.04), transparent);
+    pointer-events: none;
+  }
+  .hp-top { display: flex; padding: 10px 12px; gap: 10px; position: relative; z-index: 1; }
+  .avatar {
+    width: 64px; height: 64px; border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--bg-dark), #1a2235);
+    border: 2px solid var(--border-accent); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-glow-blue); overflow: hidden;
+  }
+  .avatar-inner {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #2a3550, #1a2235);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--text-muted);
+  }
+  .bars { flex: 1; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
+  .bar-row {}
+  .bar-lbl { font-size: 9px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.4px; text-transform: uppercase; display: flex; justify-content: space-between; margin-bottom: 1px; }
+  .bar-lbl .v { color: var(--text-primary); font-weight: 800; }
+  .bar-trk {
+    background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.03); position: relative;
+  }
+  .bar-fl {
+    height: 100%; border-radius: 8px; position: relative;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .bar-fl::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent);
+    border-radius: 8px 8px 0 0;
+  }
+  .bar-hp .bar-trk { height: 18px; }
+  .bar-hp .bar-fl { background: linear-gradient(90deg, #dc2626, #ef4444, #f87171); width: 78%; box-shadow: 0 0 10px rgba(239,68,68,0.3); }
+  .bar-mp .bar-trk { height: 12px; }
+  .bar-mp .bar-fl { background: linear-gradient(90deg, #7c3aed, #8b5cf6, #a78bfa); width: 65%; box-shadow: 0 0 10px rgba(139,92,246,0.3); }
+  .bar-xp .bar-trk { height: 8px; }
+  .bar-xp .bar-fl { background: linear-gradient(90deg, #d97706, #f59e0b, #fbbf24); width: 42%; box-shadow: 0 0 10px rgba(245,158,11,0.3); }
+  .hp-bottom {
+    display: flex; justify-content: space-between; padding: 4px 12px 8px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .stat-l { font-size: 9px; color: var(--text-muted); font-weight: 600; }
+  .stat-l span { color: var(--text-secondary); }
+  .conditions { display: flex; gap: 2px; padding: 0 12px 8px; }
+  .cond {
+    width: 16px; height: 16px; border-radius: 3px; background: var(--bg-dark);
+    border: 1px solid var(--border-subtle); display: flex; align-items: center;
+    justify-content: center; font-size: 8px;
+  }
+
+  /* ========== INVENTORY ========== */
+  .inv-body { display: flex; flex-direction: column; align-items: center; padding: 6px; gap: 2px; }
+  .eq-grid { display: grid; gap: 2px; }
+  .eq-row { display: flex; gap: 2px; justify-content: center; }
+  .slot {
+    width: 32px; height: 32px; background: var(--bg-dark);
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all var(--transition-fast); position: relative;
+  }
+  .slot::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
+    pointer-events: none; border-radius: var(--radius-sm);
+  }
+  .slot:hover { border-color: var(--border-accent); background: var(--bg-dark); box-shadow: var(--shadow-glow-blue); }
+  .slot .lbl { font-size: 6px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; opacity: 0; transition: opacity var(--transition-fast); }
+  .slot:hover .lbl { opacity: 1; }
+  .slot .iid { position: absolute; bottom: 1px; right: 2px; font-size: 7px; font-weight: 800; color: var(--accent-green); text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+  .cap-lbl { font-size: 9px; color: var(--text-muted); text-align: center; margin-top: 3px; padding-top: 4px; border-top: 1px solid var(--border-subtle); width: 100%; }
+  .cap-lbl span { color: var(--accent-cyan); font-weight: 700; }
+
+  /* ========== COMBAT ========== */
+  .combat-grid { display: grid; grid-template-columns: repeat(5, 26px); gap: 3px; justify-content: center; padding: 4px; }
+  .cmb {
+    width: 26px; height: 26px; background: var(--bg-dark);
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all var(--transition-fast); position: relative;
+  }
+  .cmb:hover { border-color: var(--border-accent); background: var(--bg-dark); }
+  .cmb.on { border-color: var(--accent-blue); background: rgba(99,140,255,0.1); box-shadow: 0 0 8px rgba(99,140,255,0.2); }
+  .cmb.on::after {
+    content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%);
+    width: 12px; height: 2px; background: var(--accent-blue); border-radius: 1px;
+  }
+  .cmb svg { width: 18px; height: 18px; }
+
+  /* ========== SKILLS ========== */
+  .sk-row {
+    display: flex; align-items: center; padding: 2px 4px; border-radius: 3px;
+    cursor: pointer; transition: background var(--transition-fast); gap: 4px;
+  }
+  .sk-row:hover { background: rgba(255,255,255,0.04); }
+  .sk-nm { font-size: 9px; color: var(--text-secondary); flex: 1; }
+  .sk-vl { font-size: 9px; color: var(--text-primary); font-weight: 700; font-variant-numeric: tabular-nums; min-width: 42px; text-align: right; }
+  .sk-br { height: 2px; background: rgba(255,255,255,0.03); border-radius: 1px; margin-top: 1px; }
+  .sk-bf { height: 100%; border-radius: 1px; background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan)); }
+  .sk-bf.red { background: linear-gradient(90deg, var(--accent-red), var(--accent-amber)); }
+
+  /* ========== COOLDOWNS ========== */
+  .cd-grid { display: flex; gap: 3px; padding: 4px; align-items: flex-start; flex-wrap: wrap; }
+  .cd-ico {
+    width: 20px; height: 20px; border-radius: 4px; background: var(--bg-dark);
+    border: 1px solid var(--border-subtle); display: flex; align-items: center;
+    justify-content: center; position: relative; overflow: hidden;
+  }
+  .cd-ico.rdy { border-color: rgba(52,211,153,0.3); }
+  .cd-ico.cd { border-color: rgba(248,113,113,0.3); }
+  .cd-ico svg { width: 16px; height: 16px; }
+  .cd-sep { width: 1px; height: 16px; background: var(--border-subtle); margin: 2px 2px; flex-shrink: 0; }
+  .cd-spells { display: flex; gap: 2px; flex-wrap: wrap; }
+  .cd-sp {
+    width: 22px; height: 22px; border-radius: 3px; background: var(--bg-dark);
+    border: 1px solid var(--border-subtle); overflow: hidden;
+  }
+  .cd-sp svg { width: 22px; height: 22px; }
+
+  /* ========== MINIMAP ========== */
+  .mm-body {
+    height: 140px; background: #0a0e17; border-radius: var(--radius-sm);
+    overflow: hidden; position: relative; border: 1px solid var(--border-subtle);
+  }
+  .mm-grid {
+    width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(34,211,238,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.04) 1px, transparent 1px);
+    background-size: 8px 8px;
+  }
+  .mm-cross {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 6px; height: 6px; border: 1px solid var(--accent-cyan); border-radius: 50%;
+    background: rgba(34,211,238,0.15);
+  }
+  .mm-ctrls { position: absolute; top: 3px; right: 3px; display: flex; gap: 2px; }
+  .mm-ctrls button {
+    width: 12px; height: 12px; border-radius: 2px;
+    background: var(--bg-glass); border: 1px solid var(--border-subtle);
+    color: var(--text-muted); font-size: 7px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ========== MAP AREA ========== */
+  .map-area {
+    position: relative; overflow: hidden;
+  }
+  .map-ph {
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at 30% 40%, rgba(34,211,238,0.02), transparent 60%),
+      radial-gradient(ellipse at 70% 60%, rgba(168,85,247,0.015), transparent 60%),
+      linear-gradient(180deg, #080c14, #0b1018);
+    display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .map-ph::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 32px 32px; opacity: 0.5;
+  }
+  .map-lbl { font-size: 11px; color: var(--text-muted); letter-spacing: 3px; text-transform: uppercase; position: relative; z-index: 1; }
+
+  /* ========== BOTTOM CONSOLE ========== */
+  .bottom {
+    position: absolute; bottom: 0; left: 198px; right: 198px; height: 170px;
+    background: var(--bg-glass); backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-subtle);
+    display: flex; flex-direction: column;
+  }
+  .console-toolbar {
+    display: flex; align-items: center; gap: 2px; padding: 3px 6px;
+    border-bottom: 1px solid var(--border-subtle); min-height: 26px;
+  }
+  .ct-btn {
+    width: 20px; height: 20px; border-radius: 4px; background: transparent;
+    border: none; color: var(--text-muted); cursor: pointer; display: flex;
+    align-items: center; justify-content: center; font-size: 10px;
+    transition: all var(--transition-fast); flex-shrink: 0;
+  }
+  .ct-btn:hover { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+  .ct-sep { width: 1px; height: 12px; background: var(--border-subtle); margin: 0 2px; flex-shrink: 0; }
+  .ct-tab {
+    height: 22px; padding: 0 8px; border-radius: var(--radius-sm);
+    background: transparent; border: none; color: var(--text-muted);
+    font-size: 9px; font-weight: 500; cursor: pointer;
+    transition: all var(--transition-fast); white-space: nowrap;
+    display: flex; align-items: center; gap: 3px;
+  }
+  .ct-tab:hover { background: rgba(255,255,255,0.05); color: var(--text-secondary); }
+  .ct-tab.active { background: rgba(99,140,255,0.1); color: var(--accent-blue); font-weight: 700; }
+  .ct-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent-green); }
+  .ct-spacer { flex: 1; }
+  .console-msgs {
+    flex: 1; padding: 4px 8px; overflow-y: auto; background: rgba(0,0,0,0.2);
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent;
+  }
+  .console-msgs::-webkit-scrollbar { width: 3px; }
+  .console-msgs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+  .msg { font-size: 10px; line-height: 1.6; font-family: 'Consolas', 'SF Mono', monospace; }
+  .msg-ts { color: var(--text-muted); font-size: 8px; margin-right: 3px; }
+  .msg-sys { color: var(--text-muted); }
+  .msg-n { color: #d4d4d8; }
+  .msg-ch { color: var(--accent-blue); }
+  .msg-g { color: var(--accent-green); }
+  .msg-p { color: var(--accent-purple); }
+  .msg-npc { color: var(--accent-cyan); }
+  .msg-w { color: var(--accent-amber); }
+  .msg-nm { font-weight: 700; }
+  .console-input {
+    display: flex; align-items: center; gap: 4px; padding: 4px 6px;
+    border-top: 1px solid var(--border-subtle); background: rgba(0,0,0,0.15);
+  }
+  .ci-field {
+    flex: 1; background: var(--bg-dark); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm); padding: 4px 8px; color: var(--text-primary);
+    font-size: 10px; font-family: 'Consolas', monospace; outline: none;
+  }
+  .ci-field:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 2px rgba(99,140,255,0.1); }
+  .ci-field::placeholder { color: var(--text-muted); }
+
+  /* ========== SPELL BAR (FOLDS) ========== */
+  .spellbar {
+    position: absolute; bottom: 172px; left: 50%; transform: translateX(-50%); z-index: 50;
+  }
+  .sb-inner {
+    background: var(--bg-glass); backdrop-filter: blur(20px) saturate(1.5);
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+    padding: 6px 10px; display: flex; flex-direction: column; gap: 4px;
+    box-shadow: var(--shadow-lg), var(--shadow-glow-purple); position: relative; overflow: hidden;
+  }
+  .sb-inner::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), var(--accent-blue), transparent);
+    opacity: 0.4;
+  }
+  .sb-row { display: flex; gap: 4px; }
+  .sb-slot {
+    width: 32px; height: 32px; background: var(--bg-dark);
+    border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+    position: relative; cursor: pointer; overflow: hidden;
+    transition: all var(--transition-fast);
+  }
+  .sb-slot::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
+    pointer-events: none; z-index: 2;
+  }
+  .sb-slot:hover { border-color: var(--accent-purple); box-shadow: 0 0 12px rgba(168,85,247,0.3); transform: translateY(-1px); }
+  .sb-slot.rdy { border-color: rgba(52,211,153,0.25); }
+  .sb-slot.rdy::after {
+    content: ''; position: absolute; inset: -1px; border-radius: var(--radius-sm);
+    border: 1px solid rgba(52,211,153,0.15); pointer-events: none; z-index: 1;
+  }
+  .sb-cd {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: var(--text-primary); z-index: 3;
+  }
+  .sb-nm {
+    position: absolute; bottom: 0; left: 0; right: 0; font-size: 5px;
+    text-align: center; color: rgba(255,255,255,0.4); padding: 1px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6)); z-index: 3;
+    opacity: 0; transition: opacity var(--transition-fast);
+  }
+  .sb-slot:hover .sb-nm { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ====== TOPBAR ====== -->
+<div class="topbar">
+  <div class="topbar-group">
+    <button class="topbar-btn" title="Exit">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M7 17H4a1 1 0 01-1-1V4a1 1 0 011-1h3M13 14l4-4-4-4M17 10H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="topbar-sep"></div>
+    <button class="topbar-btn active" title="Inventory">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M7 4V3a1 1 0 011-1h4a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.3"/></svg>
+    </button>
+    <button class="topbar-btn" title="Skills">
+      <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M3 17c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+    <button class="topbar-btn" title="Battle List">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M4 5h12M4 10h12M4 15h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+    <button class="topbar-btn" title="Minimap">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M2 5l5-2 6 2 5-2v12l-5 2-6-2-5 2V5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7 3v12M13 5v12" stroke="currentColor" stroke-width="1.3"/></svg>
+    </button>
+    <button class="topbar-btn" title="Spell List">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M10 2l1.5 3.5L15 6.5l-2.5 2.5.5 3.5L10 11l-3 1.5.5-3.5L5 6.5l3.5-1L10 2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="topbar-btn" title="Cooldowns">
+      <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.3"/><path d="M10 5.5V10l3 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="topbar-btn" title="Combat Controls">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M10 3v14M3 10h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.3"/></svg>
+    </button>
+    <button class="topbar-btn" title="Quest Log">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="4" y="2" width="12" height="16" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M7 7h6M7 10h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+    <button class="topbar-btn" title="VIP List">
+      <svg viewBox="0 0 20 20" fill="none"><circle cx="8" cy="7" r="3.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 17c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M14 9l1.5 1.5L18 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="topbar-btn" title="Market">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M4 8l6-4 6 4v8H4V8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 16v-5h4v5" stroke="currentColor" stroke-width="1.3"/></svg>
+    </button>
+    <button class="topbar-btn" title="Achievements">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M10 1l2 4 4.5.7-3.2 3.2.8 4.5L10 11l-4.1 2.4.8-4.5L3.5 5.7 8 5l2-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <div class="topbar-info">
+    <span class="topbar-label topbar-fps">FPS: 60</span>
+    <div class="topbar-sep"></div>
+    <span class="topbar-label topbar-ping">PING: 42ms</span>
+  </div>
+  <div class="topbar-group">
+    <button class="topbar-btn" title="Options">
+      <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M10 2v2m0 12v2M2 10h2m12 0h2M4.2 4.2l1.4 1.4m8.8 8.8l1.4 1.4M4.2 15.8l1.4-1.4m8.8-8.8l1.4-1.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ====== MAIN LAYOUT ====== -->
+<div class="game-layout">
+
+  <!-- LEFT PANEL -->
+  <div class="side-panel">
+
+    <!-- Health Info -->
+    <div class="hp-info">
+      <div class="hp-top">
+        <div class="avatar"><div class="avatar-inner">🧙</div></div>
+        <div class="bars">
+          <div class="bar-row bar-hp">
+            <div class="bar-lbl"><span>HP</span><span class="v">782 / 1,002</span></div>
+            <div class="bar-trk"><div class="bar-fl"></div></div>
+          </div>
+          <div class="bar-row bar-mp">
+            <div class="bar-lbl"><span>MP</span><span class="v">428 / 660</span></div>
+            <div class="bar-trk"><div class="bar-fl"></div></div>
+          </div>
+          <div class="bar-row bar-xp">
+            <div class="bar-lbl"><span>EXP</span><span class="v">42.3%</span></div>
+            <div class="bar-trk"><div class="bar-fl"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-bottom">
+        <span class="stat-l">Cap: <span>1,240</span></span>
+        <span class="stat-l">Soul: <span>100</span></span>
+      </div>
+      <div class="conditions">
+        <div class="cond">🛡</div><div class="cond">⚡</div><div class="cond">🔥</div><div class="cond">💚</div>
+      </div>
+    </div>
+
+    <!-- Inventory -->
+    <div class="mw">
+      <div class="mw-hd">
+        <div class="mw-title">📦 Inventory</div>
+        <div class="mw-ctrls"><button>—</button><button class="x">✕</button></div>
+      </div>
+      <div class="mw-body">
+        <div class="inv-body">
+          <div class="eq-row"><div></div><div class="slot"><span class="lbl">Neck</span></div><div></div></div>
+          <div class="eq-row"><div class="slot"><span class="lbl">Back</span></div><div class="slot"><span class="lbl">Head</span></div><div class="slot"><span class="lbl">Back</span></div></div>
+          <div class="eq-row"><div class="slot"><span class="lbl">Left</span></div><div class="slot"><span class="iid">+3</span><span class="lbl">Body</span></div><div class="slot"><span class="lbl">Right</span></div></div>
+          <div class="eq-row"><div class="slot"><span class="lbl">Finger</span></div><div class="slot"><span class="lbl">Legs</span></div><div class="slot"><span class="lbl">Ammo</span></div></div>
+          <div class="eq-row"><div></div><div class="slot"><span class="lbl">Feet</span></div><div></div></div>
+          <div class="cap-lbl">Cap: <span>1,240</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Combat Controls -->
+    <div class="mw">
+      <div class="mw-hd">
+        <div class="mw-title">⚔️ Combat</div>
+        <div class="mw-ctrls"><button>—</button><button class="x">✕</button></div>
+      </div>
+      <div class="mw-body" style="padding:3px">
+        <div class="combat-grid">
+          <div class="cmb on" title="Offensive"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#ef4444" stroke-width="1.3"/><path d="M10 6v8M6 10h8" stroke="#ef4444" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="cmb" title="Balanced"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#f59e0b" stroke-width="1.3"/><path d="M10 6v8" stroke="#f59e0b" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="cmb" title="Defensive"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#22c55e" stroke-width="1.3"/><path d="M7 10l2 2 4-4" stroke="#22c55e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="cmb" title="Chase"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#638cff" stroke-width="1.3"/><path d="M7 10h6m-2-2m2 2l-2 2" stroke="#638cff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="cmb" title="Safe"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#a855f7" stroke-width="1.3"/><path d="M10 7v3" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="13" r="0.8" fill="#a855f7"/></svg></div>
+          <div class="cmb" title="White Dove"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#e2e8f0" stroke-width="1.3"/><path d="M7 12c1-3 5-3 6 0" stroke="#e2e8f0" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="cmb" title="White Hand"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#94a3b8" stroke-width="1.3"/><path d="M10 7v6M8 9v4M12 9v4" stroke="#94a3b8" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <div class="cmb" title="Yellow Hand"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#fbbf24" stroke-width="1.3"/><path d="M10 7v6M8 9v4M12 9v4" stroke="#fbbf24" stroke-width="1" stroke-linecap="round"/></svg></div>
+          <div class="cmb" title="Red Fist"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#ef4444" stroke-width="1.3"/><circle cx="10" cy="10" r="2.5" stroke="#ef4444" stroke-width="1.3"/></svg></div>
+          <div class="cmb" title="Mount"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#22d3ee" stroke-width="1.3"/><path d="M7 13l2-6h2l2 6" stroke="#22d3ee" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP AREA -->
+  <div class="map-area">
+    <div class="map-ph">
+      <span class="map-lbl">GAME MAP AREA</span>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="side-panel right">
+
+    <!-- Skills -->
+    <div class="mw">
+      <div class="mw-hd">
+        <div class="mw-title">📊 Skills</div>
+        <div class="mw-ctrls"><button>—</button><button class="x">✕</button></div>
+      </div>
+      <div class="mw-body" style="padding:2px 4px">
+        <div class="sk-row"><span class="sk-nm">Experience</span><span class="sk-vl">2,847,392</span></div>
+        <div class="sk-row"><span class="sk-nm">Level</span><span class="sk-vl">156</span></div>
+        <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf red" style="width:42%"></div></div>
+        <div class="sk-row"><span class="sk-nm">Magic Level</span><span class="sk-vl">87</span></div>
+        <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf red" style="width:68%"></div></div>
+        <div class="sk-row"><span class="sk-nm">Sword</span><span class="sk-vl">94</span></div>
+        <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf" style="width:82%"></div></div>
+        <div class="sk-row"><span class="sk-nm">Shielding</span><span class="sk-vl">88</span></div>
+        <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf" style="width:71%"></div></div>
+        <div class="sk-row"><span class="sk-nm">Distance</span><span class="sk-vl">45</span></div>
+        <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf" style="width:38%"></div></div>
+        <div class="sk-row"><span class="sk-nm">Stamina</span><span class="sk-vl">38:12</span></div>
+        <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf" style="width:63%"></div></div>
+        <div class="sk-row"><span class="sk-nm">Regen</span><span class="sk-vl">2:14</span></div>
+      </div>
+    </div>
+
+    <!-- Cooldowns -->
+    <div class="mw">
+      <div class="mw-hd">
+        <div class="mw-title">⏱️ Cooldowns</div>
+        <div class="mw-ctrls"><button>—</button><button class="x">✕</button></div>
+      </div>
+      <div class="mw-body" style="padding:4px">
+        <div class="cd-grid">
+          <div class="cd-ico rdy"><svg viewBox="0 0 20 20" fill="none"><path d="M10 4l-1 4h-4l3 2-1 4 3-2 3 2-1-4 3-2h-4l-1-4z" stroke="#ef4444" stroke-width="0.8" fill="rgba(239,68,68,0.15)"/></svg></div>
+          <div class="cd-ico cd"><svg viewBox="0 0 20 20" fill="none"><path d="M10 5l-4 4h3v5h2v-5h3l-4-4z" stroke="#22c55e" stroke-width="0.8" fill="rgba(34,197,94,0.15)"/></svg></div>
+          <div class="cd-ico rdy"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" stroke="#638cff" stroke-width="0.8" fill="rgba(99,140,255,0.15)"/></svg></div>
+          <div class="cd-ico rdy"><svg viewBox="0 0 20 20" fill="none"><path d="M10 4l1.5 3 3.5.5-2.5 2.5.5 3.5L10 12l-3 1.5.5-3.5L5 7.5l3.5-.5L10 4z" stroke="#a855f7" stroke-width="0.8" fill="rgba(168,85,247,0.15)"/></svg></div>
+          <div class="cd-sep"></div>
+          <div class="cd-spells">
+            <div class="cd-sp"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="5" stroke="#638cff" stroke-width="0.8" opacity="0.6"/></svg></div>
+            <div class="cd-sp"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="5" stroke="#22c55e" stroke-width="0.8" opacity="0.6"/></svg></div>
+            <div class="cd-sp"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="5" stroke="#f59e0b" stroke-width="0.8" opacity="0.6"/></svg></div>
+            <div class="cd-sp"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="5" stroke="#a855f7" stroke-width="0.8" opacity="0.6"/></svg></div>
+            <div class="cd-sp"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="5" stroke="#ef4444" stroke-width="0.8" opacity="0.6"/></svg></div>
+            <div class="cd-sp"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="5" stroke="#22d3ee" stroke-width="0.8" opacity="0.6"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Minimap -->
+    <div class="mw">
+      <div class="mw-hd">
+        <div class="mw-title">🗺️ Minimap</div>
+        <div class="mw-ctrls"><button>—</button><button class="x">✕</button></div>
+      </div>
+      <div class="mw-body" style="padding:4px">
+        <div class="mm-body">
+          <div class="mm-grid"></div>
+          <div class="mm-cross"></div>
+          <div class="mm-ctrls"><button>?</button><button>HD</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SPELL BAR ====== -->
+<div class="spellbar">
+  <div class="sb-inner">
+    <div class="sb-row">
+      <div class="sb-slot rdy" title="Exura"><span class="sb-nm">Exura</span></div>
+      <div class="sb-slot rdy" title="Exori"><span class="sb-nm">Exori</span></div>
+      <div class="sb-slot" title="Exori Gran - CD:4"><div class="sb-cd">4</div><span class="sb-nm">Exori Gran</span></div>
+      <div class="sb-slot rdy" title="Exura Gran"><span class="sb-nm">Exura Gran</span></div>
+      <div class="sb-slot rdy" title="Exani Hur"><span class="sb-nm">Exani Hur</span></div>
+      <div class="sb-slot" title="Exori Mas - CD:12"><div class="sb-cd">12</div><span class="sb-nm">Exori Mas</span></div>
+      <div class="sb-slot rdy" title="Exana Mort"><span class="sb-nm">Exana Mort</span></div>
+      <div class="sb-slot rdy" title="Exana Pox"><span class="sb-nm">Exana Pox</span></div>
+      <div class="sb-slot rdy" title="Energy Wave"><span class="sb-nm">Energy Wave</span></div>
+      <div class="sb-slot rdy" title="Sudden Death"><span class="sb-nm">Sudden Death</span></div>
+      <div class="sb-slot" title="Mega Wave - CD:30"><div class="sb-cd">30</div><span class="sb-nm">Mega Wave</span></div>
+      <div class="sb-slot rdy" title="Stone Shower"><span class="sb-nm">Stone Shower</span></div>
+    </div>
+    <div class="sb-row">
+      <div class="sb-slot rdy" title="Avalanche"><span class="sb-nm">Avalanche</span></div>
+      <div class="sb-slot rdy" title="Thunderstorm"><span class="sb-nm">Thunderstorm</span></div>
+      <div class="sb-slot rdy" title="Fireball"><span class="sb-nm">Fireball</span></div>
+      <div class="sb-slot" title="Hellstorm - CD:8"><div class="sb-cd">8</div><span class="sb-nm">Hellstorm</span></div>
+      <div class="sb-slot rdy" title="Magic Shield"><span class="sb-nm">Magic Shield</span></div>
+      <div class="sb-slot rdy" title="Haste"><span class="sb-nm">Haste</span></div>
+      <div class="sb-slot rdy" title="Food"><span class="sb-nm">Food</span></div>
+      <div class="sb-slot" title="Ultimate Healing - CD:60"><div class="sb-cd">60</div><span class="sb-nm">Ult. Healing</span></div>
+      <div class="sb-slot rdy" title="Chameleon"><span class="sb-nm">Chameleon</span></div>
+      <div class="sb-slot rdy" title="Light"><span class="sb-nm">Light</span></div>
+      <div class="sb-slot rdy" title="Great Light"><span class="sb-nm">Great Light</span></div>
+      <div class="sb-slot rdy" title="Levitate"><span class="sb-nm">Levitate</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== BOTTOM CONSOLE ====== -->
+<div class="bottom">
+  <div class="console-toolbar">
+    <button class="ct-btn" title="Chat Mode">💬</button>
+    <div class="ct-sep"></div>
+    <button class="ct-tab" style="font-size:11px">◀</button>
+    <button class="ct-tab active"><span class="ct-dot"></span>Main</button>
+    <button class="ct-tab"><span class="ct-dot" style="background:var(--accent-purple)"></span>Party</button>
+    <button class="ct-tab"><span class="ct-dot" style="background:var(--accent-green)"></span>Guild</button>
+    <button class="ct-tab" style="font-size:11px">▶</button>
+    <div class="ct-spacer"></div>
+    <button class="ct-btn" title="Spell Bar" style="color:var(--accent-purple)">✨</button>
+    <button class="ct-btn" title="Close">✕</button>
+    <button class="ct-btn" title="Clear">🗑</button>
+    <button class="ct-btn" title="Channels">📋</button>
+    <button class="ct-btn" title="Ignore">🚫</button>
+  </div>
+  <div class="console-msgs">
+    <div class="msg msg-sys"><span class="msg-ts">[14:23]</span> Welcome to Freebuff Desktop v8.0!</div>
+    <div class="msg msg-sys"><span class="msg-ts">[14:23]</span> You have logged in as <span class="msg-nm" style="color:var(--accent-blue)">ShadowMage</span>.</div>
+    <div class="msg msg-n"><span class="msg-ts">[14:24]</span> <span class="msg-nm" style="color:#fef3c7">ShadowMage</span>: Hey everyone!</div>
+    <div class="msg msg-npc"><span class="msg-ts">[14:24]</span> <span class="msg-nm" style="color:var(--accent-cyan)">NPC Guard</span>: Welcome to the city, traveler.</div>
+    <div class="msg msg-ch"><span class="msg-ts">[14:25]</span> [Party] <span class="msg-nm" style="color:var(--accent-blue)">DruidBoy</span>: LFG Gaia boss</div>
+    <div class="msg msg-g"><span class="msg-ts">[14:25]</span> [Guild] <span class="msg-nm" style="color:var(--accent-green)">Leader</span>: Guild war at 8pm!</div>
+    <div class="msg msg-w"><span class="msg-ts">[14:26]</span> You are losing health rapidly!</div>
+    <div class="msg msg-n"><span class="msg-ts">[14:26]</span> You lose 42 hitpoints.</div>
+    <div class="msg msg-p"><span class="msg-ts">[14:27]</span> <span class="msg-nm" style="color:var(--accent-purple)">FriendOne</span>: Wanna hunt?</div>
+    <div class="msg msg-n"><span class="msg-ts">[14:27]</span> <span class="msg-nm" style="color:#fef3c7">ShadowMage</span>: Sure, where?</div>
+  </div>
+  <div class="console-input">
+    <button class="ct-btn">💬</button>
+    <button class="ct-btn">😊</button>
+    <input class="ci-field" type="text" placeholder="Type a message..." />
+  </div>
+</div>
+
+</body>
+</html>

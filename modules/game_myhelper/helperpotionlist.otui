@@ -1,0 +1,67 @@
+PotionOption < Panel
+  size: 210 42
+  background-color: #1a1d24
+  border-width: 1
+  border-color: #2c3240
+  padding: 4
+  focusable: true
+
+  $hover:
+    background-color: #242936
+    border-color: #4a90e2
+
+  UIItem
+    id: optionIcon
+    size: 32 32
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    phantom: true
+    virtual: true
+
+  Label
+    id: optionName
+    anchors.left: optionIcon.right
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    font: verdana-11px-rounded
+    color: #ffffff
+    text-auto-resize: true
+
+MainWindow
+  id: potionListWindow
+  !text: tr('Escolha a pocao')
+  size: 230 300
+  anchors.centerIn: parent
+  @onEscape: modules.game_myhelper.hidePotionList()
+
+  UIButton
+    id: potionListClose
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 6
+    size: 14 14
+    image-source: /images/ui/miniwindow_buttons
+    image-clip: 28 0 14 14
+    @onClick: modules.game_myhelper.hidePotionList()
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14
+
+  Panel
+    id: listPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-top: 28
+    margin-left: 6
+    margin-right: 6
+    margin-bottom: 6
+    layout:
+      type: verticalBox
+      cell-spacing: 3

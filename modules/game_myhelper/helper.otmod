@@ -1,0 +1,12 @@
+Module
+  name: game_myhelper
+  description: Helper pessoal - cura por magia, potions, water heal em aliado e auto target
+  author: Avatar
+  website: localhost
+  version: 1.0
+  autoload: true
+  autoload-priority: 1010
+  sandboxed: true
+  scripts: [ potions, helper ]
+  @onLoad: init()
+  @onUnload: terminate()

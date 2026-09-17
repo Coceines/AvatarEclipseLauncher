@@ -1,0 +1,31 @@
+MainWindow
+  id: unmuteCastWindow
+  text: Desmutar Espectador da TV
+  height: 130
+  width: 260
+  visible: false
+  Label
+    id: unmuteCastLabel
+    text: Nome do Espectador:
+    anchors.top: parent.top
+    anchors.left: parent.left
+  TextEdit
+    id: unmuteCastText
+    anchors.top: unmuteCastLabel.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Button
+    id: buttonCancel
+    text: Cancel
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: castCancel()
+  Button
+    id: buttonOk
+    text: Ok
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: unmuteCast()

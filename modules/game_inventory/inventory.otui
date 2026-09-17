@@ -1,0 +1,190 @@
+CombatBox < UICheckBox
+  size: 28 28
+  image-clip: 0 0 28 28
+  anchors.top: parent.top
+
+  $checked:
+    image-clip: 0 28 28 28
+
+FightOffensiveBox < CombatBox
+  image-source: /images/game/combatmodes/fightoffensive
+FightBalancedBox < CombatBox
+  image-source: /images/game/combatmodes/fightbalanced
+FightDefensiveBox < CombatBox
+  image-source: /images/game/combatmodes/fightdefensive
+
+ChaseModeBox < CombatBox
+  image-source: /images/game/combatmodes/chasemode
+SafeFightBox < CombatBox
+  image-source: /images/game/combatmodes/safefight
+
+
+InventoryItem < Item
+
+HeadSlot < InventoryItem
+  id: slot1
+  image-source: /images/game/slots/head
+  &position: {x=65535, y=1, z=0}
+
+BodySlot < InventoryItem
+  id: slot4
+  image-source: /images/game/slots/body
+  &position: {x=65535, y=4, z=0}
+
+LegSlot < InventoryItem
+  id: slot7
+  image-source: /images/game/slots/legs
+  &position: {x=65535, y=7, z=0}
+
+FeetSlot < InventoryItem
+  id: slot8
+  image-source: /images/game/slots/feet
+  &position: {x=65535, y=8, z=0}
+
+NeckSlot < InventoryItem
+  id: slot2
+  image-source: /images/game/slots/neck
+  &position: {x=65535, y=2, z=0}
+
+LeftSlot < InventoryItem
+  id: slot6
+  image-source: /images/game/slots/left-hand
+  &position: {x=65535, y=6, z=0}
+
+FingerSlot < InventoryItem
+  id: slot9
+  image-source: /images/game/slots/finger
+  &position: {x=65535, y=9, z=0}
+
+BackSlot < InventoryItem
+  id: slot3
+  image-source: /images/game/slots/back
+  &position: {x=65535, y=3, z=0}
+
+RightSlot < InventoryItem
+  id: slot5
+  image-source: /images/game/slots/right-hand
+  &position: {x=65535, y=5, z=0}
+
+AmmoSlot < InventoryItem
+  id: slot10
+  image-source: /images/game/slots/ammo
+  &position: {x=65535, y=10, z=0}
+
+CameraSlot < InventoryItem
+  id: cameraSlot
+  image-source: /images/game/slots/camera
+  &position: {x=65535, y=11, z=0}
+
+MomoSlot < InventoryItem
+  id: momoSlot
+  image-source: /images/game/slots/momopouch
+  &position: {x=65535, y=12, z=0}
+
+MiniWindow
+  id: inventoryWindow
+  !text: tr('Inventory')
+  icon: /images/topbuttons/inventory
+  height: 190
+  @onClose: modules.game_inventory.onMiniWindowClose()
+  &save: true
+
+  MiniWindowContents
+    HeadSlot
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 3
+      margin-left: 25
+
+    BodySlot
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: prev.horizontalCenter
+      margin-top: 3
+
+    LegSlot
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: prev.horizontalCenter
+      margin-top: 3
+
+    FeetSlot
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: prev.horizontalCenter
+      margin-top: 3
+
+    Label
+      id: cap
+      anchors.top: slot8.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 2
+      text: Cap: 1000
+      width: 100
+      text-align: center
+
+    NeckSlot
+      anchors.top: slot1.top
+      anchors.right: slot1.left
+      margin-top: 10
+      margin-right: 5
+
+    LeftSlot
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: prev.horizontalCenter
+      margin-top: 3
+
+    FingerSlot
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: prev.horizontalCenter
+      margin-top: 3
+
+    BackSlot
+      anchors.top: slot1.top
+      anchors.left: slot1.right
+      margin-top: 10
+      margin-left: 5
+
+    RightSlot
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: prev.horizontalCenter
+      margin-top: 3
+
+    AmmoSlot
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: prev.horizontalCenter
+      margin-top: 3
+
+    CameraSlot
+      anchors.top: slot9.top
+      anchors.right: slot9.left
+      margin-right: 5
+      margin-top: -3
+
+    MomoSlot
+      anchors.top: cameraSlot.bottom
+      anchors.right: cameraSlot.right
+      margin-top: 3
+
+    FightOffensiveBox
+      id: fightOffensiveBox 
+      anchors.left: parent.left
+    
+    FightBalancedBox
+      id: fightBalancedBox
+      margin-top: 28
+      anchors.left: parent.left
+
+    FightDefensiveBox
+      id: fightDefensiveBox
+      margin-top: 56
+      anchors.left: parent.left
+
+    ChaseModeBox
+      id: chaseModeBox
+      anchors.left: parent.left
+      margin-left: 28
+
+    SafeFightBox
+      id: safeFightBox
+      anchors.left: parent.left
+      margin-top: 28
+      margin-left: 28
+

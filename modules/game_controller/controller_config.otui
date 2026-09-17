@@ -1,0 +1,33 @@
+MainWindow
+  id: controllerConfigWindow
+  !text: tr('Game Controller - Buttons')
+  size: 430 540
+  @onEscape: self:hide()
+
+  Label
+    id: configHint
+    !text: tr('Click a slot to assign a key. Right-click to clear.')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 16
+    color: #a0a0a0ff
+
+  VerticalScrollBar
+    id: configScrollBar
+    anchors.top: configHint.bottom
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-top: 6
+    margin-bottom: 6
+    step: 40
+    pixels-scroll: true
+
+  TextList
+    id: configList
+    anchors.top: configHint.bottom
+    anchors.left: parent.left
+    anchors.right: configScrollBar.left
+    anchors.bottom: parent.bottom
+    margin: 6
+    vertical-scrollbar: configScrollBar

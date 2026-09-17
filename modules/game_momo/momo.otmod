@@ -1,0 +1,14 @@
+Module
+  name: game_momo
+  description: Momo Pouch - sistema de coleta automatica personalizada
+  author: Sirius
+  website: http://otclient.ovh
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1000
+  scripts: [ json, momo ]
+  dependencies:
+    - game_interface
+    - client_options
+  @onLoad: init()
+  @onUnload: terminate()

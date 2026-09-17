@@ -1,0 +1,103 @@
+Loot < UIWidget
+  height: 43
+  phantom: true
+
+  UIItem
+    id: item
+    size: 33 33
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin: 4 0 0 4
+
+  Label
+    id: name
+    anchors.top: parent.top
+    anchors.left: prev.right
+    margin: 6 0 0 4
+    text-auto-resize: true
+
+  Label
+    id: count
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    margin-top: 3
+    text-auto-resize: true
+
+  Label
+    id: chance
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin: 0 8 6 0
+    text-auto-resize: true
+
+MainWindow
+  size: 290 380
+  !text: tr('Monster Loot')
+  visible: false
+  padding-top: 16
+
+  TextEdit
+    id: edtSearch
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: next.left
+    margin-right: 5
+
+  Button
+    id: btnSearch
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    !text: tr('Search')
+    @onClick: searchMonster(self:getParent():getChildById('edtSearch'):getText())
+
+  UIButton
+    id: closeButton
+    size: 14 14
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: /images/ui/miniwindow_buttons
+    image-clip: 28 0 14 14
+    margin-right: -3
+    @onClick: self:getParent():hide()
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14 
+
+  Creature
+    id: uiCreature
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+
+  Label
+    id: lblName
+    font: sans-bold-16px
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 7
+    text-auto-resize: true
+
+  TextList
+    id: listLoot
+    height: 174
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    parent.bottom: edtSearch.top
+    margin: 8 12 0 0
+    phantom: true
+    vertical-scrollbar: scrollLoot
+    border: 1 #756866
+    background-color: #140e0e
+
+  VerticalScrollBar
+    id: scrollLoot
+    anchors.top: listLoot.top
+    anchors.bottom: listLoot.bottom
+    anchors.left: listLoot.right
+    margin-left: 2
+    step: 50
+    pixels-scroll: true

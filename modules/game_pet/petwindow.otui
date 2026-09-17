@@ -1,0 +1,75 @@
+NextOutfitButton < NextButton
+PrevOutfitButton < PreviousButton
+
+MainWindow
+  !text: tr('Select Pet')
+  size: 300 250
+
+  @onEnter: modules.game_pet.accept()
+  @onEscape: modules.game_pet.destroy()
+
+  Label
+    id: petName
+    !text: tr('No Pet')
+    text-align: center
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    width: 240
+
+  Creature
+    id: petCreatureBox
+    anchors.top: petName.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    padding: 4 4 4 4
+    fixed-creature-size: true
+    size: 80 80
+
+  NextOutfitButton
+    id: petNextButton
+    anchors.left: petCreatureBox.right
+    anchors.verticalCenter: petCreatureBox.verticalCenter
+    margin-left: 10
+    enabled: true
+    @onClick: modules.game_pet.nextPet()
+
+  PrevOutfitButton
+    id: petPrevButton
+    anchors.right: petCreatureBox.left
+    anchors.verticalCenter: petCreatureBox.verticalCenter
+    margin-right: 10
+    enabled: true
+    @onClick: modules.game_pet.previousPet()
+
+  HorizontalSeparator
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: petOkButton.top
+    margin-bottom: 10
+
+  Button
+    id: petRemoveButton
+    !text: tr('Remove Pet')
+    width: 90
+    anchors.right: petOkButton.left
+    anchors.bottom: parent.bottom
+    margin-right: 12
+    @onClick: modules.game_pet.removePet()
+
+  Button
+    id: petOkButton
+    !text: tr('Ok')
+    width: 70
+    anchors.right: petCancelButton.left
+    anchors.bottom: parent.bottom
+    margin-right: 12
+    @onClick: modules.game_pet.accept()
+
+  Button
+    id: petCancelButton
+    !text: tr('Cancel')
+    width: 70
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: modules.game_pet.destroy()

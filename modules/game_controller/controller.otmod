@@ -1,0 +1,10 @@
+Module
+  name: game_controller
+  description: SDL2 GameController support — integrado ao painel de Options
+  author: Sirius (Kenai)
+  website: https://github.com/mehah/otclient
+  sandboxed: true
+  scripts: [ controller ]
+  dependencies: [ client_options, game_hotkeys ]
+  @onLoad: init()
+  @onUnload: terminate()

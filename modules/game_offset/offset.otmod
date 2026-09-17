@@ -1,0 +1,10 @@
+Module
+  name: game_offset
+  description: Manage client house
+  author: Telasko
+  website: https://tibiadevs.com
+  sandboxed: true
+  scripts: [ offset ]
+  dependencies: [ game_interface, client_topmenu ]
+  @onLoad: init()
+  @onUnload: terminate()

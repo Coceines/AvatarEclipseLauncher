@@ -1,0 +1,99 @@
+Panel
+  id: loadingWindow
+  anchors.fill: parent
+  margin: 0
+  padding: 0
+  phantom: false
+  background-color: #000000
+  visible: false
+
+  // background: two layers that crossfade between loading images (ken burns
+  // zoom is driven from loading.lua)
+  Panel
+    id: loadingSlideshow
+    anchors.fill: parent
+    margin: 0
+    padding: 0
+    focusable: false
+
+    Panel
+      id: slideA
+      anchors.fill: parent
+      image-smooth: true
+      image-fixed-ratio: false
+      image-color: #9c9c9c
+      focusable: false
+
+    Panel
+      id: slideB
+      anchors.fill: parent
+      image-smooth: true
+      image-fixed-ratio: false
+      image-color: #9c9c9c
+      opacity: 0
+      focusable: false
+
+  // animated background (APNG). Plays once and holds the last frame (set via
+  // loading.lua setImageAnimationLoops(1)). If /data/images/Background2.png is
+  // missing, the slideshow above is shown instead.
+  Panel
+    id: loadingAnimated
+    anchors.fill: parent
+    image-smooth: true
+    image-fixed-ratio: false
+    image-color: #9c9c9c
+    opacity: 0
+    focusable: false
+
+  // radial fade: photo melts into the black background (fade out, inside -> out)
+  Panel
+    id: loadingVignette
+    anchors.fill: parent
+    image-source: /modules/client_loading/img/vignette.png
+    image-smooth: true
+    image-fixed-ratio: false
+    focusable: false
+
+  // single big bar
+  Panel
+    id: loadingBar
+    height: 30
+    image-source: /modules/client_loading/img/bar_track.png
+    image-border: 8
+    image-smooth: false
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-left: 100
+    margin-right: 100
+    margin-bottom: 40
+    focusable: false
+
+    Panel
+      id: loadingBarFill
+      image-source: /modules/client_loading/img/bar_fill.png
+      image-border: 8
+      image-smooth: false
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      margin: 1
+      focusable: false
+
+    Label
+      id: loadingPercent
+      text: 0%
+      font: verdana-11px-rounded
+      color: #ffffff
+      text-auto-resize: true
+      anchors.centerIn: parent
+
+  Label
+    id: loadingLabel
+    text: Carregando...
+    font: verdana-11px-rounded
+    color: #ffffff
+    text-auto-resize: true
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: loadingBar.top
+    margin-bottom: 12

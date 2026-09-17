@@ -1,0 +1,55 @@
+MainWindow
+  id: marketAdd
+  text: Adicionar oferta
+  height: 223
+  width: 260
+  visible: false
+  Label
+    id: addMarketLabel1
+    text: Nome do item:
+    anchors.top: parent.top
+    anchors.left: parent.left
+  TextEdit
+    id: addMarketText1
+    anchors.top: addMarketLabel1.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Label
+    id: addMarketLabel2
+    !text: tr('Total price:')
+    anchors.top: addMarketText1.top
+    anchors.left: parent.left
+    margin-top: 30
+  TextEdit
+    id: addMarketText2
+    anchors.top: addMarketLabel2.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Label
+    id: addMarketLabel3
+    text: Quantia:
+    anchors.top: addMarketText2.top
+    anchors.left: parent.left
+    margin-top: 30
+  TextEdit
+    id: addMarketText3
+    anchors.top: addMarketLabel3.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Button
+    id: buttonCancel
+    text: Cancel
+    width: 109
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: marketCancel()
+  Button
+    id: buttonOk
+    text: Ok
+    width: 109
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: addMarket()

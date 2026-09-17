@@ -1,0 +1,45 @@
+OptionPanel
+  OptionCheckBox
+    id: spellsoundEnabled
+    margin: 0 0 0 8
+
+    UILabel
+      id: label
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      size: 275 30
+      !text: tr('Enable spell sounds')
+      text-offset: 0 5
+      font: verdana-11px-antialised
+
+  UIWidget
+    id: spellsoundVolumeBG
+    margin: 27 0 0 0
+    height: 15
+    font: verdana-11px-antialised
+    text: Spell sound volume
+    text-align: left
+    text-offset: 2 -2
+
+    OptionScrollbar
+      id: spellsoundVolume
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin: 0 0 0 105
+      width: 220
+      minimum: 0
+      maximum: 100
+
+    Label
+      id: spellsoundVolumeLabelBG
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 35
+      margin: 0 29 0 0
+      font: verdana-11px-antialised
+      color: #77f558
+      @onSetup: |
+        local value = modules.client_options.getOption('spellsoundVolume')
+          or g_settings.getNumber('spellsoundVolume')
+        if not value or value <= 0 then value = 100 end
+        self:setText(tr('%d', value))

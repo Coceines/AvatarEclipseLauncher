@@ -1,0 +1,285 @@
+SpellProgress < UIProgressRect
+  background: #585858AA
+  percent: 0
+  ring: true
+  ring-thickness: 3
+  focusable: false
+  font: verdana-11px-rounded
+  image-source: /images/folds/moldura
+  anchors.left: parent.left
+  anchors.top: parent.top
+  size: 32 32
+  text-align: center
+
+Folds < UIButton
+  size: 32 32
+  anchors.top: parent.top
+  anchors.left: parent.left
+  focusable: false
+
+CooldownFlash < UIWidget
+  background-color: #ffffff
+  phantom: true
+  focusable: false
+
+folds
+  id: foldWindow
+  width: 515
+  height: 90
+  anchors.bottom: gameBottomPanel.top
+  anchors.horizontalCenter: parent.horizontalCenter
+  focusable: false
+  &save: true
+  phantom: true
+  dragable: true
+  image-source: bg
+  image-auto-resize: true
+  image-shader: spellbar_bg
+
+  Folds
+    id: m1
+    margin-left: 45
+    margin-top: 15
+  Folds
+    id: m2
+    anchors.left: m1.right
+    anchors.top: m1.top
+    margin-left: 5
+  Folds
+    id: m3
+    anchors.left: m2.right
+    anchors.top: m2.top
+    margin-left: 5
+  Folds
+    id: m4
+    anchors.left: m3.right
+    anchors.top: m3.top
+    margin-left: 5
+  Folds
+    id: m5
+    anchors.left: m4.right
+    margin-left: 5
+    anchors.top: m4.top
+  Folds
+    id: m6
+    anchors.left: m5.right
+    margin-left: 5
+    anchors.top: m5.top
+  Folds
+    id: m7
+    anchors.left: m6.right
+    margin-left: 5
+    anchors.top: m6.top
+  Folds
+    id: m8
+    anchors.left: m7.right
+    margin-left: 5
+    anchors.top: m7.top
+  Folds
+    id: m9
+    anchors.left: m8.right
+    margin-left: 5
+    anchors.top: m8.top
+  Folds
+    id: m10
+    anchors.left: m9.right
+    margin-left: 5
+    anchors.top: m9.top
+  Folds
+    id: m11
+    anchors.left: m10.right
+    margin-left: 5
+    anchors.top: m10.top
+  Folds
+    id: m12
+    anchors.left: m11.right
+    margin-left: 5
+    anchors.top: m11.top
+
+  Folds
+    id: m13
+    anchors.left: m1.left
+    anchors.top: m1.bottom
+    margin-top: 5
+  Folds
+    id: m14
+    anchors.left: m2.left
+    anchors.top: m2.bottom
+    margin-top: 5
+  Folds
+    id: m15
+    anchors.left: m3.left
+    anchors.top: m3.bottom
+    margin-top: 5
+  Folds
+    id: m16
+    anchors.left: m4.left
+    anchors.top: m4.bottom
+    margin-top: 5
+
+  Folds
+    id: m17
+    anchors.left: m5.left
+    anchors.top: m5.bottom
+    margin-top: 5
+  Folds
+    id: m18
+    anchors.left: m6.left
+    anchors.top: m6.bottom
+    margin-top: 5
+  Folds
+    id: m19
+    anchors.left: m7.left
+    anchors.top: m7.bottom
+    margin-top: 5
+  Folds
+    id: m20
+    anchors.left: m8.left
+    anchors.top: m8.bottom
+    margin-top: 5
+  Folds
+    id: m21
+    anchors.left: m9.left
+    anchors.top: m9.bottom
+    margin-top: 5
+  Folds
+    id: m22
+    anchors.left: m10.left
+    anchors.top: m10.bottom
+    margin-top: 5
+  Folds
+    id: m23
+    anchors.left: m11.left
+    anchors.top: m11.bottom
+    margin-top: 5
+  Folds
+    id: m24
+    anchors.left: m12.left
+    anchors.top: m12.bottom
+    margin-top: 5
+
+
+
+  SpellProgress
+    id: p1
+    anchors.left: m1.left
+    anchors.top: m1.top
+  SpellProgress
+    id: p2
+    anchors.left: m1.right
+    anchors.top: m1.top
+    margin-left: 5
+  SpellProgress
+    id: p3
+    anchors.left: m2.right
+    anchors.top: m2.top
+    margin-left: 5
+  SpellProgress
+    id: p4
+    anchors.left: m3.right
+    anchors.top: m3.top
+    margin-left: 5
+    
+  SpellProgress
+    id: p5
+    anchors.left: m4.right
+    margin-left: 5
+    anchors.top: m1.top
+  SpellProgress
+    id: p6
+    anchors.left: m5.right
+    margin-left: 5
+    anchors.top: m1.top
+  SpellProgress
+    id: p7
+    anchors.left: m6.right
+    margin-left: 5
+    anchors.top: m1.top
+  SpellProgress
+    id: p8
+    anchors.left: m7.right
+    margin-left: 5
+    anchors.top: m1.top
+
+  SpellProgress
+    id: p9
+    anchors.left: m8.right
+    margin-left: 5
+    anchors.top: m1.top
+  SpellProgress
+    id: p10
+    anchors.left: m9.right
+    margin-left: 5
+    anchors.top: m1.top
+  SpellProgress
+    id: p11
+    anchors.left: m10.right
+    margin-left: 5
+    anchors.top: m1.top
+  SpellProgress
+    id: p12
+    anchors.left: m11.right
+    margin-left: 5
+    anchors.top: m1.top
+
+  SpellProgress
+    id: p13
+    anchors.left: m1.left
+    anchors.top: m1.bottom
+    margin-top: 5
+  SpellProgress
+    id: p14
+    anchors.left: m2.left
+    anchors.top: m2.bottom
+    margin-top: 5
+  SpellProgress
+    id: p15
+    anchors.left: m3.left
+    anchors.top: m3.bottom
+    margin-top: 5
+  SpellProgress
+    id: p16
+    anchors.left: m4.left
+    anchors.top: m4.bottom
+    margin-top: 5
+
+  SpellProgress
+    id: p17
+    anchors.left: m5.left
+    anchors.top: m5.bottom
+    margin-top: 5
+  SpellProgress
+    id: p18
+    anchors.left: m6.left
+    anchors.top: m6.bottom
+    margin-top: 5
+  SpellProgress
+    id: p19
+    anchors.left: m7.left
+    anchors.top: m7.bottom
+    margin-top: 5
+  SpellProgress
+    id: p20
+    anchors.left: m8.left
+    anchors.top: m8.bottom
+    margin-top: 5
+  SpellProgress
+    id: p21
+    anchors.left: m9.left
+    anchors.top: m9.bottom
+    margin-top: 5
+  SpellProgress
+    id: p22
+    anchors.left: m10.left
+    anchors.top: m10.bottom
+    margin-top: 5
+  SpellProgress
+    id: p23
+    anchors.left: m11.left
+    anchors.top: m11.bottom
+    margin-top: 5
+  SpellProgress
+    id: p24
+    anchors.left: m12.left
+    anchors.top: m12.bottom
+    margin-top: 5

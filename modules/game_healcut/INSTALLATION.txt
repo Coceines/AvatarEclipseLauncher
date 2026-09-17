@@ -1,0 +1,108 @@
+============================================================================
+GAME HEALCUT - Instruções de Instalação
+============================================================================
+
+Este módulo mostra um ícone de "Heal Cut" (Grievous Wounds) acima do
+nome dos players que estão sob efeito de redução de cura.
+
+============================================================================
+PARTE 1: MÓDULO LUA (Client)
+============================================================================
+
+1. Copie a pasta "game_healcut" para:
+   <seu-client>/modules/game_healcut/
+
+2. O módulo será carregado automaticamente (autoload: true)
+
+============================================================================
+PARTE 2: PATCH C++ (Client - Necessário!)
+============================================================================
+
+O módulo Lua precisa de suporte no código C++ do client.
+Você precisa modificar 3 arquivos no source do OTClient:
+
+----------------------------------------------------------------------
+ARQUIVO 1: src/client/creature.h
+----------------------------------------------------------------------
+
+Adicione NOVOS membros na classe Creature (na seção protected):
+
+    // Heal Cut (Grievous Wounds)
+    bool m_healCut = false;
+    TexturePtr m_healCutTexture;
+
+Adicione NOVOS métodos públicos:
+
+    void setHealCut(bool healCut);
+    bool isHealCut() { return m_healCut; }
+
+----------------------------------------------------------------------
+ARQUIVO 2: src/client/creature.cpp
+----------------------------------------------------------------------
+
+No construtor Creature::Creature(), adicione:
+
+    m_healCut = false;
+    m_healCutTexture = g_textures.getTexture("/miniicons/healcut");
+
+Adicione a nova função:
+
+    void Creature::setHealCut(bool healCut) {
+        m_healCut = healCut;
+    }
+
+No método Creature::drawInformation(), adicione ANTES do "return" final
+(logo após o bloco do timer):
+
+    if (m_healCut && m_healCutTexture) {
+        Rect healCutRect(textRect.horizontalCenter() - 5, textRect.top() - 12, 10, 10);
+        g_drawQueue->addTexturedRect(healCutRect, m_healCutTexture,
+            Rect(0, 0, m_healCutTexture->getSize()), Color::white.opacity(opacity));
+    }
+
+----------------------------------------------------------------------
+ARQUIVO 3: src/client/luafunctions_client.cpp
+----------------------------------------------------------------------
+
+Adicione o binding Lua (na seção onde outros métodos do Creature são
+registrados):
+
+    g_lua.bindClassMemberFunction<Creature>("setHealCut", &Creature::setHealCut);
+
+----------------------------------------------------------------------
+TEXTURA
+----------------------------------------------------------------------
+
+Coloque o ícone em PNG no path do client:
+    /data/images/miniicons/healcut.png
+
+Ou crie o diretório "miniicons" dentro de "images" e adicione uma
+imagem PNG de 10x10 pixels representando o ícone de cura cortada
+(um coração com um X ou similar).
+
+============================================================================
+PARTE 3: SERVIDOR (Já implementado)
+============================================================================
+
+Os seguintes arquivos foram criados no servidor:
+
+- data/lib/custom/healcut_lib.lua      → Biblioteca compartilhada
+- data/lib/custom/healcut_hooks.lua    → Hooks de redução de cura
+- data/creaturescripts/scripts/grievous_wounds.lua → Referência
+- data/creaturescripts/scripts/imuneable.lua       → Detecção (modificado)
+- data/globalevents/scripts/healcut_init.lua       → Startup hooks
+
+Registros em XML:
+- data/globalevents/globalevents.xml   → HealCutInit (startup)
+- data/creaturescripts/creaturescripts.xml → hasImuneable (modificado)
+
+============================================================================
+TESTANDO
+============================================================================
+
+1. Compile o server com as mudanças
+2. Copie os módulos Lua para o client
+3. Compile o client com os patches C++
+4. No servidor, use uma spell em outro player em PvP
+5. O ícone deve aparecer acima do nome do player atingido
+6. A cura deve ser reduzida em 50% por 5 segundos

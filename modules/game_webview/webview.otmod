@@ -1,0 +1,7 @@
+Module
+  name: game_webview
+  description: HTML/CSS/JS rendering inside the client using Ultralight
+  author: Codebuff
+  scripts: [ init ]
+  @onLoad: onModuleLoad()
+  @onUnload: onModuleUnload()

@@ -1,0 +1,11 @@
+Module
+  name: game_partydamage
+  description: Party Damage Meter (DPS)
+  author: Avatar
+  website:
+  sandboxed: true
+  autoload: true
+  dependencies: [ game_interface, client_topmenu ]
+  scripts: [ partydamage ]
+  @onLoad: init()
+  @onUnload: terminate()

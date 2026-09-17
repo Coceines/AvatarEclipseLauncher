@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 100vw; height: 100vh; overflow: hidden;
+    font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+    background: transparent; color: #c8cdd5;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  /* ===== TOKENS ===== */
+  :root {
+    --bg-dark: #111827; --bg-panel: #151c2c;
+    --bg-glass: rgba(15,20,35,0.88);
+    --border: rgba(255,255,255,0.06);
+    --border-accent: rgba(99,140,255,0.25);
+    --blue: #638cff; --purple: #a855f7; --cyan: #22d3ee;
+    --green: #34d399; --red: #f87171; --amber: #fbbf24;
+    --text1: #e8ecf1; --text2: #8892a4; --text3: #4b5563;
+    --r-sm: 6px; --r-md: 10px; --r-lg: 14px;
+  }
+
+  /* ===== TOPBAR ===== */
+  #topbar {
+    position: absolute; top: 0; left: 0; right: 0; height: 36px;
+    background: var(--bg-glass);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 8px; z-index: 100;
+  }
+  #topbar::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), var(--purple), transparent);
+    opacity: 0.3;
+  }
+  .tb-group { display: flex; align-items: center; gap: 3px; }
+  .tb-sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; }
+  .tb-btn {
+    width: 30px; height: 30px; border-radius: var(--r-sm);
+    background: transparent; border: none; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; color: var(--text2);
+    transition: all 0.15s ease; position: relative;
+  }
+  .tb-btn:hover { background: rgba(255,255,255,0.08); color: var(--text1); }
+  .tb-btn.active { background: rgba(99,140,255,0.12); color: var(--blue); }
+  .tb-btn.active::after {
+    content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
+    width: 10px; height: 2px; background: var(--blue); border-radius: 1px;
+  }
+
+  /* ===== ICONS ===== */
+  .ico { width: 18px; height: 18px; position: relative; }
+  .ico div { position: absolute; }
+
+  /* EXIT */
+  .ico-exit-door { width: 8px; height: 12px; border: 1.5px solid currentColor; border-radius: 1px; left: 2px; top: 3px; }
+  .ico-exit-arrow { width: 7px; height: 1.5px; background: currentColor; left: 9px; top: 9px; }
+  .ico-exit-arrow::after { content: ''; width: 0; height: 0; border-top: 3px solid transparent; border-bottom: 3px solid transparent; border-left: 4px solid currentColor; position: absolute; left: 7px; top: -2.25px; }
+
+  /* BAG / INVENTORY */
+  .ico-bag-flap { width: 10px; height: 3px; border: 1.5px solid currentColor; border-radius: 2px 2px 0 0; border-bottom: none; left: 4px; top: 2px; }
+  .ico-bag-body { width: 12px; height: 10px; border: 1.5px solid currentColor; border-radius: 0 0 3px 3px; left: 3px; top: 4px; }
+  .ico-bag-clasp { width: 3px; height: 2px; background: currentColor; border-radius: 1px; left: 7.5px; top: 4px; }
+
+  /* SKILLS / PERSON */
+  .ico-skills-head { width: 6px; height: 6px; border: 1.5px solid currentColor; border-radius: 50%; left: 6px; top: 1px; }
+  .ico-skills-body { width: 10px; height: 8px; border: 1.5px solid currentColor; border-radius: 5px 5px 0 0; border-bottom: none; left: 4px; top: 7px; }
+  .ico-skills-star { font-size: 6px; color: currentColor; left: 13px; top: 0px; }
+
+  /* BATTLE: SWORD + SHIELD */
+  .ico-battle-sword { width: 1.5px; height: 14px; background: currentColor; left: 7px; top: 2px; transform: rotate(-30deg); transform-origin: bottom center; }
+  .ico-battle-sword::before { content: ''; width: 5px; height: 1.5px; background: currentColor; position: absolute; top: -1px; left: -1.75px; }
+  .ico-battle-shield { width: 8px; height: 9px; border: 1.5px solid currentColor; border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; left: 8px; top: 5px; }
+  .ico-battle-shield::after { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; left: 1.5px; top: 2px; opacity: 0.4; }
+
+  /* MINIMAP: PATH + PIN */
+  .ico-map-path { width: 14px; height: 10px; border: 1.5px dashed currentColor; border-radius: 3px; left: 2px; top: 4px; opacity: 0.5; }
+  .ico-map-pin { width: 5px; height: 5px; background: currentColor; border-radius: 50%; left: 6px; top: 5px; }
+  .ico-map-pin::after { content: ''; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 5px solid currentColor; position: absolute; left: -0.5px; top: 4px; }
+
+  /* SPELL BOOK */
+  .ico-spell-book { width: 11px; height: 13px; border: 1.5px solid currentColor; border-radius: 1px; left: 3px; top: 2px; }
+  .ico-spell-book::before { content: ''; width: 1.5px; height: 13px; background: currentColor; position: absolute; left: 5px; top: 0; opacity: 0.4; }
+  .ico-spell-sparkle { font-size: 8px; color: currentColor; left: 12px; top: 1px; }
+
+  /* CLOCK / COOLDOWN */
+  .ico-clock-face { width: 13px; height: 13px; border: 1.5px solid currentColor; border-radius: 50%; left: 2.5px; top: 2.5px; }
+  .ico-clock-hand { width: 1.5px; height: 4px; background: currentColor; left: 8.25px; top: 4px; transform-origin: bottom center; }
+  .ico-clock-hand::after { content: ''; width: 3px; height: 1.5px; background: currentColor; position: absolute; top: 0; left: -0.75px; transform: rotate(-60deg); transform-origin: right center; }
+  .ico-clock-center { width: 2px; height: 2px; background: currentColor; border-radius: 50%; left: 8px; top: 8px; }
+
+  /* CROSSHAIR / COMBAT */
+  .ico-ch-ring { width: 11px; height: 11px; border: 1.5px solid currentColor; border-radius: 50%; left: 3.5px; top: 3.5px; }
+  .ico-ch-h { width: 16px; height: 1.5px; background: currentColor; left: 1px; top: 8.25px; border-radius: 1px; }
+  .ico-ch-v { width: 1.5px; height: 16px; background: currentColor; left: 8.25px; top: 1px; border-radius: 1px; }
+
+  /* QUEST LOG: BOOK + LINES */
+  .ico-quest-book { width: 12px; height: 14px; border: 1.5px solid currentColor; border-radius: 1px; left: 3px; top: 2px; }
+  .ico-quest-lines { left: 5px; top: 5px; width: 8px; }
+  .ico-quest-lines div { width: 6px; height: 1px; background: currentColor; margin-bottom: 2px; opacity: 0.5; }
+
+  /* VIP: PERSON + CHECK */
+  .ico-vip-head { width: 5px; height: 5px; border: 1.5px solid currentColor; border-radius: 50%; left: 4px; top: 1px; }
+  .ico-vip-body { width: 10px; height: 7px; border: 1.5px solid currentColor; border-radius: 5px 5px 0 0; border-bottom: none; left: 1.5px; top: 6px; }
+  .ico-vip-check { font-size: 7px; color: var(--green); left: 12px; top: 7px; font-weight: bold; }
+
+  /* MARKET: SHOP */
+  .ico-market-roof { width: 14px; height: 2px; background: currentColor; left: 2px; top: 4px; }
+  .ico-market-roof::before { content: ''; width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 3px solid currentColor; position: absolute; left: -2px; top: -3px; }
+  .ico-market-stall { width: 12px; height: 8px; border: 1.5px solid currentColor; border-top: none; left: 3px; top: 6px; }
+  .ico-market-door { width: 4px; height: 5px; border: 1px solid currentColor; border-bottom: none; border-radius: 2px 2px 0 0; left: 7px; top: 9px; }
+
+  /* GUILD: FLAG */
+  .ico-guild-flag { width: 8px; height: 6px; background: currentColor; border-radius: 0 2px 2px 0; left: 6px; top: 2px; opacity: 0.3; }
+  .ico-guild-flag::before { content: ''; width: 6px; height: 5px; border: 1.5px solid currentColor; border-radius: 0 2px 2px 0; position: absolute; left: 1px; top: 0.5px; }
+  .ico-guild-pole { width: 1.5px; height: 14px; background: currentColor; left: 5px; top: 2px; }
+
+  /* KEY / HOTKEYS */
+  .ico-key-head { width: 6px; height: 6px; border: 1.5px solid currentColor; border-radius: 50%; left: 1px; top: 1px; }
+  .ico-key-shaft { width: 9px; height: 2px; background: currentColor; left: 6px; top: 7px; border-radius: 0 1px 1px 0; }
+  .ico-key-teeth div { width: 2px; height: 3px; background: currentColor; position: absolute; }
+  .ico-key-teeth div:nth-child(1) { left: 12px; top: 9px; }
+  .ico-key-teeth div:nth-child(2) { left: 15px; top: 9px; }
+
+  /* WAND / MAGIC */
+  .ico-wand-stick { width: 1.5px; height: 12px; background: currentColor; left: 8px; top: 6px; transform: rotate(-30deg); transform-origin: top center; }
+  .ico-wand-tip { font-size: 8px; color: currentColor; left: 5px; top: 0px; }
+
+  /* MEDAL / ACHIEVEMENT */
+  .ico-medal-star { font-size: 10px; color: currentColor; left: 3px; top: 0px; }
+  .ico-medal-ribbon { width: 8px; height: 5px; border-left: 1.5px solid currentColor; border-right: 1.5px solid currentColor; left: 5px; top: 10px; }
+  .ico-medal-ribbon::before { content: ''; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 3px solid currentColor; position: absolute; left: -4px; top: 3px; }
+
+  /* CHART / PARTY DPS */
+  .ico-chart-bar1 { width: 3px; height: 6px; background: currentColor; border-radius: 1px; left: 2px; bottom: 2px; opacity: 0.5; }
+  .ico-chart-bar2 { width: 3px; height: 10px; background: currentColor; border-radius: 1px; left: 7px; bottom: 2px; opacity: 0.7; }
+  .ico-chart-bar3 { width: 3px; height: 14px; background: currentColor; border-radius: 1px; left: 12px; bottom: 2px; }
+
+  /* GEAR / OPTIONS */
+  .ico-gear-ring { width: 12px; height: 12px; border: 1.5px solid currentColor; border-radius: 50%; left: 3px; top: 3px; }
+  .ico-gear-ring::before { content: ''; width: 16px; height: 3px; background: currentColor; position: absolute; left: -2px; top: 4.5px; border-radius: 1px; }
+  .ico-gear-ring::after { content: ''; width: 3px; height: 16px; background: currentColor; position: absolute; left: 4.5px; top: -2px; border-radius: 1px; }
+  .ico-gear-hole { width: 4px; height: 4px; border: 1.5px solid currentColor; border-radius: 50%; left: 7px; top: 7px; background: var(--bg-glass); }
+
+  /* COMPASS / DAILY HUNT */
+  .ico-hunt-compass { width: 12px; height: 12px; border: 1.5px solid currentColor; border-radius: 50%; left: 3px; top: 3px; }
+  .ico-hunt-needle { width: 1.5px; height: 6px; background: currentColor; left: 8.25px; top: 3px; transform-origin: bottom center; }
+  .ico-hunt-needle::after { content: ''; width: 0; height: 0; border-left: 2px solid transparent; border-right: 2px solid transparent; border-bottom: 3px solid currentColor; position: absolute; left: -1.25px; top: -1px; }
+
+  /* HELPER: QUESTION MARK */
+  .ico-helper-circle { width: 14px; height: 14px; border: 1.5px solid currentColor; border-radius: 50%; left: 2px; top: 2px; }
+  .ico-helper-q { font-size: 11px; color: currentColor; left: 5px; top: 0px; font-weight: bold; }
+  .tb-info { display: flex; align-items: center; gap: 10px; }
+  .tb-label { font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tb-fps { color: var(--green); }
+  .tb-ping { color: var(--amber); }
+
+  /* ===== LEFT PANEL ===== */
+  #left-panel {
+    position: absolute; top: 36px; left: 0; width: 198px; bottom: 0;
+    background: var(--bg-glass); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 5px; padding: 5px;
+    overflow-y: auto; overflow-x: hidden;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent;
+  }
+
+  /* ===== RIGHT PANEL ===== */
+  #right-panel {
+    position: absolute; top: 36px; right: 0; width: 198px; bottom: 0;
+    background: var(--bg-glass); border-left: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 5px; padding: 5px;
+    overflow-y: auto; overflow-x: hidden;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent;
+  }
+
+  /* ===== MINI WINDOWS ===== */
+  .mw {
+    background: var(--bg-panel); border: 1px solid var(--border);
+    border-radius: var(--r-md); overflow: hidden; flex-shrink: 0;
+  }
+  .mw-hd {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 5px 8px; border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(255,255,255,0.025), transparent);
+  }
+  .mw-title {
+    font-size: 10px; font-weight: 700; color: var(--text1);
+    letter-spacing: 0.5px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .mw-ctrls { display: flex; gap: 3px; }
+  .mw-ctrls button {
+    width: 13px; height: 13px; border-radius: 3px; border: none;
+    background: rgba(255,255,255,0.05); color: var(--text3); font-size: 7px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .mw-ctrls button:hover { background: rgba(255,255,255,0.1); color: var(--text2); }
+  .mw-body { padding: 6px; }
+
+  /* ===== HEALTH INFO ===== */
+  .hp-info {
+    background: var(--bg-panel); border: 1px solid var(--border);
+    border-radius: var(--r-lg); overflow: hidden; position: relative;
+  }
+  .hp-info::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 70px;
+    background: linear-gradient(135deg, rgba(99,140,255,0.07), rgba(168,85,247,0.04), transparent);
+    pointer-events: none;
+  }
+  .hp-top { display: flex; padding: 10px 12px; gap: 10px; position: relative; z-index: 1; }
+  .avatar {
+    width: 64px; height: 64px; border-radius: var(--r-md);
+    background: linear-gradient(135deg, var(--bg-dark), #1a2235);
+    border: 2px solid var(--border-accent); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .avatar::after {
+    content: ''; position: absolute; inset: 0; border-radius: var(--r-md);
+    box-shadow: 0 0 20px rgba(99,140,255,0.15); pointer-events: none;
+  }
+  .avatar-inner {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #2a3550, #1a2235);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--text3);
+  }
+  .bars { flex: 1; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
+  .bar-lbl {
+    font-size: 9px; font-weight: 700; color: var(--text2);
+    letter-spacing: 0.4px; text-transform: uppercase;
+    display: flex; justify-content: space-between; margin-bottom: 1px;
+  }
+  .bar-lbl .v { color: var(--text1); font-weight: 800; }
+  .bar-trk {
+    background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.03); position: relative;
+  }
+  .bar-fl {
+    height: 100%; border-radius: 8px; position: relative;
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  .bar-fl::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent);
+    border-radius: 8px 8px 0 0;
+  }
+  .bar-hp .bar-trk { height: 18px; }
+  .bar-hp .bar-fl { background: linear-gradient(90deg, #16a34a, #22c55e, #4ade80); box-shadow: 0 0 10px rgba(34,197,94,0.3); }
+  .bar-mp .bar-trk { height: 12px; }
+  .bar-mp .bar-fl { background: linear-gradient(90deg, #7c3aed, #8b5cf6, #a78bfa); box-shadow: 0 0 10px rgba(139,92,246,0.3); }
+  .bar-xp .bar-trk { height: 8px; }
+  .bar-xp .bar-fl { background: linear-gradient(90deg, #d97706, #f59e0b, #fbbf24); box-shadow: 0 0 10px rgba(245,158,11,0.3); }
+  .hp-bottom {
+    display: flex; justify-content: space-between; padding: 4px 12px 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-l { font-size: 9px; color: var(--text3); font-weight: 600; }
+  .stat-l span { color: var(--text2); }
+  .conditions { display: flex; gap: 2px; padding: 0 12px 8px; }
+  .cond {
+    width: 16px; height: 16px; border-radius: 3px; background: var(--bg-dark);
+    border: 1px solid var(--border); display: flex; align-items: center;
+    justify-content: center; font-size: 8px;
+  }
+
+  /* ===== INVENTORY ===== */
+  .inv-body { display: flex; flex-direction: column; align-items: center; padding: 6px; gap: 2px; }
+  .eq-row { display: flex; gap: 2px; justify-content: center; }
+  .slot {
+    width: 32px; height: 32px; background: var(--bg-dark);
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; transition: all 0.15s ease;
+  }
+  .slot::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
+    pointer-events: none; border-radius: var(--r-sm);
+  }
+  .slot:hover { border-color: var(--border-accent); box-shadow: 0 0 20px rgba(99,140,255,0.15); }
+  .slot .iid {
+    position: absolute; bottom: 1px; right: 2px; font-size: 7px;
+    font-weight: 800; color: var(--green); text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  }
+  .cap-lbl {
+    font-size: 9px; color: var(--text3); text-align: center; margin-top: 3px;
+    padding-top: 4px; border-top: 1px solid var(--border); width: 100%;
+  }
+  .cap-lbl span { color: var(--cyan); font-weight: 700; }
+
+  /* ===== COMBAT ===== */
+  .combat-grid { display: grid; grid-template-columns: repeat(5, 26px); gap: 3px; justify-content: center; padding: 4px; }
+  .cmb {
+    width: 26px; height: 26px; background: var(--bg-dark);
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; transition: all 0.15s ease;
+  }
+  .cmb:hover { border-color: var(--border-accent); }
+  .cmb.on { border-color: var(--blue); background: rgba(99,140,255,0.1); box-shadow: 0 0 8px rgba(99,140,255,0.2); }
+  .cmb.on::after {
+    content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%);
+    width: 12px; height: 2px; background: var(--blue); border-radius: 1px;
+  }
+  .cmb svg { width: 18px; height: 18px; }
+
+  /* ===== SKILLS ===== */
+  .sk-row {
+    display: flex; align-items: center; padding: 2px 4px; border-radius: 3px;
+    gap: 4px; transition: background 0.15s ease;
+  }
+  .sk-row:hover { background: rgba(255,255,255,0.04); }
+  .sk-nm { font-size: 9px; color: var(--text2); flex: 1; }
+  .sk-vl { font-size: 9px; color: var(--text1); font-weight: 700; font-variant-numeric: tabular-nums; min-width: 42px; text-align: right; }
+  .sk-br { height: 2px; background: rgba(255,255,255,0.03); border-radius: 1px; margin-top: 1px; }
+  .sk-bf { height: 100%; border-radius: 1px; background: linear-gradient(90deg, var(--green), var(--cyan)); }
+  .sk-bf.red { background: linear-gradient(90deg, var(--red), var(--amber)); }
+
+  /* ===== COOLDOWNS ===== */
+  .cd-grid { display: flex; gap: 3px; padding: 4px; flex-wrap: wrap; }
+  .cd-ico {
+    width: 20px; height: 20px; border-radius: 4px; background: var(--bg-dark);
+    border: 1px solid var(--border); display: flex; align-items: center;
+    justify-content: center;
+  }
+  .cd-ico.rdy { border-color: rgba(52,211,153,0.3); }
+  .cd-ico.cd { border-color: rgba(248,113,113,0.3); }
+  .cd-ico svg { width: 16px; height: 16px; }
+  .cd-sep { width: 1px; height: 16px; background: var(--border); margin: 2px 2px; }
+  .cd-spells { display: flex; gap: 2px; flex-wrap: wrap; }
+  .cd-sp {
+    width: 22px; height: 22px; border-radius: 3px; background: var(--bg-dark);
+    border: 1px solid var(--border);
+  }
+  .cd-sp svg { width: 22px; height: 22px; }
+
+  /* ===== MINIMAP ===== */
+  .mm-body {
+    height: 140px; background: #0a0e17; border-radius: var(--r-sm);
+    overflow: hidden; position: relative; border: 1px solid var(--border);
+  }
+  .mm-grid {
+    width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(34,211,238,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,211,238,0.04) 1px, transparent 1px);
+    background-size: 8px 8px;
+  }
+  .mm-cross {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 6px; height: 6px; border: 1px solid var(--cyan); border-radius: 50%;
+    background: rgba(34,211,238,0.15);
+  }
+
+  /* ===== SPELL BAR ===== */
+  #spellbar {
+    position: absolute; bottom: 172px; left: 50%; transform: translateX(-50%); z-index: 50;
+  }
+  .sb-inner {
+    background: var(--bg-glass); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 6px 10px;
+    display: flex; flex-direction: column; gap: 4px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    position: relative; overflow: hidden;
+  }
+  .sb-inner::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--purple), var(--blue), transparent);
+    opacity: 0.4;
+  }
+  .sb-row { display: flex; gap: 4px; }
+  .sb-slot {
+    width: 32px; height: 32px; background: var(--bg-dark);
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    position: relative; overflow: hidden; transition: all 0.15s ease;
+  }
+  .sb-slot::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
+    pointer-events: none; z-index: 2;
+  }
+  .sb-slot:hover { border-color: var(--purple); box-shadow: 0 0 12px rgba(168,85,247,0.3); transform: translateY(-1px); }
+  .sb-slot.rdy { border-color: rgba(52,211,153,0.25); }
+  .sb-slot.rdy::after {
+    content: ''; position: absolute; inset: -1px; border-radius: var(--r-sm);
+    border: 1px solid rgba(52,211,153,0.15); pointer-events: none; z-index: 1;
+  }
+  .sb-cd {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: var(--text1); z-index: 3;
+  }
+  .sb-nm {
+    position: absolute; bottom: 0; left: 0; right: 0; font-size: 5px;
+    text-align: center; color: rgba(255,255,255,0.4); padding: 1px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6)); z-index: 3;
+    opacity: 0; transition: opacity 0.15s ease;
+  }
+  .sb-slot:hover .sb-nm { opacity: 1; }
+
+  /* ===== BOTTOM CONSOLE ===== */
+  #console {
+    position: absolute; bottom: 0; left: 198px; right: 198px; height: 170px;
+    background: var(--bg-glass); border-top: 1px solid var(--border);
+    display: flex; flex-direction: column;
+  }
+  .ct-toolbar {
+    display: flex; align-items: center; gap: 2px; padding: 3px 6px;
+    border-bottom: 1px solid var(--border); min-height: 26px;
+  }
+  .ct-btn {
+    width: 20px; height: 20px; border-radius: 4px; background: transparent;
+    border: none; color: var(--text3); cursor: pointer; display: flex;
+    align-items: center; justify-content: center; font-size: 10px;
+    flex-shrink: 0;
+  }
+  .ct-btn:hover { background: rgba(255,255,255,0.06); color: var(--text2); }
+  .ct-sep { width: 1px; height: 12px; background: var(--border); margin: 0 2px; }
+  .ct-tab {
+    height: 22px; padding: 0 8px; border-radius: var(--r-sm);
+    background: transparent; border: none; color: var(--text3);
+    font-size: 9px; font-weight: 500; cursor: pointer;
+    white-space: nowrap; display: flex; align-items: center; gap: 3px;
+  }
+  .ct-tab:hover { background: rgba(255,255,255,0.05); color: var(--text2); }
+  .ct-tab.active { background: rgba(99,140,255,0.1); color: var(--blue); font-weight: 700; }
+  .ct-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
+  .ct-spacer { flex: 1; }
+  .ct-msgs {
+    flex: 1; padding: 4px 8px; overflow-y: auto; background: rgba(0,0,0,0.2);
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent;
+  }
+  .msg { font-size: 10px; line-height: 1.6; font-family: 'Consolas', monospace; }
+  .msg-ts { color: var(--text3); font-size: 8px; margin-right: 3px; }
+  .msg-sys { color: var(--text3); }
+  .msg-n { color: #d4d4d8; }
+  .msg-ch { color: var(--blue); }
+  .msg-g { color: var(--green); }
+  .msg-p { color: var(--purple); }
+  .msg-npc { color: var(--cyan); }
+  .msg-w { color: var(--amber); }
+  .msg-nm { font-weight: 700; }
+  .ct-input {
+    display: flex; align-items: center; gap: 4px; padding: 4px 6px;
+    border-top: 1px solid var(--border); background: rgba(0,0,0,0.15);
+  }
+  .ci-field {
+    flex: 1; background: var(--bg-dark); border: 1px solid var(--border);
+    border-radius: var(--r-sm); padding: 4px 8px; color: var(--text1);
+    font-size: 10px; font-family: 'Consolas', monospace; outline: none;
+  }
+  .ci-field:focus { border-color: var(--blue); box-shadow: 0 0 0 2px rgba(99,140,255,0.1); }
+  .ci-field::placeholder { color: var(--text3); }
+
+  /* ===== CENTER TRANSPARENT ===== */
+  #center { position: absolute; top: 36px; left: 198px; right: 198px; bottom: 170px; background: transparent; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="tb-group">
+    <!-- EXIT / LOGOUT -->
+    <div class="tb-btn" title="Exit (Ctrl+Q)">
+      <div class="ico ico-exit"><div class="ico-exit-door"></div><div class="ico-exit-arrow"></div></div>
+    </div>
+    <div class="tb-sep"></div>
+    <!-- INVENTORY (Ctrl+I) -->
+    <div class="tb-btn active" id="btn-inventory" title="Inventory (Ctrl+I)">
+      <div class="ico ico-bag"><div class="ico-bag-flap"></div><div class="ico-bag-body"></div><div class="ico-bag-clasp"></div></div>
+    </div>
+    <!-- SKILLS (Ctrl+Z) -->
+    <div class="tb-btn" id="btn-skills" title="Skills (Ctrl+Z)">
+      <div class="ico ico-skills"><div class="ico-skills-head"></div><div class="ico-skills-body"></div><div class="ico-skills-star">★</div></div>
+    </div>
+    <!-- BATTLE LIST (Ctrl+B) -->
+    <div class="tb-btn" id="btn-battle" title="Battle (Ctrl+B)">
+      <div class="ico ico-battle"><div class="ico-battle-sword"></div><div class="ico-battle-shield"></div></div>
+    </div>
+    <!-- MINIMAP (Ctrl+M) -->
+    <div class="tb-btn" id="btn-minimap" title="Minimap (Ctrl+M)">
+      <div class="ico ico-map"><div class="ico-map-path"></div><div class="ico-map-pin"></div></div>
+    </div>
+    <!-- SPELL LIST -->
+    <div class="tb-btn" id="btn-spells" title="Spell List">
+      <div class="ico ico-spell"><div class="ico-spell-book"></div><div class="ico-spell-sparkle">✦</div></div>
+    </div>
+    <!-- COOLDOWNS -->
+    <div class="tb-btn" id="btn-cd" title="Cooldowns">
+      <div class="ico ico-clock"><div class="ico-clock-face"></div><div class="ico-clock-hand"></div><div class="ico-clock-center"></div></div>
+    </div>
+    <!-- COMBAT CONTROLS -->
+    <div class="tb-btn" id="btn-combat" title="Combat Controls">
+      <div class="ico ico-crosshair"><div class="ico-ch-ring"></div><div class="ico-ch-h"></div><div class="ico-ch-v"></div></div>
+    </div>
+    <!-- QUEST LOG -->
+    <div class="tb-btn" id="btn-quests" title="Quest Log">
+      <div class="ico ico-quest"><div class="ico-quest-book"></div><div class="ico-quest-lines"><div></div><div></div><div></div></div></div>
+    </div>
+    <!-- VIP LIST (Ctrl+P) -->
+    <div class="tb-btn" id="btn-vip" title="VIP List (Ctrl+P)">
+      <div class="ico ico-vip"><div class="ico-vip-head"></div><div class="ico-vip-body"></div><div class="ico-vip-check">✓</div></div>
+    </div>
+    <!-- MARKET -->
+    <div class="tb-btn" id="btn-market" title="Market">
+      <div class="ico ico-market"><div class="ico-market-roof"></div><div class="ico-market-stall"></div><div class="ico-market-door"></div></div>
+    </div>
+    <!-- GUILD -->
+    <div class="tb-btn" id="btn-guild" title="Guild">
+      <div class="ico ico-guild"><div class="ico-guild-flag"></div><div class="ico-guild-pole"></div></div>
+    </div>
+    <!-- HOTKEYS (Ctrl+K) -->
+    <div class="tb-btn" id="btn-hotkeys" title="Hotkeys (Ctrl+K)">
+      <div class="ico ico-key"><div class="ico-key-head"></div><div class="ico-key-shaft"></div><div class="ico-key-teeth"><div></div><div></div></div></div>
+    </div>
+    <!-- MAGIC METER (Ctrl+Shift+D) -->
+    <div class="tb-btn" id="btn-magic" title="Magic Meter">
+      <div class="ico ico-wand"><div class="ico-wand-stick"></div><div class="ico-wand-tip">✧</div></div>
+    </div>
+    <!-- ACHIEVEMENTS -->
+    <div class="tb-btn" id="btn-achieve" title="Achievements">
+      <div class="ico ico-medal"><div class="ico-medal-star">★</div><div class="ico-medal-ribbon"></div></div>
+    </div>
+    <!-- PARTY DPS -->
+    <div class="tb-btn" id="btn-partydps" title="Party Damage">
+      <div class="ico ico-chart"><div class="ico-chart-bar1"></div><div class="ico-chart-bar2"></div><div class="ico-chart-bar3"></div></div>
+    </div>
+  </div>
+  <div class="tb-info">
+    <span class="tb-label tb-fps" id="fps-label">FPS: --</span>
+    <div class="tb-sep"></div>
+    <span class="tb-label tb-ping" id="ping-label">PING: --</span>
+  </div>
+  <div class="tb-group">
+    <!-- OPTIONS -->
+    <div class="tb-btn" id="btn-options" title="Options">
+      <div class="ico ico-gear"><div class="ico-gear-ring"></div><div class="ico-gear-hole"></div></div>
+    </div>
+    <!-- DAILY HUNT -->
+    <div class="tb-btn" id="btn-hunt" title="Daily Hunt">
+      <div class="ico ico-hunt"><div class="ico-hunt-compass"></div><div class="ico-hunt-needle"></div></div>
+    </div>
+    <!-- HELPER -->
+    <div class="tb-btn" id="btn-helper" title="Helper">
+      <div class="ico ico-helper"><div class="ico-helper-circle"></div><div class="ico-helper-q">?</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LEFT PANEL -->
+<div id="left-panel">
+  <!-- Health Info -->
+  <div class="hp-info">
+    <div class="hp-top">
+      <div class="avatar"><div class="avatar-inner" id="avatar-icon">🧙</div></div>
+      <div class="bars">
+        <div class="bar-row bar-hp">
+          <div class="bar-lbl"><span>HP</span><span class="v" id="hp-text">-- / --</span></div>
+          <div class="bar-trk"><div class="bar-fl" id="hp-bar" style="width:0%"></div></div>
+        </div>
+        <div class="bar-row bar-mp">
+          <div class="bar-lbl"><span>MP</span><span class="v" id="mp-text">-- / --</span></div>
+          <div class="bar-trk"><div class="bar-fl" id="mp-bar" style="width:0%"></div></div>
+        </div>
+        <div class="bar-row bar-xp">
+          <div class="bar-lbl"><span>EXP</span><span class="v" id="xp-text">--%</span></div>
+          <div class="bar-trk"><div class="bar-fl" id="xp-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hp-bottom">
+      <span class="stat-l">Cap: <span id="cap-text">--</span></span>
+      <span class="stat-l">Soul: <span id="soul-text">--</span></span>
+    </div>
+    <div class="conditions" id="conditions"></div>
+  </div>
+
+  <!-- Inventory -->
+  <div class="mw">
+    <div class="mw-hd"><div class="mw-title">📦 Inventory</div></div>
+    <div class="mw-body">
+      <div class="inv-body">
+        <div class="eq-row"><div></div><div class="slot" id="slot-neck"></div><div></div></div>
+        <div class="eq-row"><div class="slot" id="slot-back"></div><div class="slot" id="slot-head"></div><div class="slot" id="slot-back2"></div></div>
+        <div class="eq-row"><div class="slot" id="slot-left"></div><div class="slot" id="slot-body"><span class="iid"></span></div><div class="slot" id="slot-right"></div></div>
+        <div class="eq-row"><div class="slot" id="slot-finger"></div><div class="slot" id="slot-legs"></div><div class="slot" id="slot-ammo"></div></div>
+        <div class="eq-row"><div></div><div class="slot" id="slot-feet"></div><div></div></div>
+        <div class="cap-lbl">Cap: <span id="cap-text2">--</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Combat Controls -->
+  <div class="mw">
+    <div class="mw-hd"><div class="mw-title">⚔️ Combat</div></div>
+    <div class="mw-body" style="padding:3px">
+      <div class="combat-grid">
+        <div class="cmb on" id="cmb-offensive"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#ef4444" stroke-width="1.3"/><path d="M10 6v8M6 10h8" stroke="#ef4444" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+        <div class="cmb" id="cmb-balanced"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#f59e0b" stroke-width="1.3"/><path d="M10 6v8" stroke="#f59e0b" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+        <div class="cmb" id="cmb-defensive"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#22c55e" stroke-width="1.3"/><path d="M7 10l2 2 4-4" stroke="#22c55e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cmb" id="cmb-chase"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#638cff" stroke-width="1.3"/><path d="M7 10h6m-2-2m2 2l-2 2" stroke="#638cff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="cmb" id="cmb-safe"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#a855f7" stroke-width="1.3"/><path d="M10 7v3" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="13" r="0.8" fill="#a855f7"/></svg></div>
+        <div class="cmb" id="cmb-dove"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#e2e8f0" stroke-width="1.3"/><path d="M7 12c1-3 5-3 6 0" stroke="#e2e8f0" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+        <div class="cmb" id="cmb-whand"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#94a3b8" stroke-width="1.3"/><path d="M10 7v6M8 9v4M12 9v4" stroke="#94a3b8" stroke-width="1" stroke-linecap="round"/></svg></div>
+        <div class="cmb" id="cmb-yhand"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#fbbf24" stroke-width="1.3"/><path d="M10 7v6M8 9v4M12 9v4" stroke="#fbbf24" stroke-width="1" stroke-linecap="round"/></svg></div>
+        <div class="cmb" id="cmb-rfist"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#ef4444" stroke-width="1.3"/><circle cx="10" cy="10" r="2.5" stroke="#ef4444" stroke-width="1.3"/></svg></div>
+        <div class="cmb" id="cmb-mount"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#22d3ee" stroke-width="1.3"/><path d="M7 13l2-6h2l2 6" stroke="#22d3ee" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CENTER (transparent - game map shows through) -->
+<div id="center"></div>
+
+<!-- RIGHT PANEL -->
+<div id="right-panel">
+  <!-- Skills -->
+  <div class="mw">
+    <div class="mw-hd"><div class="mw-title">📊 Skills</div></div>
+    <div class="mw-body" style="padding:2px 4px">
+      <div class="sk-row"><span class="sk-nm">Experience</span><span class="sk-vl" id="sk-exp">--</span></div>
+      <div class="sk-row"><span class="sk-nm">Level</span><span class="sk-vl" id="sk-level">--</span></div>
+      <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf red" id="sk-level-bar" style="width:0%"></div></div>
+      <div class="sk-row"><span class="sk-nm">Magic Level</span><span class="sk-vl" id="sk-ml">--</span></div>
+      <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf red" id="sk-ml-bar" style="width:0%"></div></div>
+      <div class="sk-row"><span class="sk-nm">Sword</span><span class="sk-vl" id="sk-sword">--</span></div>
+      <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf" id="sk-sword-bar" style="width:0%"></div></div>
+      <div class="sk-row"><span class="sk-nm">Shielding</span><span class="sk-vl" id="sk-shield">--</span></div>
+      <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf" id="sk-shield-bar" style="width:0%"></div></div>
+      <div class="sk-row"><span class="sk-nm">Stamina</span><span class="sk-vl" id="sk-stamina">--</span></div>
+      <div class="sk-br" style="margin:0 4px 2px"><div class="sk-bf" id="sk-stamina-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- Cooldowns -->
+  <div class="mw">
+    <div class="mw-hd"><div class="mw-title">⏱️ Cooldowns</div></div>
+    <div class="mw-body" style="padding:4px">
+      <div class="cd-grid">
+        <div class="cd-ico rdy"><svg viewBox="0 0 20 20" fill="none"><path d="M10 4l-1 4h-4l3 2-1 4 3-2 3 2-1-4 3-2h-4l-1-4z" stroke="#ef4444" stroke-width="0.8" fill="rgba(239,68,68,0.15)"/></svg></div>
+        <div class="cd-ico cd"><svg viewBox="0 0 20 20" fill="none"><path d="M10 5l-4 4h3v5h2v-5h3l-4-4z" stroke="#22c55e" stroke-width="0.8" fill="rgba(34,197,94,0.15)"/></svg></div>
+        <div class="cd-ico rdy"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" stroke="#638cff" stroke-width="0.8" fill="rgba(99,140,255,0.15)"/></svg></div>
+        <div class="cd-ico rdy"><svg viewBox="0 0 20 20" fill="none"><path d="M10 4l1.5 3 3.5.5-2.5 2.5.5 3.5L10 12l-3 1.5.5-3.5L5 7.5l3.5-.5L10 4z" stroke="#a855f7" stroke-width="0.8" fill="rgba(168,85,247,0.15)"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimap -->
+  <div class="mw">
+    <div class="mw-hd"><div class="mw-title">🗺️ Minimap</div></div>
+    <div class="mw-body" style="padding:4px">
+      <div class="mm-body">
+        <div class="mm-grid"></div>
+        <div class="mm-cross"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPELL BAR -->
+<div id="spellbar">
+  <div class="sb-inner">
+    <div class="sb-row" id="sb-row1"></div>
+    <div class="sb-row" id="sb-row2"></div>
+  </div>
+</div>
+
+<!-- CONSOLE -->
+<div id="console">
+  <div class="ct-toolbar">
+    <button class="ct-btn">💬</button>
+    <div class="ct-sep"></div>
+    <button class="ct-tab" style="font-size:11px">◀</button>
+    <button class="ct-tab active"><span class="ct-dot"></span>Main</button>
+    <button class="ct-tab"><span class="ct-dot" style="background:var(--purple)"></span>Party</button>
+    <button class="ct-tab"><span class="ct-dot" style="background:var(--green)"></span>Guild</button>
+    <button class="ct-tab" style="font-size:11px">▶</button>
+    <div class="ct-spacer"></div>
+    <button class="ct-btn">✨</button>
+    <button class="ct-btn">✕</button>
+    <button class="ct-btn">🗑</button>
+    <button class="ct-btn">📋</button>
+    <button class="ct-btn">🚫</button>
+  </div>
+  <div class="ct-msgs" id="console-msgs">
+    <div class="msg msg-sys"><span class="msg-ts">[--:--]</span> Overlay HTML carregado com sucesso!</div>
+  </div>
+  <div class="ct-input">
+    <button class="ct-btn">💬</button>
+    <button class="ct-btn">😊</button>
+    <input class="ci-field" type="text" placeholder="Type a message..." />
+  </div>
+</div>
+
+<script>
+// ===== GAME STATE UPDATE FUNCTIONS =====
+// Called from Lua via: webView:executeScript("functionName(args)")
+
+function updateHealth(hp, maxHp) {
+  var pct = maxHp > 0 ? Math.round((hp / maxHp) * 100) : 0;
+  document.getElementById('hp-bar').style.width = pct + '%';
+  document.getElementById('hp-text').textContent = hp + ' / ' + maxHp;
+}
+
+function updateMana(mp, maxMp) {
+  var pct = maxMp > 0 ? Math.round((mp / maxMp) * 100) : 0;
+  document.getElementById('mp-bar').style.width = pct + '%';
+  document.getElementById('mp-text').textContent = mp + ' / ' + maxMp;
+}
+
+function updateExp(pct) {
+  document.getElementById('xp-bar').style.width = pct + '%';
+  document.getElementById('xp-text').textContent = Math.round(pct) + '%';
+}
+
+function updateCap(cap) {
+  document.getElementById('cap-text').textContent = cap;
+  document.getElementById('cap-text2').textContent = cap;
+}
+
+function updateSoul(soul) {
+  document.getElementById('soul-text').textContent = soul;
+}
+
+function updateFPS(fps) {
+  document.getElementById('fps-label').textContent = 'FPS: ' + fps;
+}
+
+function updatePing(ping) {
+  var color = ping <= 70 ? 'var(--green)' : ping <= 130 ? 'var(--amber)' : 'var(--red)';
+  document.getElementById('ping-label').textContent = 'PING: ' + ping + 'ms';
+  document.getElementById('ping-label').style.color = color;
+}
+
+function updateSkill(name, value) {
+  var el = document.getElementById('sk-' + name);
+  if (el) el.textContent = value;
+}
+
+function setSpellSlot(row, index, ready, cooldownText) {
+  var rowEl = document.getElementById('sb-row' + row);
+  if (!rowEl) return;
+  var slot = rowEl.children[index];
+  if (!slot) return;
+
+  if (ready) {
+    slot.className = 'sb-slot rdy';
+    var cd = slot.querySelector('.sb-cd');
+    if (cd) cd.remove();
+  } else {
+    slot.className = 'sb-slot';
+    if (cooldownText) {
+      var existing = slot.querySelector('.sb-cd');
+      if (!existing) {
+        var cdEl = document.createElement('div');
+        cdEl.className = 'sb-cd';
+        cdEl.textContent = cooldownText;
+        slot.appendChild(cdEl);
+      } else {
+        existing.textContent = cooldownText;
+      }
+    }
+  }
+}
+
+function addConsoleMessage(text, type) {
+  var msgs = document.getElementById('console-msgs');
+  var div = document.createElement('div');
+  div.className = 'msg ' + (type || 'msg-n');
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// Initialize spell bar slots
+(function() {
+  for (var r = 1; r <= 2; r++) {
+    var row = document.getElementById('sb-row' + r);
+    for (var i = 0; i < 12; i++) {
+      var slot = document.createElement('div');
+      slot.className = 'sb-slot rdy';
+      slot.id = 'sp-' + r + '-' + i;
+      row.appendChild(slot);
+    }
+  }
+})();
+</script>
+</body>
+</html>

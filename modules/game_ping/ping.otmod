@@ -1,0 +1,12 @@
+Module
+  name: game_ping
+  description: Smart Ping System - Mark locations for party members
+  author: Custom
+  website: https://github.com/custom
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1000
+  scripts: [ ping ]
+  dependencies: [ game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

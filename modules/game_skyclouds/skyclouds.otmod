@@ -1,0 +1,10 @@
+Module
+  name: game_skyclouds
+  description: Realistic animated sky clouds with per-pixel occlusion
+  author: otclientv8
+  website: http://otclient.ovh
+  scripts: [ skyclouds ]
+  sandboxed: true
+  dependencies: [ game_shaders, game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

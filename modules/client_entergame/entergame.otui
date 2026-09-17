@@ -1,0 +1,259 @@
+PassCastWindow < Window
+  text: Password Cast
+  size: 340 100
+  margin-bottom: -15
+  draggable: false
+  @onEnter: CharacterList.doLogin()
+
+  Label
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    text-auto-resize: true
+    text-wrap: true
+    text: Digite a senha do Cast
+
+  PasswordTextEdit
+    id: edtCastPassword
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 5
+
+// Tamanho 380x480: e' o que o EnterGame.setUniqueServer() aplica em tempo de
+// execucao (setWidth(380) / setHeight(480)), chamado pelo mod ava_protocol.
+// Deixando o mesmo valor aqui a tela nao muda de forma quando esse caminho
+// nao roda. A arte (logo.png, 1063x1480) e' esticada para preencher a janela.
+//
+// image-shader: entergame_glow (registrado em modules/game_shaders/shaders.lua)
+// deixa um brilho bem suave nas bordas da arte. O shader desenha a propria
+// imagem e so' soma luz na faixa das bordas, entao o miolo da janela fica
+// identico. Se o shader nao carregar, o motor cai no desenho normal da imagem.
+EnterGameWindow < UIWindow
+  size: 380 480
+  image-source: logo
+  image-shader: entergame_glow
+  anchors.centerIn: parent
+
+EnterGameButton < Button
+  width: 67
+  height: 17
+
+ServerListButton < UIButton
+  size: 13 13
+  image-source: /images/topbuttons/minimap
+  image-color: #ffffffff
+
+  $hover !disabled:
+    image-color: #ffffff99
+
+  $pressed:
+    image-color: #ffffff44
+
+  $disabled:
+    image-color: #ffffff55
+
+// ============================================================================
+// LOGIN - geometria encaixada no painel da arte, 25% menor que antes
+//
+// Com a arte esticada na janela de 380x480, o miolo escuro do painel (onde o
+// formulario deve ficar) cai em x 74..305 / y 268..415; de y 415 a ~430 o
+// painel afunila, mas ainda cabe a fileira de botoes.
+//
+// Antes -> agora (largura x altura):
+//   campos de texto . 278x20 -> 208x15
+//   combo do world ... 278x20 -> 208x15  (depois saiu de vez: 1 mundo so')
+//   checkbox ......... 16x16  -> 12x12
+//   botoes ........... 90/100/90 x 23 -> 67/75/67 x 17
+//   espacos entre blocos: 10 -> 6, 8 -> 2, 15 -> 3, 30 -> 3
+// A fonte continua a mesma (verdana-11px-antialised, altura de linha 14): e'
+// fonte bitmap, nao da' para escalar 25% so' pelo otui.
+// ============================================================================
+EnterGameWindow
+  id: enterGame
+  @onEnter: EnterGame.doLogin()
+
+
+  Label
+    id: testLogin
+    !text: tr('Test Server')
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    color: blue
+    visible: false
+
+  MenuLabel
+    id:ml
+    !text: tr('Account name')
+    anchors.left: parent.left
+    anchors.top: parent.top
+    text-auto-resize: true
+    margin: 268 0 0 85
+
+  // Fundo dos campos 50% transparente (80 em hex = 128/255): a arte da janela
+  // aparece por baixo do campo, so' o texto digitado fica solido.
+  PasswordTextEdit
+    id: accountNameTextEdit
+    anchors.left: ml.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin: 2 87 0 0
+    height: 15
+    padding: 0
+    text-offset: 0 1
+    image-color: #ffffff80
+
+  MenuLabel
+    id: mp
+    !text: tr('Password')
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 6
+    text-auto-resize: true
+
+  PasswordTextEdit
+    id: accountPasswordTextEdit
+    anchors.left: mp.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin: 2 87 0 0
+    height: 15
+    padding: 0
+    text-offset: 0 1
+    image-color: #ffffff80
+
+  // O label "World" e o combo de escolha de mundo sairam daqui: o client tem um
+  // mundo unico, definido em modules/client_entergame/config.lua (a lista
+  // 'servers', que agora tem so' uma entrada) e aplicado em EnterGame.doLogin /
+  // EnterGame.getHostPort. Todo mundo entra no mesmo lugar.
+
+  MenuLabel
+    id: serverLabel
+    !text: tr('Server')
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 2
+    text-auto-resize: true
+    visible: false
+
+  ServerListButton
+    id: serverListButton
+    !tooltip: tr('Server list')
+    anchors.right: parent.right
+    anchors.top: serverLabel.bottom
+    margin-top: 1
+    margin-right: 85
+    @onClick: ServerList.show()
+
+  TextEdit
+    id: serverHostTextEdit
+    !tooltip: tr('Make sure that your client uses\\nthe correct game client version')
+    anchors.left: ml.left
+    anchors.right: serverListButton.left
+    anchors.top: serverLabel.bottom
+    margin: 2 4 0 0
+    height: 15
+    padding: 0
+    text-offset: 0 1
+
+  MenuLabel
+    id: clientLabel
+    !text: tr('Client Version')
+    anchors.left: ml.left
+    anchors.top: serverHostTextEdit.bottom
+    text-auto-resize: true
+    margin-right: 10
+    margin-top: 2
+    visible: false
+
+  ComboBox
+    id: clientComboBox
+    anchors.left: ml.left
+    anchors.right: parent.horizontalCenter
+    anchors.top: clientLabel.bottom
+    margin-top: 2
+    margin-right: 3
+    width: 90
+    height: 15
+    visible: false
+
+  MenuLabel
+    id: portLabel
+    !text: tr('Port')
+    anchors.left: serverPortTextEdit.left
+    anchors.top: serverHostTextEdit.bottom
+    margin-top: 2
+    text-auto-resize: true
+    visible: false
+
+  TextEdit
+    id: serverPortTextEdit
+    text: 7171
+    anchors.right: parent.right
+    anchors.left: parent.horizontalCenter
+    anchors.top: clientComboBox.top
+    margin-left: 3
+    margin-right: 87
+    height: 15
+    padding: 0
+    text-offset: 0 1
+    visible: false
+
+  CheckBox
+    id: rememberPasswordBox
+    !text: tr('Remember password')
+    !tooltip: tr('Remember account and password when starts client')
+    anchors.left: ml.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin: 3 87 0 0
+    height: 12
+    text-offset: 14 0
+
+  // Fileira de botoes: 67 + 3 + 75 + 3 + 67 = 215 px, centrada no painel
+  // (74..305), logo comeca em 82. Ficam ancoradas no checkbox "Lembrar senha"
+  // para acompanhar o formulario em vez de flutuar no fundo da janela.
+  // O espaco que sobrou das duas linhas que sairam daqui (o checkbox "Entrar
+  // automaticamente" e a linha do "World") foi dividido: o checkbox "Lembrar
+  // senha" desceu 18 (veja rememberPasswordBox:setMarginTop em
+  // EnterGame.setUniqueServer) e esta fileira subiu 18.
+  // Como a fileira esta ancorada no bottom do checkbox, os 18 que ele desceu
+  // contam duas vezes aqui: 59 - 18 (checkbox) - 18 (a propria fileira) = 23.
+  // Resultado: vao de 23 px entre os dois, ~como no desenho original. Para
+  // deixar a fileira de volta na altura antiga (y 411..428), use 59.
+
+  EnterGameButton
+    id: ent
+    width: 67
+    !text: tr('Ok')
+    anchors.left: parent.left
+    anchors.top: rememberPasswordBox.bottom
+    margin: 23 0 0 82
+    @onClick: EnterGame.doLogin()
+
+  EnterGameButton
+    id: createAccountBtn
+    width: 75
+    !text: tr('Criar Conta')
+    anchors.left: parent.left
+    anchors.top: rememberPasswordBox.bottom
+    margin: 23 0 0 152
+    @onClick: CreateAccount.show()
+
+  EnterGameButton
+    id: cast
+    width: 67
+    !text: tr('Broadcasts')
+    anchors.left: parent.left
+    anchors.top: rememberPasswordBox.bottom
+    margin: 23 0 0 230
+    @onClick: EnterGame.cast()
+
+  Label
+    id: serverInfoLabel
+    font: verdana-11px-rounded
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    color: green
+    text-auto-resize: true
+    visible: false

@@ -1,0 +1,8 @@
+Font
+  name: verdana-new
+  texture: verdana-new
+  height: 10
+  glyph-size: 10 11
+  y-offset: 1
+  spacing: -1 -1
+  space-width: 3

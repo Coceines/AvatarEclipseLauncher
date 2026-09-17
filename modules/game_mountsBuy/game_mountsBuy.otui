@@ -1,0 +1,138 @@
+MountMoldura < UIProgressRect
+  background: #585858AA
+  percent: 100
+  focusable: false
+  font: verdana-11px-rounded
+  size: 64 64
+
+MountsB < UIButton
+  size: 64 64
+  anchors.top: parent.top
+  anchors.left: parent.left
+
+MainWindow
+  text: Comprar Montaria
+  size: 310 210
+  @onEscape: self.onEscape()
+
+  MountsB
+    id: mountButton1
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 5
+
+  MountsB
+    id: mountButton2
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+
+  MountsB
+    id: mountButton3
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+
+  MountsB
+    id: mountButton4
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+
+  MountsB
+    id: mountButton5
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 5
+    margin-top: 75
+
+  MountsB
+    id: mountButton6
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+    margin-top: 75
+
+  MountsB
+    id: mountButton7
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+    margin-top: 75
+
+  MountsB
+    id: mountButton8
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+    margin-top: 75
+
+  MountMoldura
+    id: mold1
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 5
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold2
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold3
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold4
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold5
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 5
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold6
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 75
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold7
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 145
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  MountMoldura
+    id: mold8
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 215
+    margin-top: 75
+    @onClick: self.onClick(self)
+
+  Label
+    id: Label0
+    !text: tr ('Qual montaria deseja adquirir?')
+    font: verdana-11px-rounded
+    color: #32a3d9
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 155
+    margin-left: 55

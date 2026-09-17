@@ -1,0 +1,33 @@
+MiniWindow
+  id: momoWindow
+  !text: tr('Momo Pouch')
+  icon: /images/game/slots/momopouch
+  height: 140
+  width: 200
+  @onClose: modules.game_momo.hideConfig()
+
+  MiniWindowContents
+    Label
+      id: descriptionLabel
+      text: tr('Click the status below to enable or disable the automatic collection.')
+      wrap: true
+      width: 185
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 4
+
+    Button
+      id: statusButton
+      !text: tr('Enabled')
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 6
+      width: 120
+      height: 24
+
+    Label
+      id: itemsLabel
+      text: tr('Items to collect: 0')
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 6

@@ -1,0 +1,63 @@
+MagicMeterRow < UIWidget
+  height: 24
+  margin-bottom: 2
+
+  UILabel
+    id: nameLabel
+    font: verdana-11px-monochrome
+    text-auto-resize: true
+    color: white
+    anchors.left: parent.left
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+
+  UILabel
+    id: damageLabel
+    font: verdana-11px-monochrome
+    text-align: topright
+    text-auto-resize: true
+    color: white
+    anchors.right: parent.right
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+
+  UIProgressBar
+    id: progressBar
+    background-color: #ffffffaa
+    percent: 0
+    height: 5
+    margin-top: 16
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+MiniWindow
+  id: magicMeterWindow
+  !text: tr('Magic Meter')
+  height: 150
+  visible: false
+  icon: /images/topbuttons/Magicmeter
+  @onClose: modules.game_magicmeter.onMiniWindowClose()
+  &save: true
+
+  UIButton
+    id: resetButton
+    text: Reset
+    font: verdana-11px-rounded
+    color: #ff5555
+    size: 40 14
+    anchors.top: minimizeButton.top
+    anchors.right: minimizeButton.left
+    margin-right: 3
+    @onClick: modules.game_magicmeter.requestReset()
+
+  MiniWindowContents
+    layout: verticalBox
+    padding-left: 5
+    padding-right: 5
+
+    UIWidget
+      id: rowsContainer
+      layout:
+        type: verticalBox
+        fit-children: true
